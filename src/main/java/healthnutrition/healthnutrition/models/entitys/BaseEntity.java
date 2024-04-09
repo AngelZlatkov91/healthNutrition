@@ -1,4 +1,4 @@
-package healthnutrition.healthnutrition.models;
+package healthnutrition.healthnutrition.models.entitys;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
