@@ -2,8 +2,8 @@ spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/healthnutrition?allowPublicKeyRetrieval=true&useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
-    username: root
-    password: 123456789
+    username: 
+    password:
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     defer-datasource-initialization: true
@@ -22,8 +22,8 @@ spring:
         enabled: true
 
 healthNutrition:
-  default.admin.pass: ${DEFAULT_ADMIN_PASS:1234}
-  remember.me.key: ${REMEBER_ME_KEY:topsecret}
+  default.admin.pass: ${DEFAULT_ADMIN_PASS:}
+  remember.me.key: ${REMEBER_ME_KEY:}
 
 
 logging:
