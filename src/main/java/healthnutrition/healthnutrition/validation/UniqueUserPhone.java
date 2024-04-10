@@ -12,8 +12,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Constraint(validatedBy = UniqueUserPhoneValidator.class)
 public @interface UniqueUserPhone {
-    String message() default "The user phone should be unique";
-    Class<?>[] group()default {};
+    String message() default "The phone all ready exist";
+    Class<?>[] groups()default {};
 
     Class<? extends Payload>[] payload() default {};
 }

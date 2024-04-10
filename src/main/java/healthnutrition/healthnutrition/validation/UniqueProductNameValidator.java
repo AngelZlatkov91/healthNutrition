@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = UniqueProductNameValidatorImpl.class)
 public @interface UniqueProductNameValidator {
     String message() default "The product name should be unique";
-    Class<?>[] group()default {};
+    Class<?>[] groups()default {};
 
     Class<? extends Payload>[] payload() default {};
 }

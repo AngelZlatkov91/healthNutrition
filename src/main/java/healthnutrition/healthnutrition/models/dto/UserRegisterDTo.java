@@ -9,23 +9,24 @@ second = "confirmPassword",
 message = "Passwords should match")
 public class UserRegisterDTo {
     @Email
-    @NotBlank
+    @NotBlank(message = "The email cannot be empty!")
     @UniqueUserEmail
     private String email;
     @Size(min = 3,max = 20)
+    @NotBlank(message = "The fullName cannot be empty!")
     private String fullName;
     @Positive
     @Min(12)
-    @NotBlank
+    @NotNull(message = "The age should be more or equals to 12!")
     private int age;
-    @NotBlank
+    @NotBlank(message = "The Phone cannot be empty!")
     @Size(min = 9)
     @UniqueUserPhone
     private String phone;
-    @NotBlank
+    @NotBlank(message = "The Password cannot be empty!")
     @Size(min = 4,max = 20)
     private String password;
-    @NotBlank
+    @NotBlank(message = "The Password cannot be empty!")
     @Size(min = 4,max = 20)
     private String confirmPassword;
 

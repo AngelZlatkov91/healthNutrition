@@ -13,9 +13,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Optional<Product> findByName(String value);
 
-    List<Product> findAllByName(String name);
-    List<Product> findAllByBrant(ProductBrantEnum brant);
-    List<Product> findAllByType(ProductTypeEnum type);
+//    List<Product> findAllByName(String name);
+//    List<Product> findAllByBrant(String brant);
+//    List<Product> findAllByType(String type);
 
 
 

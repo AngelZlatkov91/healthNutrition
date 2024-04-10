@@ -8,8 +8,6 @@ public class ShopingCartDTO {
     private List<ProductInCartDTO> products;
 
 
-
-
     public ShopingCartDTO() {
         this.products = new ArrayList<>();
 

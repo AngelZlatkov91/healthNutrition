@@ -18,18 +18,23 @@
 
     <!-- Registration form start -->
     <form
-            th:action="@{/users/register}"
+            th:action="@{/register}"
             th:method="POST"
-
+            th:object="${userRegistrationDTO}"
             class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
             <div class="form-group col-md-6 mb-3">
                 <label for="fullName" class="text-white font-weight-bold">Full name</label>
                 <input  id="fullName"
                         name="fullName"
-                        type="text" min="2" max="20" class="form-control"
+                        th:field="*{fullName}"
+                        th:errorclass="is-invalid"
+                        type="text"
+                        min="3" max="20" class="form-control"
                         placeholder="fullName "/>
-
+                <p class="errors alert alert-danger invalid-feedback" th:each="error: ${#fields.hasErrors('fullName')}">
+                    FullName cannot be empty!.
+                </p>
             </div>
         </div>
         <div class="row">
@@ -37,10 +42,12 @@
                 <label for="email" class="text-white font-weight-bold">Email</label>
                 <input id="email"
                        name="email"
+                       th:field="*{email}"
+                       th:errorclass="is-invalid"
                        type="text"
                        min="2" max="20" class="form-control"
                        placeholder="Email"/>
-                <p class="errors alert alert-danger">
+                <p class="errors alert alert-danger invalid-feedback">
                     Email is required.
                 </p>
             </div>
@@ -48,8 +55,11 @@
                 <label for="age" class="text-white font-weight-bold">Age</label>
                 <input id="age"
                        name="age"
+                       th:field="*{age}"
+                       th:errorclass="is-invalid"
+                       min="12"
                        type="number"/>
-                <p class="errors alert alert-danger">
+                <p class="errors alert alert-danger invalid-feedback">
                     Age must be more than 12!
                 </p>
             </div>
@@ -58,9 +68,11 @@
                 <input id="phone"
                        name="phone"
                        type="text"
+                       th:field="*{phone}"
+                       th:errorclass="is-invalid"
                        min="9" class="form-control"
                        placeholder="Phone"/>
-                <p class="errors alert alert-danger">
+                <p class="errors alert alert-danger invalid-feedback">
                     Phone is required.
                 </p>
             </div>
@@ -72,9 +84,11 @@
                        class="text-white font-weight-bold">Password</label>
                 <input id="password"
                        name="password"
-                       type="password" min="2" max="20" class="form-control"
+                       th:field="*{password}"
+                       th:errorclass="is-invalid"
+                       type="password" min="4" max="20" class="form-control"
                        placeholder="Password"/>
-                <p class="errors alert alert-danger">
+                <p class="errors alert alert-danger invalid-feedback">
                     Password is required.
                 </p>
             </div>
@@ -84,9 +98,11 @@
                    class="text-white font-weight-bold">Confirm Password</label>
             <input id="confirmPassword"
                    name="confirmPassword"
-                   type="password" min="2" max="20" class="form-control"
+                   th:field="*{confirmPassword}"
+                   th:errorclass="is-invalid"
+                   type="password" min="4" max="20" class="form-control"
                    placeholder="Confirm Password"/>
-            <p class="errors alert alert-danger">
+            <p class="errors alert alert-danger invalid-feedback">
                 Password conformation is required.
             </p>
         </div>

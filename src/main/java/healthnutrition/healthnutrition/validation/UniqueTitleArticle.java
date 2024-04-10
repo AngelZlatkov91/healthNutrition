@@ -10,9 +10,10 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-@Constraint(validatedBy = UniqueUserEmailValidator.class)
-public @interface UniqueUserEmail {
-    String message() default "This email should exist!";
+@Constraint(validatedBy = UniqueTitleArticleValidator.class)
+public @interface UniqueTitleArticle {
+
+    String message() default "The title for this Article should be unique";
     Class<?>[] groups()default {};
 
     Class<? extends Payload>[] payload() default {};

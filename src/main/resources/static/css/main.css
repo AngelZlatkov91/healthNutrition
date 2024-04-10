@@ -1,5 +1,5 @@
 body {
-     background-image: url('../images/1.jpg');
+     background-image: url('../images/backgroundPic.jpg');
      background-position: center center;
      background-repeat: no-repeat;
      background-attachment: fixed;
@@ -13,6 +13,7 @@ body {
 }
 
 .container, .container-fluid {
+     color: #1d2124;
      padding-top: 90px;
 }
 
@@ -56,4 +57,7 @@ form.main-form {
 
 .logged-user {
      color: white;
+}
+.navbar-brand {
+     background: transparent;
 }

@@ -36,7 +36,7 @@ public class SecurityConfig {
 
                         .requestMatchers("/swagger-ui/**","/v3/api-docs/**").permitAll()
                         // allow anyone to see the home page the registration and the login form
-                        .requestMatchers("/","/users/login","/users/register", "/users/login-error").permitAll()
+                        .requestMatchers("/","/users/login","/register", "/users/login-error").permitAll()
                         .requestMatchers("/products/all").permitAll()
                         .requestMatchers(HttpMethod.GET,"/offer/**").permitAll()
                         .requestMatchers("error").permitAll()
