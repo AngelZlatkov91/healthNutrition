@@ -4,8 +4,9 @@ import healthnutrition.healthnutrition.models.dto.ArticlesDTO;
 import healthnutrition.healthnutrition.models.entitys.Articles;
 import healthnutrition.healthnutrition.repositories.ArticlesRepositories;
 import healthnutrition.healthnutrition.services.ArticlesService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,8 +29,9 @@ public class ArticlesServiceImpl implements ArticlesService {
     }
 
     @Override
-    public List<ArticlesDTO> allArticles() {
-      return this.articlesRepositories.findAll().stream().map(articles ->map(articles)).collect(Collectors.toList());
+    public Page<ArticlesDTO> allArticles(Pageable pageable) {
+      return this.articlesRepositories.findAll(pageable)
+              .map(this::map);
     }
     private ArticlesDTO map (Articles articles) {
         ArticlesDTO article = new ArticlesDTO();

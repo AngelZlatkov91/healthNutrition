@@ -18,7 +18,7 @@ public class DeliveryFirm extends BaseEntity{
 
     @Column()
     @Enumerated(EnumType.STRING)
-    private DeliveryAddress deliveryAdress;
+    private DeliveryAddress deliveryAddress;
 
 
 
@@ -38,11 +38,11 @@ public class DeliveryFirm extends BaseEntity{
         this.priceForDelivery = priceForDelivery;
     }
 
-    public DeliveryAddress getDeliveryAdress() {
-        return deliveryAdress;
+    public DeliveryAddress getDeliveryAddress() {
+        return deliveryAddress;
     }
 
-    public void setDeliveryAdress(DeliveryAddress deliveryAdress) {
-        this.deliveryAdress = deliveryAdress;
+    public void setDeliveryAddress(DeliveryAddress deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
     }
 }

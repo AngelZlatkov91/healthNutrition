@@ -38,12 +38,13 @@ public class SecurityConfig {
                         // allow anyone to see the home page the registration and the login form
                         .requestMatchers("/","/users/login","/register", "/users/login-error").permitAll()
                         .requestMatchers("/products/all").permitAll()
+                        .requestMatchers("/articles/all").permitAll()
                         .requestMatchers(HttpMethod.GET,"/offer/**").permitAll()
                         .requestMatchers("error").permitAll()
-                        .requestMatchers("/product/add").hasRole(UserRoleEnum.ADMIN.name())
-                        .requestMatchers("/brands").hasRole(UserRoleEnum.ADMIN.name())
-                        .requestMatchers("/type").hasRole(UserRoleEnum.ADMIN.name())
-                        .requestMatchers("/add-article").hasRole(UserRoleEnum.ADMIN.name())
+                        .requestMatchers("/add/brand").hasRole(UserRoleEnum.ADMIN.name())
+                        .requestMatchers("/product-add").hasRole(UserRoleEnum.ADMIN.name())
+                        .requestMatchers("/add/type").hasRole(UserRoleEnum.ADMIN.name())
+                        .requestMatchers("/add/article").hasRole(UserRoleEnum.ADMIN.name())
                         // all other requests are authenticated
                         .anyRequest().authenticated()).formLogin(
                 formLogin -> {

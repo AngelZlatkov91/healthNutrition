@@ -14,7 +14,7 @@ public class Articles extends BaseEntity {
     private String description;
 
 
-    @Column(nullable = false, columnDefinition = "LONGTEXT")
+    @Column(columnDefinition = "LONGTEXT")
     private String imageUrl;
 
     public String getTitle() {

@@ -1,18 +1,31 @@
 package healthnutrition.healthnutrition.services.impl;
 
 import healthnutrition.healthnutrition.models.dto.ProductCreateDTO;
+import healthnutrition.healthnutrition.models.dto.ProductDetailsDTO;
+import healthnutrition.healthnutrition.models.entitys.BrandProduct;
 import healthnutrition.healthnutrition.models.entitys.Product;
+import healthnutrition.healthnutrition.models.entitys.TypeProduct;
+import healthnutrition.healthnutrition.repositories.BrandRepository;
 import healthnutrition.healthnutrition.repositories.ProductRepository;
+import healthnutrition.healthnutrition.repositories.TypeRepository;
 import healthnutrition.healthnutrition.services.ProductService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final TypeRepository typeRepository;
+    private final BrandRepository brandRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, TypeRepository typeRepository, BrandRepository brandRepository) {
         this.productRepository = productRepository;
+        this.typeRepository = typeRepository;
+        this.brandRepository = brandRepository;
     }
 
     @Override
@@ -20,13 +33,33 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository.save(map(productCreateDTO));
     }
 
+    @Override
+    public Page<ProductDetailsDTO> getAllProducts(Pageable pageable) {
+        return productRepository.findAll(pageable).map(ProductServiceImpl::mapSummary);
+    }
+
+    private static ProductDetailsDTO mapSummary(Product product) {
+        ProductDetailsDTO productDetailsDTO = new ProductDetailsDTO();
+        productDetailsDTO.setName(product.getName());
+        productDetailsDTO.setDescription(product.getDescription());
+        productDetailsDTO.setPrice(product.getPrice());
+        productDetailsDTO.setImageUrl(product.getImageUrl());
+        productDetailsDTO.setType(product.getType().getType());
+        productDetailsDTO.setBrant(product.getBrant().getBrand());
+        return productDetailsDTO;
+    }
+
     private Product map(ProductCreateDTO productCreateDTO) {
         Product product = new Product();
-        product.setName(productCreateDTO.getName());
-        product.setDescription(productCreateDTO.getDescription());
-        product.setAvailability(productCreateDTO.getAvailability());
-        product.setPrice(productCreateDTO.getPrice());
-        product.setImageUrl(productCreateDTO.getImageUrl());
+        Optional<TypeProduct> byType = this.typeRepository.findByType(productCreateDTO.type());
+        Optional<BrandProduct> byBrand = this.brandRepository.findByBrand(productCreateDTO.brand());
+        product.setName(productCreateDTO.name());
+        product.setDescription(productCreateDTO.description());
+        product.setAvailability(productCreateDTO.availability());
+        product.setPrice(productCreateDTO.price());
+        product.setImageUrl(productCreateDTO.imageUrl());
+        product.setBrant(byBrand.get());
+        product.setType(byType.get());
         return product;
     }
 

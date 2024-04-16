@@ -1,20 +1,10 @@
-package healthnutrition.healthnutrition.models.entitys;
+package healthnutrition.healthnutrition.models.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+public class DeliveryDataDTO {
 
-@Entity
-@Table(name = "delivery_data")
-public class Address extends BaseEntity{
-
-    @Column(nullable = false,unique = true)
     private String city;
-    @Column(nullable = false,unique = true)
     private String postCode;
-    @Column(nullable = false)
     private String address;
-
 
     public String getCity() {
         return city;
@@ -39,6 +29,4 @@ public class Address extends BaseEntity{
     public void setAddress(String address) {
         this.address = address;
     }
-
-
 }

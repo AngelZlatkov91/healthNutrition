@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+>
+<head th:replace="~{navbar/header}">
+</head>
+<body>
+<div>
+    <nav th:replace="~{navbar/navbar}">
+    </nav>
+</div>
+<div class="container-fluid">
+    <h2 class="text-center text-white mt-5">All Articles</h2>
+    <div class="offers row mx-auto d-flex flex-row justify-content-center">
+        <div th:each="article: ${articles.getContent()}"
+             th:object="${article}"
+             class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
+            <div class="card-img-top-wrapper">
+                <img class="card-img-top" th:src="*{imageUrl}" alt="Car image">
+            </div>
+            <div class="card-body pb-1">
+                <h5 class="card-title" th:text="*{title}" >
+                    Offer year Brand name Model name</h5>
+            </div>
+            <ul class="offer-details list-group list-group-flush">
+                <li class="list-group-item">
+                </li>
+            </ul>
+            <!--            <div class="card-body">-->
+            <!--                <a class="card-link" th:href="@{/offer/{offerUUID}(offerUUID=*{id})}">Details</a>-->
+            <!--            </div>-->
+        </div>
+    </div>
+</div>
+
+<div>
+    <footer> </footer>
+</div>
+
+</body>
+</html>

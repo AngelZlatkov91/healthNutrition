@@ -13,5 +13,5 @@ public interface ArticlesRepositories extends JpaRepository<Articles, Long> {
 
     Optional<Articles> findByTitle(String title);
 
-    List<Articles> findAll();
+
 }

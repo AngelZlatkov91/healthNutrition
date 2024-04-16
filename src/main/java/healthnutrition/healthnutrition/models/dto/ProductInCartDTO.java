@@ -1,7 +1,5 @@
 package healthnutrition.healthnutrition.models.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 
 public class ProductInCartDTO {
 

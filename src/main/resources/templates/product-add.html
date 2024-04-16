@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{navbar/header}">
+
+</head>
+
+<body>
+
+<div>
+    <nav th:replace="~{navbar/navbar}">
+    </nav>
+</div>
+<div class="container">
+    <h2 class="text-center text-white">Add Product</h2>
+    <form th:method="POST"
+          th:action="@{/product-add}"
+          th:object="${productCreateDTO}"
+          class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label class="text-center text-white font-weight-bold" for="brand">Brand</label>
+                <select id="brand"
+                        type="text"
+                        th:name="brand"
+                        th:errorclass="is-invalid"
+                        class="form-control">
+                    <option value="">- Select a brand -</option>
+                    <option
+                            th:each="brand: ${brands}"
+                            th:label="${brand.brand()}"
+                            th:text="${brand.brand()}"
+                            th:value="${brand.brand()}"
+                            th:selected="*{brand()} == ${brand.brand()}">
+                            Brand
+                        </option>
+
+                </select>
+                <p class="invalid-feedback errors alert alert-danger">
+                    The brand is required.
+                </p>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label class="text-center text-white font-weight-bold" for="type">Type</label>
+                <select id="type"
+                        type="text"
+                        th:name="type"
+                        th:errorclass="is-invalid"
+                        class="form-control">
+                    <option value="">- Select a type -</option>
+                    <option
+                            th:each="type: ${types}"
+                            th:label="${type.type()}"
+                            th:text="${type.type()}"
+                            th:value="${type.type()}"
+                             th:selected="*{type()} == ${type.type()}">
+                    </option>
+                </select>
+                <p class="invalid-feedback errors alert alert-danger">
+                    The type is required.
+                </p>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label class="text-center text-white font-weight-bold" for="name">Name</label>
+                <input id="name"
+                        type="text"
+                        th:name="name"
+                        th:errorclass="is-invalid"
+                        class="form-control"/>
+                <p class="invalid-feedback errors alert alert-danger">
+                    The brand is required.
+                </p>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label for="price" class="text-white font-weight-bold">Price</label>
+                <input id="price"
+                       th:name="price"
+                       th:field="*{price}"
+                       th:errorclass="is-invalid"
+                       type="number"
+                       class="form-control"
+                       placeholder="Suggested price"/>
+                <p  class="invalid-feedback errors alert alert-danger">
+                    Suggested price is required.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="availability" class="text-white font-weight-bold">Availability</label>
+                <input id="availability"
+                       th:name="availability"
+                       th:field="*{availability}"
+                       th:errorclass="is-invalid"
+                       type="number"
+                       class="form-control"
+                       placeholder="Availability"/>
+                <p class="invalid-feedback errors alert alert-danger">
+                    Availability is required.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="text-white font-weight-bold" for="description">Description</label>
+            <textarea id="description"
+                      th:name="description"
+                      th:field="*{description}"
+                      th:errorclass="is-invalid"
+                      type="textarea"
+                      class="form-control"
+                      placeholder="Description"></textarea>
+            <p class="invalid-feedback errors alert alert-danger">
+                Description is required.
+            </p>
+        </div>
+        <div class="form-group">
+            <label class="text-white font-weight-bold" for="imageUrl">Image URL</label>
+            <input id="imageUrl"
+                   th:name="imageUrl"
+                   th:errorclass="is-invalid"
+                   th:field="*{imageUrl}"
+                   type="url"
+                   class="form-control"
+                   placeholder="Put product image URL here">
+            <p class="invalid-feedback errors alert alert-danger">
+                Product image URL is required.
+            </p>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="button-holder d-flex">
+                    <input type="submit" class="btn btn-info btn-lg" value="Submit product"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <footer> </footer>
+</div>
+
+</body>
+</html>
