@@ -4,12 +4,21 @@ import healthnutrition.healthnutrition.validation.UniqueTitleArticle;
 import jakarta.validation.constraints.NotBlank;
 
 public class ArticlesDTO {
+    private String id;
     @NotBlank
     @UniqueTitleArticle
     private String title;
     @NotBlank
     private String description;
     private String imageUrl;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;

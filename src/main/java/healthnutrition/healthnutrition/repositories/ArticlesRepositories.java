@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface ArticlesRepositories extends JpaRepository<Articles, Long> {
@@ -14,4 +15,5 @@ public interface ArticlesRepositories extends JpaRepository<Articles, Long> {
     Optional<Articles> findByTitle(String title);
 
 
+    Articles findByUuid(UUID uuid);
 }

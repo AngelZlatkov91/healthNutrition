@@ -21,12 +21,15 @@ public class ShoppingCart extends BaseEntity {
     private List<Product> products;
     @Column
     private LocalDate date;
+    @Column
+    private Double price;
 
     @Column
-    private boolean isDelivered;
+    private boolean isGivenToDeliveriFirm;
 
     public ShoppingCart (){
         this.products = new ArrayList<>();
+        isGivenToDeliveriFirm = false;
     }
 
     public UUID getDeliveryNumber() {
@@ -62,11 +65,19 @@ public class ShoppingCart extends BaseEntity {
         this.date = date;
     }
 
-    public boolean isDelivered() {
-        return isDelivered;
+    public boolean isGivenToDeliveriFirm() {
+        return isGivenToDeliveriFirm;
     }
 
-    public void setDelivered(boolean delivered) {
-        isDelivered = delivered;
+    public void setGivenToDeliveriFirm(boolean givenToDeliveriFirm) {
+        isGivenToDeliveriFirm = givenToDeliveriFirm;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }

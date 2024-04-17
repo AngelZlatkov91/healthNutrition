@@ -1,6 +1,7 @@
 package healthnutrition.healthnutrition.web;
 
 import healthnutrition.healthnutrition.models.dto.ArticlesDTO;
+import healthnutrition.healthnutrition.models.dto.ProductDetailsDTO;
 import healthnutrition.healthnutrition.services.ArticlesService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -10,8 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.UUID;
 
 @Controller
 public class ArticleController {
@@ -42,6 +46,12 @@ public class ArticleController {
         }
         this.articlesService.addArticle(articlesDTO);
         return "redirect:/";
+    }
+    @GetMapping("/article/{uuid}")
+    public String details(@PathVariable("uuid") UUID uuid, Model model) {
+        ArticlesDTO articlesDTO = articlesService.getArticle(uuid);
+        model.addAttribute("article",articlesDTO);
+        return "article-details";
     }
 
 

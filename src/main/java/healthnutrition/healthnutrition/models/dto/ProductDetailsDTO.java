@@ -1,12 +1,22 @@
 package healthnutrition.healthnutrition.models.dto;
 
+
 public class ProductDetailsDTO {
+    private String id;
    private String name;
     private String description;
     private Double price;
    private String imageUrl;
     private String type;
      private String brant;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

@@ -1,10 +1,16 @@
 package healthnutrition.healthnutrition.models.entitys;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+
+import java.sql.Types;
+import java.util.UUID;
 
 @Entity
 @Table(name = "products")
 public class Product extends BaseEntity {
+    @JdbcTypeCode(Types.VARCHAR)
+    private UUID uuid;
     @Column(nullable = false,unique = true)
     private String name;
     @Column(nullable = false, columnDefinition = "LONGTEXT")
@@ -21,6 +27,14 @@ public class Product extends BaseEntity {
     private TypeProduct type;
     @ManyToOne
     private BrandProduct brant;
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
     public String getName() {
         return name;

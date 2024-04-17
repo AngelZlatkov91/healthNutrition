@@ -3,10 +3,17 @@ package healthnutrition.healthnutrition.models.entitys;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.JdbcTypeCode;
+
+
+import java.sql.Types;
+import java.util.UUID;
 
 @Entity
 @Table(name = "articles")
 public class Articles extends BaseEntity {
+    @JdbcTypeCode(Types.VARCHAR)
+    private UUID uuid;
     @Column(nullable = false,unique = true,columnDefinition = "TEXT")
     private String title;
 
@@ -16,6 +23,14 @@ public class Articles extends BaseEntity {
 
     @Column(columnDefinition = "LONGTEXT")
     private String imageUrl;
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
     public String getTitle() {
         return title;

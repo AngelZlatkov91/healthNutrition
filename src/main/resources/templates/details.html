@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{navbar/header}">
+</head>
+<body>
+<div>
+    <nav th:replace="~{navbar/navbar}">
+    </nav>
+</div>
+<div class="container-fluid">
+    <h2 class="text-center text-white mt-5">Details</h2>
+    <div th:object="${product}" class="offers row mx-auto d-flex flex-row justify-content-center">
+        <div  class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0" >
+
+            <div class="card-body pb-1">
+                <h5 class="card-title" th:text="*{description}">
+                    Product description</h5>
+            </div>
+            <ul class="offer-details list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="card-text">
+                        <span>• Brant</span>
+                        <th:block th:text="*{brant}">12345</th:block>
+                    </div>
+                    <div class="card-text">
+                        <span>• Price</span>
+                        <th:block th:text="*{price}">12345</th:block>
+                    </div>
+                    <div class="card-text">
+                        <span>• Type</span>
+                        <th:block th:text="*{type}">12345</th:block>
+                    </div>
+                    <div class="card-text">
+                        <span>• Name</span>
+                        <th:block th:text="*{name}">12345</th:block>
+                    </div>
+
+                </li>
+                <div class="row">
+                    <div class="col col-md-4">
+                        <form th:method="POST"
+                              th:action="@{/product/{uuid}(uuid=*{id})}">
+                        <div class="button-holder d-flex">
+                            <input type="submit" class="btn btn-info btn-lg" value="BUY"/>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </ul>
+<!--            <div class="card-body" th:if="*{owner}">-->
+<!--                <form th:method="delete"-->
+<!--                      th:action="@{/offer/{offerUUID}(offerUUID=*{id})}">-->
+<!--                    <input type="submit" value="Delete" class="link card-link" />-->
+<!--                </form>-->
+<!--            </div>-->
+        </div>
+        <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0">
+            <img th:src="*{imageUrl}" class="card-img-top"  alt="Car image">
+        </div>
+    </div>
+</div>
+
+<div>
+    <footer> </footer>
+</div>
+
+</body>
+</html>

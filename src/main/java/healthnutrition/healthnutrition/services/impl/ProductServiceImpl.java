@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -38,10 +39,29 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll(pageable).map(ProductServiceImpl::mapSummary);
     }
 
+    @Override
+    public ProductDetailsDTO getProductDetails(UUID uuid) {
+        Product byUuid = productRepository.findByUuid(uuid);
+        return mapAsDetails(byUuid);
+    }
+
+
+    private ProductDetailsDTO mapAsDetails(Product product) {
+        ProductDetailsDTO productDetailsDTO = new ProductDetailsDTO();
+        productDetailsDTO.setId(product.getUuid().toString());
+        productDetailsDTO.setDescription(product.getDescription());
+        productDetailsDTO.setPrice(product.getPrice());
+        productDetailsDTO.setName(product.getName());
+        productDetailsDTO.setImageUrl(product.getImageUrl());
+        productDetailsDTO.setBrant(product.getBrant().getBrand());
+        productDetailsDTO.setType(product.getType().getType());
+        return productDetailsDTO;
+    }
+
     private static ProductDetailsDTO mapSummary(Product product) {
         ProductDetailsDTO productDetailsDTO = new ProductDetailsDTO();
+        productDetailsDTO.setId(product.getUuid().toString());
         productDetailsDTO.setName(product.getName());
-        productDetailsDTO.setDescription(product.getDescription());
         productDetailsDTO.setPrice(product.getPrice());
         productDetailsDTO.setImageUrl(product.getImageUrl());
         productDetailsDTO.setType(product.getType().getType());
@@ -53,6 +73,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = new Product();
         Optional<TypeProduct> byType = this.typeRepository.findByType(productCreateDTO.type());
         Optional<BrandProduct> byBrand = this.brandRepository.findByBrand(productCreateDTO.brand());
+        product.setUuid(UUID.randomUUID());
         product.setName(productCreateDTO.name());
         product.setDescription(productCreateDTO.description());
         product.setAvailability(productCreateDTO.availability());
