@@ -21,7 +21,7 @@ public class Articles extends BaseEntity {
     private String description;
 
 
-    @Column(columnDefinition = "LONGTEXT")
+    @Column(columnDefinition = "LONGTEXT",length = 5000000)
     private String imageUrl;
 
     public UUID getUuid() {

@@ -9,8 +9,6 @@ public class ProductInCartDTO {
 
     private int quantity;
 
-    private Double totalPricePerProduct;
-
     public ProductInCartDTO () {
 
     }
@@ -35,16 +33,18 @@ public class ProductInCartDTO {
         return quantity;
     }
 
+    public void increaseQuantity() {
+        this.quantity++;
+
+    }
+    public void decreaseQuantity() {
+        if (this.quantity >0) {
+            this.quantity--;
+        }
+    }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    public Double getTotalPricePerProduct() {
-        return totalPricePerProduct;
-    }
-
-
-    public Double totalPrice () {
-        return this.quantity * this.price;
-    }
 }

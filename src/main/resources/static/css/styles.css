@@ -74,7 +74,7 @@ header nav ul {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40 px;
+    padding: 20px 40px;
 }
 .filters label {
     display: inline-block;
@@ -85,7 +85,7 @@ header nav ul {
     border-radius: 4px;
     padding: 12px;
     background-color: transparent;
-    margin-left: 10 px;
+    margin-left: 10px;
 }
 .filters label {
     position: relative;
@@ -95,11 +95,16 @@ header nav ul {
 content: "";
 display: block;
 clear: both;
-background: url(Vector.png);
+background: url(../images/Vector.png);
 background-repeat: no-repeat;
 background-position: center;
 width: 20px;
 height: 20px;
 position:absolute;
 right: 0;
+}
+.cart-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
 }

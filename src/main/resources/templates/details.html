@@ -38,14 +38,11 @@
 
                 </li>
                 <div class="row">
-                    <div class="col col-md-4">
-                        <form th:method="POST"
-                              th:action="@{/product/{uuid}(uuid=*{id})}">
+                     <div>
                         <div class="button-holder d-flex">
-                            <input type="submit" class="btn btn-info btn-lg" value="BUY"/>
+                            <a class="ml-3 text-white" th:href="@{/product/add-shoppingCart/{uuid}(uuid=*{id})}">Add to Cart</a>
                         </div>
-                        </form>
-                    </div>
+                     </div>
                 </div>
             </ul>
 <!--            <div class="card-body" th:if="*{owner}">-->

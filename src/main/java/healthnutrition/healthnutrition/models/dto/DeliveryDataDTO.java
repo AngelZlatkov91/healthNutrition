@@ -1,9 +1,14 @@
 package healthnutrition.healthnutrition.models.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class DeliveryDataDTO {
 
+    @NotBlank
     private String city;
+    @NotBlank
     private String postCode;
+    @NotBlank
     private String address;
 
     public String getCity() {

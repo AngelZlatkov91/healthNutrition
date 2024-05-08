@@ -1,28 +1,34 @@
 package healthnutrition.healthnutrition.models.dto;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ShoppingCartDTO {
-    private List<ProductInCartDTO> products;
+    private static ShoppingCartDTO INSTANCE;
 
-    public ShoppingCartDTO() {
-        this.products = new ArrayList<>();
-    }
-
-    public List<ProductInCartDTO> getProducts() {
-        return products;
-
-    }
-    public void setProducts(List<ProductInCartDTO> products) {
-        this.products = products;
-    }
-
-    public Double calculateSumOfAllProducts(){
-        Double totalPrice = 0.0;
-        for (ProductInCartDTO product : this.products) {
-            totalPrice+=product.totalPrice();
+    public static ShoppingCartDTO getINSTANCE(){
+        if (INSTANCE == null) {
+            INSTANCE = new ShoppingCartDTO();
         }
-        return totalPrice;
+        return INSTANCE;
     }
+
+    private Map<String, ProductInCartDTO> products;
+
+    public ShoppingCartDTO (){
+        this.products = new HashMap<>();
+    }
+
+
+    public Map<String, ProductInCartDTO> getProducts() {
+        return products;
+    }
+
+    public List<ProductInCartDTO> getProductFromShoppingCart() {
+        return this.getProducts().values().stream().toList();
+    }
+
+
 }

@@ -1,6 +1,8 @@
 package healthnutrition.healthnutrition.repositories;
 
+import healthnutrition.healthnutrition.models.entitys.BrandProduct;
 import healthnutrition.healthnutrition.models.entitys.Product;
+import healthnutrition.healthnutrition.models.entitys.TypeProduct;
 import healthnutrition.healthnutrition.services.impl.ProductServiceImpl;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,6 +16,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 
     Optional<Product> findByName(String value);
+    List<Product> findAllByBrant(BrandProduct brant);
+    List<Product> findAllByType(TypeProduct type);
+
+
+
 
     Product findByUuid(UUID uuid);
 

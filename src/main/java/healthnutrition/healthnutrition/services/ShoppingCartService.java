@@ -1,8 +1,22 @@
 package healthnutrition.healthnutrition.services;
 
+import healthnutrition.healthnutrition.models.dto.ProductInCartDTO;
 import healthnutrition.healthnutrition.models.dto.ShoppingCartDTO;
-import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.List;
+import java.util.UUID;
+
 
 public interface ShoppingCartService {
-    void addShoppingCart(ShoppingCartDTO shoppingCartDTO, UserDetails user);
+
+    void addProductToShoppingCart(UUID uuid);
+
+    void removeQuantityToProduct(UUID uuid, int quantity);
+
+    double calculateTotalPrice();
+
+    UUID finalStep();
+
+    ShoppingCartDTO productInCart();
+
 }

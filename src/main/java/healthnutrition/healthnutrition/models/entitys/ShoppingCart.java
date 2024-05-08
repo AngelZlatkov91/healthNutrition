@@ -1,8 +1,6 @@
 package healthnutrition.healthnutrition.models.entitys;
-
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
-
 import java.sql.Types;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -38,6 +36,7 @@ public class ShoppingCart extends BaseEntity {
 
     public void setDeliveryNumber(UUID deliveryNumber) {
         this.deliveryNumber = deliveryNumber;
+        setGivenToDeliveriFirm(true);
     }
 
     public UserEntity getUser() {

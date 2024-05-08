@@ -2,6 +2,7 @@ package healthnutrition.healthnutrition.models.entitys;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,6 +15,9 @@ public class Address extends BaseEntity{
     private String postCode;
     @Column(nullable = false)
     private String address;
+
+    @ManyToOne
+    private DeliveryFirm deliveryFirm;
 
 
     public String getCity() {
@@ -41,4 +45,11 @@ public class Address extends BaseEntity{
     }
 
 
+    public DeliveryFirm getDeliveryFirm() {
+        return deliveryFirm;
+    }
+
+    public void setDeliveryFirm(DeliveryFirm deliveryFirm) {
+        this.deliveryFirm = deliveryFirm;
+    }
 }

@@ -30,10 +30,9 @@ public class UserEntity extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private UserRoleEnum role;
 
-    @OneToMany(mappedBy = "user")
-    private List<ShoppingCart> shoppingCart;
+
     public UserEntity() {
-        this.shoppingCart = new ArrayList<>();
+
     }
 
     public String getEmail() {
@@ -78,15 +77,6 @@ public class UserEntity extends BaseEntity{
         this.address = address;
     }
 
-
-
-    public List<ShoppingCart> getShoppingCart() {
-        return shoppingCart;
-    }
-
-    public void setShoppingCart(List<ShoppingCart> shoppingCart) {
-        this.shoppingCart = shoppingCart;
-    }
 
     public UserRoleEnum getRole() {
         return role;

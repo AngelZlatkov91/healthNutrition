@@ -1,5 +1,4 @@
 package healthnutrition.healthnutrition.services.impl;
-
 import healthnutrition.healthnutrition.models.dto.ProductCreateDTO;
 import healthnutrition.healthnutrition.models.dto.ProductDetailsDTO;
 import healthnutrition.healthnutrition.models.entitys.BrandProduct;
@@ -12,7 +11,6 @@ import healthnutrition.healthnutrition.services.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,9 +28,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addProduct(ProductCreateDTO productCreateDTO) {
+    public void addProduct(ProductCreateDTO productCreateDTO){
+
         this.productRepository.save(map(productCreateDTO));
     }
+
+
 
     @Override
     public Page<ProductDetailsDTO> getAllProducts(Pageable pageable) {
@@ -70,19 +71,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private Product map(ProductCreateDTO productCreateDTO) {
-        Product product = new Product();
-        Optional<TypeProduct> byType = this.typeRepository.findByType(productCreateDTO.type());
-        Optional<BrandProduct> byBrand = this.brandRepository.findByBrand(productCreateDTO.brand());
-        product.setUuid(UUID.randomUUID());
-        product.setName(productCreateDTO.name());
-        product.setDescription(productCreateDTO.description());
-        product.setAvailability(productCreateDTO.availability());
-        product.setPrice(productCreateDTO.price());
-        product.setImageUrl(productCreateDTO.imageUrl());
-        product.setBrant(byBrand.get());
-        product.setType(byType.get());
-        return product;
+            Product product = new Product();
+            Optional<TypeProduct> byType = this.typeRepository.findByType(productCreateDTO.type());
+            Optional<BrandProduct> byBrand = this.brandRepository.findByBrand(productCreateDTO.brand());
+            product.setUuid(UUID.randomUUID());
+            product.setName(productCreateDTO.name());
+            product.setImageUrl(productCreateDTO.imageUrl());
+            product.setDescription(productCreateDTO.description());
+            product.setAvailability(productCreateDTO.availability());
+            product.setPrice(productCreateDTO.price());
+            product.setBrant(byBrand.get());
+            product.setType(byType.get());
+            return product;
     }
+
 
 
 }

@@ -1,8 +1,6 @@
 package healthnutrition.healthnutrition.models.entitys;
-
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
-
 import java.sql.Types;
 import java.util.UUID;
 
@@ -20,13 +18,17 @@ public class Product extends BaseEntity {
 
     @Column(nullable = false)
     private int availability;
-    @Column(nullable = false)
+
+    @Column(columnDefinition = "LONGTEXT",length = 50000000)
     private String imageUrl;
 
     @ManyToOne
     private TypeProduct type;
     @ManyToOne
     private BrandProduct brant;
+
+    public Product(){
+    }
 
     public UUID getUuid() {
         return uuid;
@@ -70,13 +72,7 @@ public class Product extends BaseEntity {
         this.availability = availability;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 
     public TypeProduct getType() {
         return type;
@@ -92,5 +88,13 @@ public class Product extends BaseEntity {
 
     public void setBrant(BrandProduct brant) {
         this.brant = brant;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

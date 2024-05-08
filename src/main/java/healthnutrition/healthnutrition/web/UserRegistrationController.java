@@ -1,5 +1,4 @@
 package healthnutrition.healthnutrition.web;
-
 import healthnutrition.healthnutrition.models.dto.UserRegisterDTo;
 import healthnutrition.healthnutrition.services.UserService;
 import jakarta.validation.Valid;

@@ -32,8 +32,9 @@ public class DeliveryDataServiceImpl implements DeliveryDataService {
                   address.setCity(deliveryDataDTO.getCity());
                   address.setPostCode(deliveryDataDTO.getPostCode());
                   address.setAddress(deliveryDataDTO.getAddress());
-                  this.deliveryDataRepositories.save(address);
                   byEmail.get().setAddress(address);
+                  this.deliveryDataRepositories.save(address);
+
               }
     }
 }
