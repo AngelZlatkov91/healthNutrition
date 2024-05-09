@@ -81,10 +81,6 @@ public class ProductController {
         return "redirect:/products/all";
     }
 
-    @GetMapping("shoping/cart")
-    public String shoppingCart(){
-       return null;
-    }
 
 
 }

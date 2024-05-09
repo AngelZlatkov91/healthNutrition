@@ -27,14 +27,14 @@ public class DeliveryDataServiceImpl implements DeliveryDataService {
         String userEmail = user.getUsername();
         Optional<UserEntity> byEmail = this.userRepositories.findByEmail(userEmail);
         Address address = new Address();
-        Optional<Address> byCityAndPostCode = this.deliveryDataRepositories.findByCityAndPostCode(deliveryDataDTO.getCity(), deliveryDataDTO.getPostCode());
-              if (byCityAndPostCode.isEmpty()) {
                   address.setCity(deliveryDataDTO.getCity());
                   address.setPostCode(deliveryDataDTO.getPostCode());
                   address.setAddress(deliveryDataDTO.getAddress());
+                  address.setFirm(deliveryDataDTO.getFirm());
+                  address.setDeliveryAddress(deliveryDataDTO.getDeliveryAddress());
                   byEmail.get().setAddress(address);
                   this.deliveryDataRepositories.save(address);
 
-              }
+
     }
 }

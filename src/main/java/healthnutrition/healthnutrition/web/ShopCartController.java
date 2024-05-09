@@ -3,9 +3,9 @@ import healthnutrition.healthnutrition.models.dto.*;
 import healthnutrition.healthnutrition.models.enums.DeliveryAddress;
 import healthnutrition.healthnutrition.models.enums.DeliveryFirmEnum;
 import healthnutrition.healthnutrition.services.DeliveryDataService;
-import healthnutrition.healthnutrition.services.DeliveryFirmService;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,29 +26,27 @@ public class ShopCartController {
     private final ShoppingCartService shoppingCartService;
 
     private final DeliveryDataService deliveryDataService;
-    private final DeliveryFirmService deliveryFirmService;
+    private double price;
+    private UUID uuid;
 
-    public ShopCartController(ShoppingCartService shoppingCartService, DeliveryDataService deliveryDataService, DeliveryFirmService deliveryFirmService) {
+    public ShopCartController(ShoppingCartService shoppingCartService, DeliveryDataService deliveryDataService) {
         this.shoppingCartService = shoppingCartService;
         this.deliveryDataService = deliveryDataService;
-        this.deliveryFirmService = deliveryFirmService;
-    }
-
-    @ModelAttribute("firm")
-    public DeliveryFirmDTO deliveryFirmDTO(){
-        return new DeliveryFirmDTO();
+        this.price = 0.0;
+        this.uuid = null;
     }
     @ModelAttribute("data")
-    public DeliveryDataDTO deliveryDataDTO(){
+    public DeliveryDataDTO initForm(){
         return new DeliveryDataDTO();
     }
+
     @ModelAttribute("nameFirm")
     public DeliveryFirmEnum[] firmValues(){
         return DeliveryFirmEnum.values();
     }
     @ModelAttribute("address")
     public DeliveryAddress[] addressType(){
-        return  DeliveryAddress.values();
+        return DeliveryAddress.values();
     }
 
 
@@ -56,8 +54,9 @@ public class ShopCartController {
     public ModelAndView shoppingCart(Model model){
         ShoppingCartDTO shoppingCartDTO = this.shoppingCartService.productInCart();
         List<ProductInCartDTO> productFromShoppingCart = shoppingCartDTO.getProductFromShoppingCart();
-        double price = this.shoppingCartService.calculateTotalPrice();
-        model.addAttribute("price",price);
+        double priceForProducts = this.shoppingCartService.calculateTotalPrice();
+        this.price = priceForProducts;
+        model.addAttribute("price",priceForProducts);
         return new ModelAndView("shoping_cart","products",productFromShoppingCart);
     }
 
@@ -68,27 +67,27 @@ public class ShopCartController {
 
 
     @PostMapping("/delivery")
-    public String finalDelivery( DeliveryFirmDTO firm,DeliveryDataDTO data, UserDetails user,
-                                      //BindingResult bindingResult,
-                                      //RedirectAttributes redirectAttributes,
-                                       Model model) {
-//        if (bindingResult.hasErrors()) {
-//            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.firm",bindingResult);
-//            redirectAttributes.addFlashAttribute("firm", firm);
-//            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.data",bindingResult);
-//            redirectAttributes.addFlashAttribute("data", data);
-//            return new ModelAndView("redirect:/register");
-//        }
+    public ModelAndView finalDelivery(DeliveryDataDTO data,
+                                      @AuthenticationPrincipal  UserDetails user) {
+        System.out.println();
         this.deliveryDataService.addAddress(data,user);
 
-
-        this.deliveryFirmService.addDeliverFirm(user,firm);
-        double price = this.deliveryFirmService.getPrice();
+        this.price = this.price + data.getPriceForDelivery();
        // model.addAttribute("price",price);
         UUID uuid = this.shoppingCartService.finalStep();
+        this.uuid = uuid;
         System.out.println();
-         return "redirect:/succsesDelivery";
+         return new ModelAndView("redirect:/succses-delivery");
     }
+
+    @GetMapping("/succses-delivery")
+    public String succsesDelivery (Model model) {
+        model.addAttribute("price",price);
+        model.addAttribute("uuid",uuid);
+        return "succses-delivery";
+    }
+
+
 
 
 

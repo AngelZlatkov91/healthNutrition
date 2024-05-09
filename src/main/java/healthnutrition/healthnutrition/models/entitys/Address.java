@@ -1,23 +1,31 @@
 package healthnutrition.healthnutrition.models.entitys;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import healthnutrition.healthnutrition.models.enums.DeliveryAddress;
+import healthnutrition.healthnutrition.models.enums.DeliveryFirmEnum;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "delivery_data")
 public class Address extends BaseEntity{
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String city;
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String postCode;
     @Column(nullable = false)
     private String address;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private DeliveryFirmEnum firm;
 
-    @ManyToOne
-    private DeliveryFirm deliveryFirm;
+    @Column(nullable = false)
+    private Double priceForDelivery;
+
+    @Column()
+    @Enumerated(EnumType.STRING)
+    private DeliveryAddress deliveryAddress;
+
+
 
 
     public String getCity() {
@@ -44,12 +52,27 @@ public class Address extends BaseEntity{
         this.address = address;
     }
 
-
-    public DeliveryFirm getDeliveryFirm() {
-        return deliveryFirm;
+    public DeliveryFirmEnum getFirm() {
+        return firm;
     }
 
-    public void setDeliveryFirm(DeliveryFirm deliveryFirm) {
-        this.deliveryFirm = deliveryFirm;
+    public void setFirm(DeliveryFirmEnum firm) {
+        this.firm = firm;
+    }
+
+    public Double getPriceForDelivery() {
+        return priceForDelivery;
+    }
+
+    public void setPriceForDelivery(Double priceForDelivery) {
+        this.priceForDelivery = priceForDelivery;
+    }
+
+    public DeliveryAddress getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(DeliveryAddress deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
     }
 }

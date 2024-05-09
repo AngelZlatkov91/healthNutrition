@@ -9,7 +9,8 @@ import java.util.Optional;
 @Repository
 public interface DeliveryDataRepositories extends JpaRepository<Address, Long> {
 
-    Optional<Address> findByCityAndPostCode(String city, String postCode);
+
+
 
 
 }
