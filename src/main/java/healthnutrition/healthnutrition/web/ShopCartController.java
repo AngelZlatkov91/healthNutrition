@@ -4,18 +4,17 @@ import healthnutrition.healthnutrition.models.enums.DeliveryAddress;
 import healthnutrition.healthnutrition.models.enums.DeliveryFirmEnum;
 import healthnutrition.healthnutrition.services.DeliveryDataService;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
-import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -40,14 +39,14 @@ public class ShopCartController {
         return new DeliveryDataDTO();
     }
 
-    @ModelAttribute("nameFirm")
-    public DeliveryFirmEnum[] firmValues(){
-        return DeliveryFirmEnum.values();
-    }
-    @ModelAttribute("address")
-    public DeliveryAddress[] addressType(){
-        return DeliveryAddress.values();
-    }
+//    @ModelAttribute("nameFirm")
+//    public DeliveryFirmEnum[] firmValues(){
+//        return DeliveryFirmEnum.values();
+//    }
+//    @ModelAttribute("address")
+//    public DeliveryAddress[] addressType(){
+//        return DeliveryAddress.values();
+//    }
 
 
     @GetMapping("/shopping_cart")
@@ -61,30 +60,35 @@ public class ShopCartController {
     }
 
     @GetMapping("/delivery")
-    public String finalDelivery() {
-        return "delivery";
+    public ModelAndView finalDelivery(Model model) {
+        List<DeliveryFirmEnum> firmName = Arrays.stream(DeliveryFirmEnum.values()).toList();
+        List<DeliveryAddress> add = Arrays.stream(DeliveryAddress.values()).toList();
+        model.addAttribute("nameFirm",firmName);
+        model.addAttribute("address",add);
+        return new ModelAndView("delivery");
     }
 
 
     @PostMapping("/delivery")
-    public ModelAndView finalDelivery(DeliveryDataDTO data,
-                                      @AuthenticationPrincipal  UserDetails user) {
+    public ModelAndView finalDelivery(DeliveryDataDTO data, @AuthenticationPrincipal UserDetails user) {
+        String userEmail = user.getUsername();
         System.out.println();
-        this.deliveryDataService.addAddress(data,user);
+
+        this.deliveryDataService.addAddress(data,userEmail);
 
         this.price = this.price + data.getPriceForDelivery();
        // model.addAttribute("price",price);
-        UUID uuid = this.shoppingCartService.finalStep();
-        this.uuid = uuid;
+        UUID step = this.shoppingCartService.finalStep(userEmail);
+        this.uuid = step;
         System.out.println();
          return new ModelAndView("redirect:/succses-delivery");
     }
 
     @GetMapping("/succses-delivery")
-    public String succsesDelivery (Model model) {
+    public ModelAndView succsesDelivery (Model model) {
         model.addAttribute("price",price);
         model.addAttribute("uuid",uuid);
-        return "succses-delivery";
+        return new ModelAndView("succses-delivery");
     }
 
 

@@ -51,10 +51,7 @@ public class DeliveryDataDTO {
 
     public void setFirm(DeliveryFirmEnum firm) {
         this.firm = firm;
-        switch (firm){
-            case SPEEDY -> setPriceForDelivery(getPriceForDelivery() + 2.50);
-            case EKONT -> setPriceForDelivery(getPriceForDelivery() + 3.50);
-        }
+
     }
 
     public Double getPriceForDelivery() {
@@ -71,13 +68,23 @@ public class DeliveryDataDTO {
 
     public void setDeliveryAddress(DeliveryAddress deliveryAddress) {
         this.deliveryAddress = deliveryAddress;
-        switch (deliveryAddress) {
-            case OFFICE -> setPriceForDelivery(getPriceForDelivery() + 0.50);
-            case ADDRESS -> setPriceForDelivery(getPriceForDelivery() + 5.50);
-        }
+
     }
 
     public static DeliveryDataDTO empty(){
         return new DeliveryDataDTO(null,null,null, null, null, null);
+    }
+
+    public void add() {
+        Double price = 0.0;
+        switch (deliveryAddress) {
+            case OFFICE -> price  =  0.50;
+            case ADDRESS -> price = 5.50;
+        }
+        switch (firm){
+            case SPEEDY -> price = price + 2.50;
+            case EKONT -> price = price  + 3.50;
+        }
+        setPriceForDelivery(price);
     }
 }

@@ -45,6 +45,7 @@ public class SecurityConfig {
                         .requestMatchers("/product-add").hasRole(UserRoleEnum.ADMIN.name())
                         .requestMatchers("/add/type").hasRole(UserRoleEnum.ADMIN.name())
                         .requestMatchers("/add/article").hasRole(UserRoleEnum.ADMIN.name())
+                        .requestMatchers("/delivery").permitAll()
                         // all other requests are authenticated
                         .anyRequest().authenticated()).formLogin(
                 formLogin -> {

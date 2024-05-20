@@ -6,5 +6,5 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public interface DeliveryDataService {
 
-    void addAddress(DeliveryDataDTO deliveryDataDTO, UserDetails user);
+    void addAddress(DeliveryDataDTO deliveryDataDTO, String user);
 }

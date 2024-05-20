@@ -23,15 +23,16 @@ public class DeliveryDataServiceImpl implements DeliveryDataService {
     }
 
     @Override
-    public void addAddress(DeliveryDataDTO deliveryDataDTO, UserDetails user) {
-        String userEmail = user.getUsername();
-        Optional<UserEntity> byEmail = this.userRepositories.findByEmail(userEmail);
+    public void addAddress(DeliveryDataDTO deliveryDataDTO, String user) {
+        Optional<UserEntity> byEmail = this.userRepositories.findByEmail(user);
+        deliveryDataDTO.add();
         Address address = new Address();
                   address.setCity(deliveryDataDTO.getCity());
                   address.setPostCode(deliveryDataDTO.getPostCode());
                   address.setAddress(deliveryDataDTO.getAddress());
                   address.setFirm(deliveryDataDTO.getFirm());
                   address.setDeliveryAddress(deliveryDataDTO.getDeliveryAddress());
+                  address.setPriceForDelivery(deliveryDataDTO.getPriceForDelivery());
                   byEmail.get().setAddress(address);
                   this.deliveryDataRepositories.save(address);
 

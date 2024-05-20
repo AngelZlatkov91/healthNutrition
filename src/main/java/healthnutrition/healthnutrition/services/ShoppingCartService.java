@@ -15,7 +15,7 @@ public interface ShoppingCartService {
 
     double calculateTotalPrice();
 
-    UUID finalStep();
+    UUID finalStep(String user);
 
     ShoppingCartDTO productInCart();
 

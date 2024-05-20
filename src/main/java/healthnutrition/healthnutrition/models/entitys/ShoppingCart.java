@@ -11,7 +11,7 @@ import java.util.UUID;
 @Table(name = "shoping_cart")
 public class ShoppingCart extends BaseEntity {
 
-    @JdbcTypeCode(Types.INTEGER)
+    @JdbcTypeCode(Types.VARCHAR)
     private UUID deliveryNumber;
     @ManyToOne
     private UserEntity user;

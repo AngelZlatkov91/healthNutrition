@@ -74,8 +74,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public UUID finalStep() {
-        ShoppingCart shoppingCart = addProduct();
+    public UUID finalStep(String user) {
+        ShoppingCart shoppingCart = addProduct(user);
         return shoppingCart.getDeliveryNumber();
     }
 
@@ -94,10 +94,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return product;
     }
 
-    private ShoppingCart addProduct () {
+    private ShoppingCart addProduct (String user) {
 
          List<Product> products = new ArrayList<>();
-        Optional<UserEntity> byEmail = this.userRepositories.findByEmail(UserDetails.class.getName());
+        Optional<UserEntity> byEmail = this.userRepositories.findByEmail(user);
         for (ProductInCartDTO productFromCart : this.shoppingCartDTO.getProducts().values()) {
             Optional<Product> byName = this.productRepository.findByName(productFromCart.getName());
             products.add(byName.get());
