@@ -5,7 +5,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -30,9 +32,12 @@ public class UserEntity extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private UserRoleEnum role;
 
+   @ManyToMany
+    private Set<ShoppingCart> shoppingCarts;
+
 
     public UserEntity() {
-
+       this.shoppingCarts = new HashSet<>();
     }
 
     public String getEmail() {
@@ -84,5 +89,13 @@ public class UserEntity extends BaseEntity{
 
     public void setRole(UserRoleEnum role) {
         this.role = role;
+    }
+
+    public Set<ShoppingCart> getShoppingCarts() {
+        return shoppingCarts;
+    }
+
+    public void setShoppingCarts(Set<ShoppingCart> shoppingCarts) {
+        this.shoppingCarts = shoppingCarts;
     }
 }

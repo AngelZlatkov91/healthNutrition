@@ -9,15 +9,10 @@ import healthnutrition.healthnutrition.repositories.ShoppingCartRepositories;
 import healthnutrition.healthnutrition.repositories.UserRepositories;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
@@ -52,17 +47,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
     }
 
-    @Override
-    public void removeQuantityToProduct(UUID uuid, int quantity) {
-       ProductInCartDTO product = findProduct(uuid);
-        int quantity1 = this.shoppingCartDTO.getProducts().get(product.getName()).getQuantity();
-        if ((quantity1 - quantity) <=0) {
-            this.shoppingCartDTO.getProducts().remove(product.getName());
-        } else {
-            this.shoppingCartDTO.getProducts().get(product.getName()).decreaseQuantity();
-        }
-
-    }
 
     @Override
     public double calculateTotalPrice() {
@@ -84,6 +68,34 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return this.shoppingCartDTO;
     }
 
+    @Override
+    public void remove(String getName) {
+        this.shoppingCartDTO.getProducts().remove(getName);
+    }
+
+    @Override
+    public void decrease(String getName) {
+        this.shoppingCartDTO.getProducts().get(getName).decreaseQuantity();
+    }
+
+    @Override
+    public void increase(String getName) {
+        this.shoppingCartDTO.getProducts().get(getName).increaseQuantity();
+    }
+
+    @Override
+    public List<ShoppingCartDTO> allShoppingCarts(String user) {
+        Optional<UserEntity> byEmail = this.userRepositories.findByEmail(user);
+        List<ShoppingCart> allByUser = this.shoppingCartRepositories.findAllByUser(byEmail.get());
+        List<ShoppingCartDTO> allCarts = new ArrayList<>();
+        for (ShoppingCart shop : allByUser) {
+            ShoppingCartDTO shoppingCartDTO1 = new ShoppingCartDTO();
+
+        }
+
+        return null;
+    }
+
 
     private ProductInCartDTO findProduct(UUID uuid) {
         Product byUuid = this.productRepository.findByUuid(uuid);
@@ -95,19 +107,22 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     private ShoppingCart addProduct (String user) {
-
-         List<Product> products = new ArrayList<>();
+        Map<Integer,Product> products = new HashMap<>();
         Optional<UserEntity> byEmail = this.userRepositories.findByEmail(user);
+
+
         for (ProductInCartDTO productFromCart : this.shoppingCartDTO.getProducts().values()) {
             Optional<Product> byName = this.productRepository.findByName(productFromCart.getName());
-            products.add(byName.get());
+           products.put(productFromCart.getQuantity(),byName.get());
         }
+        this.shoppingCartDTO.empty();
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setDeliveryNumber(UUID.randomUUID());
         shoppingCart.setUser(byEmail.get());
         shoppingCart.setProducts(products);
         shoppingCart.setDate(LocalDate.now());
         shoppingCart.setPrice(calculateTotalPrice());
+        byEmail.get().getShoppingCarts().add(shoppingCart);
         this.shoppingCartRepositories.save(shoppingCart);
         return shoppingCart;
     }

@@ -33,6 +33,7 @@ public class HomeController {
     public String home(Model model){
         List<GetBrandsDTO> brands = brandProductService.allBrands();
         List<GetTypesDTO> types = typeProductService.allTypes();
+
         model.addAttribute("brands", brands);
         model.addAttribute("types",types);
         return "home";

@@ -2,13 +2,17 @@ package healthnutrition.healthnutrition.services.impl;
 
 import healthnutrition.healthnutrition.event.UserRegisterEvent;
 import healthnutrition.healthnutrition.models.dto.UserRegisterDTo;
+import healthnutrition.healthnutrition.models.dto.UserUpdateDTO;
 import healthnutrition.healthnutrition.models.entitys.UserEntity;
 import healthnutrition.healthnutrition.models.enums.UserRoleEnum;
 import healthnutrition.healthnutrition.repositories.UserRepositories;
 import healthnutrition.healthnutrition.services.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 
 @Service
@@ -31,6 +35,15 @@ public class UserServiceImpl implements UserService {
         this.userRepositories.save(map(userRegisterDTo));
         applicationEventPublisher.publishEvent(new UserRegisterEvent("UserService",
                 userRegisterDTo.getEmail(), userRegisterDTo.getFullName()));
+    }
+
+    @Override
+    public UserUpdateDTO getUserData(String userName) {
+        Optional<UserEntity> byEmail = this.userRepositories.findByEmail(userName);
+          UserUpdateDTO user = new UserUpdateDTO();
+          user.setEmail(byEmail.get().getEmail());
+          user.setFullName(byEmail.get().getFullName());
+        return user;
     }
 
     private UserEntity map(UserRegisterDTo userRegisterDTo) {

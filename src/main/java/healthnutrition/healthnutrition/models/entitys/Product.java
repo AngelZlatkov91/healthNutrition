@@ -27,6 +27,8 @@ public class Product extends BaseEntity {
     @ManyToOne
     private BrandProduct brant;
 
+
+
     public Product(){
     }
 
@@ -97,4 +99,6 @@ public class Product extends BaseEntity {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+
 }

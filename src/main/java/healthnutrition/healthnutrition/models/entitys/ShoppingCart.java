@@ -3,9 +3,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import java.sql.Types;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "shoping_cart")
@@ -15,8 +13,8 @@ public class ShoppingCart extends BaseEntity {
     private UUID deliveryNumber;
     @ManyToOne
     private UserEntity user;
-    @OneToMany
-    private List<Product> products;
+    @ManyToMany
+    private Map<Integer,Product> products;
     @Column
     private LocalDate date;
     @Column
@@ -26,7 +24,7 @@ public class ShoppingCart extends BaseEntity {
     private boolean isGivenToDeliveriFirm;
 
     public ShoppingCart (){
-        this.products = new ArrayList<>();
+        this.products = new HashMap<>();
         isGivenToDeliveriFirm = false;
     }
 
@@ -47,12 +45,11 @@ public class ShoppingCart extends BaseEntity {
         this.user = user;
     }
 
-    public List<Product> getProducts() {
+    public Map<Integer, Product> getProducts() {
         return products;
     }
 
-
-    public void setProducts(List<Product> products) {
+    public void setProducts(Map<Integer, Product> products) {
         this.products = products;
     }
 

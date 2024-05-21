@@ -11,7 +11,7 @@ public interface ShoppingCartService {
 
     void addProductToShoppingCart(UUID uuid);
 
-    void removeQuantityToProduct(UUID uuid, int quantity);
+
 
     double calculateTotalPrice();
 
@@ -19,4 +19,11 @@ public interface ShoppingCartService {
 
     ShoppingCartDTO productInCart();
 
+    void remove(String getName);
+
+    void decrease(String getName);
+
+    void increase(String getName);
+
+    List<ShoppingCartDTO> allShoppingCarts(String user);
 }

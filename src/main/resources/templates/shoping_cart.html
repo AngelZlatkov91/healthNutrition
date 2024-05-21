@@ -15,12 +15,17 @@
             <div  class="col-5 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">
                 <th:block th:each="product : ${products}">
                     <div class="mt-3 rounded badge-warning text-center">
+                        <a class="ml-3 text-danger" th:href="@{/remove/product/{getName} (getName=${product.getName()})}">Remove</a>
                         <img class="mr-2" src="" alt="Flag" width="20px" height="20px">
                         <span th:text="${product.getName()}"></span>
                         <br>
+                        <a class="ui-button text-danger "   th:min="1" th:href="@{/decrease/product/{getName} (getName=${product.getName()})}">-</a>
                         <span th:text="${product.getQuantity()}"></span>
+                        <a class="ui-button text-danger" th:href="@{/increase/product/{getName} (getName=${product.getName()})}">+</a>
                         <br>
                         <span th:text="${product.getPrice()}" ></span>
+
+
                     </div>
                 </th:block>
                 <div class="col-5 bg-danger rounded m-auto">
