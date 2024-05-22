@@ -1,5 +1,7 @@
 package healthnutrition.healthnutrition.services;
 
+import healthnutrition.healthnutrition.models.dto.ArchiveDTO;
+import healthnutrition.healthnutrition.models.dto.ArchiveShoppingCartDTO;
 import healthnutrition.healthnutrition.models.dto.ProductInCartDTO;
 import healthnutrition.healthnutrition.models.dto.ShoppingCartDTO;
 
@@ -25,5 +27,5 @@ public interface ShoppingCartService {
 
     void increase(String getName);
 
-    List<ShoppingCartDTO> allShoppingCarts(String user);
+    ArchiveDTO allShoppingCarts(String user);
 }

@@ -1,9 +1,10 @@
 package healthnutrition.healthnutrition.services.impl;
-import healthnutrition.healthnutrition.models.dto.ProductInCartDTO;
-import healthnutrition.healthnutrition.models.dto.ShoppingCartDTO;
+import healthnutrition.healthnutrition.models.dto.*;
 import healthnutrition.healthnutrition.models.entitys.Product;
+import healthnutrition.healthnutrition.models.entitys.ProductInCart;
 import healthnutrition.healthnutrition.models.entitys.ShoppingCart;
 import healthnutrition.healthnutrition.models.entitys.UserEntity;
+import healthnutrition.healthnutrition.repositories.ProductInCartRepositories;
 import healthnutrition.healthnutrition.repositories.ProductRepository;
 import healthnutrition.healthnutrition.repositories.ShoppingCartRepositories;
 import healthnutrition.healthnutrition.repositories.UserRepositories;
@@ -23,16 +24,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      private final UserRepositories userRepositories;
 
      private final ShoppingCartDTO shoppingCartDTO;
+     private final ProductInCartRepositories productInCartRepositories;
 
 
 
 
 
      @Autowired
-    public ShoppingCartServiceImpl(ProductRepository productRepository, ShoppingCartRepositories shoppingCartRepositories, UserRepositories userRepositories) {
+    public ShoppingCartServiceImpl(ProductRepository productRepository, ShoppingCartRepositories shoppingCartRepositories, UserRepositories userRepositories, ProductInCartRepositories productInCartRepositories) {
         this.productRepository = productRepository;
         this.shoppingCartRepositories = shoppingCartRepositories;
         this.userRepositories = userRepositories;
+         this.productInCartRepositories = productInCartRepositories;
          this.shoppingCartDTO = new ShoppingCartDTO();
      }
 
@@ -84,16 +87,28 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public List<ShoppingCartDTO> allShoppingCarts(String user) {
+    public ArchiveDTO allShoppingCarts(String user) {
+        ArchiveDTO archiveDTO = new ArchiveDTO();
         Optional<UserEntity> byEmail = this.userRepositories.findByEmail(user);
         List<ShoppingCart> allByUser = this.shoppingCartRepositories.findAllByUser(byEmail.get());
-        List<ShoppingCartDTO> allCarts = new ArrayList<>();
+        List<ArchiveShoppingCartDTO> allCarts = new ArrayList<>();
         for (ShoppingCart shop : allByUser) {
-            ShoppingCartDTO shoppingCartDTO1 = new ShoppingCartDTO();
-
+            Double totalPrice = 0.0;
+            ArchiveShoppingCartDTO archiveShoppingCartDTO = new ArchiveShoppingCartDTO();
+            for (ProductInCart productInCart : shop.getProducts()) {
+                ArchiveProductInCartDTO archiveProductInCartDTO = new ArchiveProductInCartDTO();
+                archiveProductInCartDTO.setName(productInCart.getName());
+                archiveProductInCartDTO.setQuantity(productInCart.getQuantity());
+                archiveProductInCartDTO.setSinglePrice(productInCart.getSinglePrice());
+                totalPrice = totalPrice + (productInCart.getQuantity() * productInCart.getSinglePrice());
+                archiveShoppingCartDTO.getArchive().add(archiveProductInCartDTO);
+            }
+            archiveShoppingCartDTO.setDate(shop.getDate());
+            archiveShoppingCartDTO.setTotalPrice(totalPrice);
+            allCarts.add(archiveShoppingCartDTO);
         }
-
-        return null;
+          archiveDTO.setArchiveShoppingCartDTOS(allCarts);
+        return archiveDTO;
     }
 
 
@@ -107,14 +122,20 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     private ShoppingCart addProduct (String user) {
-        Map<Integer,Product> products = new HashMap<>();
+         List<ProductInCart> products = new ArrayList<>();
         Optional<UserEntity> byEmail = this.userRepositories.findByEmail(user);
 
 
         for (ProductInCartDTO productFromCart : this.shoppingCartDTO.getProducts().values()) {
             Optional<Product> byName = this.productRepository.findByName(productFromCart.getName());
-           products.put(productFromCart.getQuantity(),byName.get());
+           ProductInCart productInCart = new ProductInCart();
+           productInCart.setName(byName.get().getName());
+           productInCart.setQuantity(productFromCart.getQuantity());
+           productInCart.setSinglePrice(byName.get().getPrice());
+           products.add(productInCart);
+           this.productInCartRepositories.save(productInCart);
         }
+
         this.shoppingCartDTO.empty();
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setDeliveryNumber(UUID.randomUUID());

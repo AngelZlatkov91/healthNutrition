@@ -16,7 +16,6 @@
     <h2 class="text-center text-white mt-5">Details</h2>
     <div th:object="${user}" class="offers row mx-auto d-flex flex-row justify-content-center">
         <div  class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0" >
-
             <div class="card-body pb-1">
                 <h5 class="card-title" th:text="*{fullName}">
                     Full Name</h5>
@@ -27,15 +26,20 @@
                         <span>• Email</span>
                         <th:block th:text="*{email}">12345</th:block>
                     </div>
-
                 </li>
             </ul>
-            <!--            <div class="card-body" th:if="*{owner}">-->
-            <!--                <form th:method="delete"-->
-            <!--                      th:action="@{/offer/{offerUUID}(offerUUID=*{id})}">-->
-            <!--                    <input type="submit" value="Delete" class="link card-link" />-->
-            <!--                </form>-->
-            <!--            </div>-->
+
+            <div  class="col-10 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">
+                <h3 class="mySticky bg-white text-dark text-center" th:text="|ShopCart:   ${archive.size()}|"></h3>
+                <th:block th:each="archive : ${archive.getArchiveShoppingCartDTOS()}">
+                    <span class="bg-danger text-center" th:text=" 'Date Made: ' + ${archive.getDate()} + ': Total price: ' + ${archive.getTotalPrice()}"></span>
+                    <th:block th:each="product : ${archive.getArchive()}">
+                           <div class="row rounded badge-secondary text-center">
+                              <span th:text="'Name: ' + ${product.getName()} + '; Quantity: ' + ${product.getQuantity()} + '; Price: ' + ${product.getSinglePrice()}" ></span>
+                          </div>
+                    </th:block>
+                </th:block>
+            </div>
         </div>
     </div>
 </div>

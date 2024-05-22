@@ -29,6 +29,7 @@ public class ShoppingCartDTO {
     public List<ProductInCartDTO> getProductFromShoppingCart() {
         return this.getProducts().values().stream().toList();
     }
+
     public void empty(){
         this.products = new HashMap<>();
     }

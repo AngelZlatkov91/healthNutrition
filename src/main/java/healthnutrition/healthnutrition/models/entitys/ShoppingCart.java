@@ -13,8 +13,8 @@ public class ShoppingCart extends BaseEntity {
     private UUID deliveryNumber;
     @ManyToOne
     private UserEntity user;
-    @ManyToMany
-    private Map<Integer,Product> products;
+    @OneToMany
+    private List<ProductInCart> products;
     @Column
     private LocalDate date;
     @Column
@@ -24,7 +24,7 @@ public class ShoppingCart extends BaseEntity {
     private boolean isGivenToDeliveriFirm;
 
     public ShoppingCart (){
-        this.products = new HashMap<>();
+        this.products = new ArrayList<>();
         isGivenToDeliveriFirm = false;
     }
 
@@ -45,11 +45,11 @@ public class ShoppingCart extends BaseEntity {
         this.user = user;
     }
 
-    public Map<Integer, Product> getProducts() {
+    public List<ProductInCart> getProducts() {
         return products;
     }
 
-    public void setProducts(Map<Integer, Product> products) {
+    public void setProducts(List<ProductInCart> products) {
         this.products = products;
     }
 
