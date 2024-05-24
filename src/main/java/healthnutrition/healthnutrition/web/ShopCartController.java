@@ -89,15 +89,11 @@ public class ShopCartController {
     @PostMapping("/delivery")
     public ModelAndView finalDelivery(DeliveryDataDTO data, @AuthenticationPrincipal UserDetails user) {
         String userEmail = user.getUsername();
-        System.out.println();
-
         this.deliveryDataService.addAddress(data,userEmail);
-
         this.price = this.price + data.getPriceForDelivery();
        // model.addAttribute("price",price);
         UUID step = this.shoppingCartService.finalStep(userEmail);
         this.uuid = step;
-        System.out.println();
          return new ModelAndView("redirect:/succses-delivery");
     }
 

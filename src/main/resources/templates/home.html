@@ -11,3 +11,24 @@
 <div>
     <nav th:replace="~{navbar/navbar}"></nav>
 </div>
+
+<div class="container-fluid">
+    <h2 class="text-center text-dark mt-5">Brands</h2>
+    <div class="offers row mx-auto bg-transparent d-flex flex-row justify-content-center">
+        <div th:each="brand: ${brands}"
+             class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
+            <span class="card-img-top-wrapper text-center">
+                <a th:text="${brand.brand()}" ></a>
+            </span>
+        </div>
+    </div>
+    <h2 class="text-center text-dark mt-5">Types</h2>
+    <div class="offers row mx-auto bg-transparent d-flex flex-row justify-content-center">
+        <div th:each="type: ${types}"
+             class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
+            <span class="card-img-top-wrapper text-center">
+                <a th:text="${type.type()}" ></a>
+            </span>
+        </div>
+    </div>
+</div>

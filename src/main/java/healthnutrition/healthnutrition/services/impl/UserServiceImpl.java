@@ -1,6 +1,7 @@
 package healthnutrition.healthnutrition.services.impl;
 
 import healthnutrition.healthnutrition.event.UserRegisterEvent;
+import healthnutrition.healthnutrition.models.dto.EditUserDTO;
 import healthnutrition.healthnutrition.models.dto.UserRegisterDTo;
 import healthnutrition.healthnutrition.models.dto.UserUpdateDTO;
 import healthnutrition.healthnutrition.models.entitys.UserEntity;
@@ -44,6 +45,20 @@ public class UserServiceImpl implements UserService {
           user.setEmail(byEmail.get().getEmail());
           user.setFullName(byEmail.get().getFullName());
         return user;
+    }
+
+    @Override
+    public void edit(EditUserDTO editUserDTO, String userEmail) {
+        Optional<UserEntity> byEmail = this.userRepositories.findByEmail(userEmail);
+        if (editUserDTO.getFullName() != null) {
+            byEmail.get().setFullName(editUserDTO.getFullName());
+        }
+        if (editUserDTO.getEmail() != null) {
+            byEmail.get().setEmail(editUserDTO.getEmail());
+        }
+        if (editUserDTO.getPhone() != null) {
+            byEmail.get().setPhone(editUserDTO.getPhone());
+        }
     }
 
     private UserEntity map(UserRegisterDTo userRegisterDTo) {
