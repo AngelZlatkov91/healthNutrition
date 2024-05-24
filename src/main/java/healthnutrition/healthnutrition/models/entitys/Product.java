@@ -16,8 +16,6 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private Double price;
 
-    @Column(nullable = false)
-    private int availability;
 
     @Column(columnDefinition = "LONGTEXT",length = 50000000)
     private String imageUrl;
@@ -66,13 +64,6 @@ public class Product extends BaseEntity {
 
 
 
-    public int getAvailability() {
-        return availability;
-    }
-
-    public void setAvailability(int availability) {
-        this.availability = availability;
-    }
 
 
 

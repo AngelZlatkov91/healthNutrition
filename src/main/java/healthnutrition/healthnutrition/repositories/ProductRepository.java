@@ -21,12 +21,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 
 
-
     Product findByUuid(UUID uuid);
 
-//    List<Product> findAllByName(String name);
-//    List<Product> findAllByBrant(String brant);
-//    List<Product> findAllByType(String type);
 
 
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{navbar/header}">
 
@@ -29,7 +30,7 @@
                 </li>
             </ul>
 
-            <div  class="col-10 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">
+            <div  class="col-12 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">
                 <h3 class="mySticky bg-white text-dark text-center" th:text="|ShopCart:   ${archive.size()}|"></h3>
                 <th:block th:each="archive : ${archive.getArchiveShoppingCartDTOS()}">
                     <span class="bg-danger text-center" th:text=" 'Date Made: ' + ${archive.getDate()} + ': Total price: ' + ${archive.getTotalPrice()}"></span>

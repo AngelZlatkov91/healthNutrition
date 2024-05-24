@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{navbar/header}">
 
@@ -85,22 +86,6 @@
                 </p>
             </div>
         </div>
-        <div class="row">
-            <div class="form-group col-md-6 mb-3">
-                <label for="availability" class="text-white font-weight-bold">Availability</label>
-                <input id="availability"
-                       th:name="availability"
-                       th:field="*{availability}"
-                       th:errorclass="is-invalid"
-                       type="number"
-                       class="form-control"
-                       placeholder="Availability"/>
-                <p class="invalid-feedback errors alert alert-danger">
-                    Availability is required.
-                </p>
-            </div>
-        </div>
-
         <div class="form-group">
             <label class="text-white font-weight-bold" for="description">Description</label>
             <textarea id="description"

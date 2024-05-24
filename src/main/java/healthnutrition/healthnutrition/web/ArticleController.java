@@ -54,6 +54,13 @@ public class ArticleController {
         return "article-details";
     }
 
+    @GetMapping("/articles/all")
+    public String all(Model model, Pageable pageable) {
+        Page<ArticlesDTO> allArticles = this.articlesService.allArticles(pageable);
+        model.addAttribute("articles",allArticles);
+        return "articles";
+    }
+
 
 
 }

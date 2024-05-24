@@ -9,14 +9,13 @@ import jakarta.validation.constraints.Size;
 public record ProductCreateDTO (@Size(min = 3) @NotBlank @UniqueProductNameValidator String name,
                                 @NotBlank String description,
                                 @Positive Double price,
-                                @Positive Integer availability,
                                 @NotBlank String imageUrl,
                                 @NotBlank String type,
                                 @NotBlank String brand) {
 
 
     public static ProductCreateDTO empty() {
-       return new ProductCreateDTO(null,null,null,null,null,null,null);
+       return new ProductCreateDTO(null,null,null,null,null,null);
     }
 
 

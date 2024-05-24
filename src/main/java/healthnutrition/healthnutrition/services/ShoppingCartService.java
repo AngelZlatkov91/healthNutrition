@@ -1,9 +1,6 @@
 package healthnutrition.healthnutrition.services;
 
-import healthnutrition.healthnutrition.models.dto.ArchiveDTO;
-import healthnutrition.healthnutrition.models.dto.ArchiveShoppingCartDTO;
-import healthnutrition.healthnutrition.models.dto.ProductInCartDTO;
-import healthnutrition.healthnutrition.models.dto.ShoppingCartDTO;
+import healthnutrition.healthnutrition.models.dto.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -28,4 +25,6 @@ public interface ShoppingCartService {
     void increase(String getName);
 
     ArchiveDTO allShoppingCarts(String user);
+
+    AllOrdersDTO allOrdersToSend();
 }

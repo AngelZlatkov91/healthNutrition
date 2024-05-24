@@ -1,9 +1,6 @@
 package healthnutrition.healthnutrition.services.impl;
 import healthnutrition.healthnutrition.models.dto.*;
-import healthnutrition.healthnutrition.models.entitys.Product;
-import healthnutrition.healthnutrition.models.entitys.ProductInCart;
-import healthnutrition.healthnutrition.models.entitys.ShoppingCart;
-import healthnutrition.healthnutrition.models.entitys.UserEntity;
+import healthnutrition.healthnutrition.models.entitys.*;
 import healthnutrition.healthnutrition.repositories.ProductInCartRepositories;
 import healthnutrition.healthnutrition.repositories.ProductRepository;
 import healthnutrition.healthnutrition.repositories.ShoppingCartRepositories;
@@ -90,7 +87,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public ArchiveDTO allShoppingCarts(String user) {
         ArchiveDTO archiveDTO = new ArchiveDTO();
         Optional<UserEntity> byEmail = this.userRepositories.findByEmail(user);
-        List<ShoppingCart> allByUser = this.shoppingCartRepositories.findAllByUser(byEmail.get());
+        List<ShoppingCart> allByUser = this.shoppingCartRepositories.findAllByUserOrderByDateDesc(byEmail.get());
         List<ArchiveShoppingCartDTO> allCarts = new ArrayList<>();
         for (ShoppingCart shop : allByUser) {
             Double totalPrice = 0.0;
@@ -109,6 +106,44 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
           archiveDTO.setArchiveShoppingCartDTOS(allCarts);
         return archiveDTO;
+    }
+
+    @Override
+    public AllOrdersDTO allOrdersToSend() {
+         AllOrdersDTO allOrdersDTO = new AllOrdersDTO();
+         List<OrderDTO> orderDTOList = new ArrayList<>();
+        List<ShoppingCart> allByDate = this.shoppingCartRepositories.findAllByDate(LocalDate.now());
+        for (ShoppingCart cart : allByDate) {
+            UserEntity user = cart.getUser();
+            Address address = cart.getUser().getAddress();
+            String addressFormat = String.format("%s %s %s",address.getCity(),address.getPostCode(),address.getAddress());
+            String deliverFormat = String.format("%s %s %.2f",address.getFirm(),address.getDeliveryAddress(),address.getPriceForDelivery());
+            OrderDTO orderDTO = new OrderDTO();
+            orderDTO.setFullName(user.getFullName());
+            orderDTO.setEmail(user.getEmail());
+            orderDTO.setPhone(user.getPhone());
+            orderDTO.setAddress(addressFormat);
+            orderDTO.setDeliver(deliverFormat);
+            ArchiveShoppingCartDTO archiveShoppingCartDTO = new ArchiveShoppingCartDTO();
+            List<ArchiveProductInCartDTO> archive = new ArrayList<>();
+            Double price = 0.0;
+            for (ProductInCart pr : cart.getProducts()) {
+                ArchiveProductInCartDTO archiveProductInCartDTO = new ArchiveProductInCartDTO();
+                archiveProductInCartDTO.setName(pr.getName());
+                archiveProductInCartDTO.setQuantity(pr.getQuantity());
+                archiveProductInCartDTO.setSinglePrice(pr.getSinglePrice());
+                archive.add(archiveProductInCartDTO);
+                price = price + (pr.getQuantity() * pr.getSinglePrice());
+            }
+            archiveShoppingCartDTO.setTotalPrice(price);
+            archiveShoppingCartDTO.setDate(cart.getDate());
+            archiveShoppingCartDTO.setArchive(archive);
+            orderDTO.setArchiveDTO(archiveShoppingCartDTO);
+           orderDTOList.add(orderDTO);
+        }
+        allOrdersDTO.setOrders(orderDTOList);
+
+        return allOrdersDTO;
     }
 
 
@@ -147,6 +182,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         this.shoppingCartRepositories.save(shoppingCart);
         return shoppingCart;
     }
+
+
+
 
 
 }
