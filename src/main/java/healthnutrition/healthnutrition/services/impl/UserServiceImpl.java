@@ -8,10 +8,10 @@ import healthnutrition.healthnutrition.models.entitys.UserEntity;
 import healthnutrition.healthnutrition.models.enums.UserRoleEnum;
 import healthnutrition.healthnutrition.repositories.UserRepositories;
 import healthnutrition.healthnutrition.services.UserService;
-import jakarta.transaction.Transactional;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -48,17 +48,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void edit(EditUserDTO editUserDTO, String userEmail) {
-        Optional<UserEntity> byEmail = this.userRepositories.findByEmail(userEmail);
+        Optional<UserEntity> byEmail = userRepositories.findByEmail(userEmail);
+
         if (editUserDTO.getFullName() != null) {
             byEmail.get().setFullName(editUserDTO.getFullName());
-        }
-        if (editUserDTO.getEmail() != null) {
-            byEmail.get().setEmail(editUserDTO.getEmail());
         }
         if (editUserDTO.getPhone() != null) {
             byEmail.get().setPhone(editUserDTO.getPhone());
         }
+        if (editUserDTO.getEmail() != null) {
+            byEmail.get().setEmail(editUserDTO.getEmail());
+        }
+        this.userRepositories.save(byEmail.get());
     }
 
     private UserEntity map(UserRegisterDTo userRegisterDTo) {

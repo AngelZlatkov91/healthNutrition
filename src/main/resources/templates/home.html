@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="~{navbar/header}">
@@ -12,7 +13,18 @@
     <nav th:replace="~{navbar/navbar}"></nav>
 </div>
 
+
+
 <div class="container-fluid">
+    <form class="form-inline my-2 my-lg-0 ">
+        <input class="form-control mr-sm-2 "
+               type="search"
+               th:value="searchKey"
+               th:name="searchKey"
+               placeholder="Search"
+               aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" th:href="@{/products/all}">Search</button>
+    </form>
     <h2 class="text-center text-dark mt-5">Brands</h2>
     <div class="offers row mx-auto bg-transparent d-flex flex-row justify-content-center">
         <div th:each="brand: ${brands}"

@@ -9,10 +9,14 @@ import healthnutrition.healthnutrition.repositories.ProductRepository;
 import healthnutrition.healthnutrition.repositories.TypeRepository;
 import healthnutrition.healthnutrition.services.ProductService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -36,8 +40,16 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public Page<ProductDetailsDTO> getAllProducts(Pageable pageable) {
-        return productRepository.findAll(pageable).map(ProductServiceImpl::mapSummary);
+    public List<ProductDetailsDTO> getAllProducts(String searchKey) {
+        Pageable pageable = PageRequest.of(0,10);
+        System.out.println();
+        if (searchKey.equals("")) {
+            return productRepository.findAll(pageable).map(ProductServiceImpl::mapSummary).toList();
+        } else {
+            return  productRepository.findByNameContainingIgnoreCaseOrBrantBrandContainingIgnoreCaseOrTypeTypeContainingIgnoreCase(
+                    searchKey, searchKey, searchKey, pageable).stream().map(ProductServiceImpl::mapSummary).collect(Collectors.toList());
+
+        }
     }
 
     @Override
