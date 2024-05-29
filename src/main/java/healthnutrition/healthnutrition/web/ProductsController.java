@@ -22,8 +22,22 @@ public class ProductsController {
 
     @GetMapping("/products/all")
     public String all(Model model, @PathVariable("searchKey") @RequestParam(defaultValue = "") String searchKey) {
+        model.addAttribute("searchKey",searchKey);
         List<ProductDetailsDTO> allProducts = productService.getAllProducts(searchKey);
+        if (allProducts.isEmpty()) {
+            return "redirect:/home";
+        }
         model.addAttribute("products",allProducts);
         return "products";
     }
+
+    @GetMapping("/search")
+    public  String search(Model model, @PathVariable("searchKey") @RequestParam(defaultValue = "") String searchKey) {
+        model.addAttribute("searchKey",searchKey);
+        List<ProductDetailsDTO> allProducts = productService.getAllProducts(searchKey);
+        model.addAttribute("products",allProducts);
+        return "search";
+    }
+
+
 }

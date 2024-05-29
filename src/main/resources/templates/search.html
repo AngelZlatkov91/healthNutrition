@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{navbar/header}">
+</head>
+<body>
+<div>
+    <nav th:replace="~{navbar/navbar}">
+    </nav>
+</div>
+<div class="container-fluid">
+    <h2 class="text-center text-dark mt-5">Search Result for <th:block
+            th:text="${searchKey}"></th:block>
+    </h2>
+    <h2 class="text-center text-dark mt-5"><span th:if="${products.size() ==0}">No results found!</span></h2>
+    <div class="offers col mx-auto d-flex flex-row justify-content-center">
+        <div th:each="product: ${products}"
+             th:object="${product}"
+             class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
+            <div class="card-img-top-wrapper">
+                <img class="card-img-top" th:src="*{imageUrl}" alt="Car image">
+            </div>
+            <div class="card-body pb-1">
+                <h5 class="card-title" th:text="*{name}" >
+                    Offer year Brand name Model name</h5>
+            </div>
+            <ul class="offer-details list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="card-text">
+                        <span>• Price</span>
+                        <th:block th:text="*{price}">123</th:block>
+                    </div>
+                    <div class="card-text">
+                        <span>• Type</span>
+                        <th:block th:text="*{type}">TYPE</th:block>
+                    </div>
+                    <div class="card-text">
+                        <span>• Brand</span>
+                        <th:block th:text="*{brant}">BRAND</th:block>
+                    </div>
+                </li>
+            </ul>
+            <div class="card-body">
+                <a class="btn btn-info btn-lg" th:href="@{/product/{uuid}(uuid=*{id})}">Details</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <footer> </footer>
+</div>
+
+</body>
+</html>

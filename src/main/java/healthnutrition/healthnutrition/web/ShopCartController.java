@@ -55,8 +55,10 @@ public class ShopCartController {
         ShoppingCartDTO shoppingCartDTO = this.shoppingCartService.productInCart();
         List<ProductInCartDTO> productFromShoppingCart = shoppingCartDTO.getProductFromShoppingCart();
         double priceForProducts = this.shoppingCartService.calculateTotalPrice();
+        int size = productFromShoppingCart.size();
         this.price = priceForProducts;
         model.addAttribute("price",priceForProducts);
+        model.addAttribute("size",size);
         return new ModelAndView("shoping_cart","products",productFromShoppingCart);
     }
 

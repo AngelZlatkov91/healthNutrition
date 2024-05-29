@@ -28,14 +28,14 @@
                     Admin
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/product-add">Add New Product</a>
+                    <a class="dropdown-item" href="/product-add">Add New Product</a>
                     <a class="dropdown-item" href="/add/brand">Add New brand</a>
                     <a class="dropdown-item" href="/add/type">Add New type</a>
                     <a class="dropdown-item" href="/add/article">Add New article</a>
                 </div>
             </li>
             <li>
-                <a class="text-reset me-3" th:href="@{shopping_cart}">
+                <a class="text-reset me-3" th:href="@{/shopping_cart}">
                     <i class="fas fa-shopping-cart"></i>
                 </a>
             </li>
@@ -47,7 +47,7 @@
                     </div>
                     <form th:method="POST"
                           th:action="@{/users/logout}">
-                        <input type="submit" class="btn btn-link" value="Logout" />
+                        <input type="submit" class="btn btn-link" value="Logout"/>
                     </form>
 
                 </div>

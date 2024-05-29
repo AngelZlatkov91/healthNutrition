@@ -42,13 +42,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDetailsDTO> getAllProducts(String searchKey) {
         Pageable pageable = PageRequest.of(0,10);
-        System.out.println();
         if (searchKey.equals("")) {
             return productRepository.findAll(pageable).map(ProductServiceImpl::mapSummary).toList();
         } else {
-            return  productRepository.findByNameContainingIgnoreCaseOrBrantBrandContainingIgnoreCaseOrTypeTypeContainingIgnoreCase(
+            List<ProductDetailsDTO> collect = productRepository.findByNameContainingIgnoreCaseOrBrantBrandContainingIgnoreCaseOrTypeTypeContainingIgnoreCase(
                     searchKey, searchKey, searchKey, pageable).stream().map(ProductServiceImpl::mapSummary).collect(Collectors.toList());
-
+            searchKey = "";
+            return collect;
         }
     }
 
