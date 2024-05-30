@@ -38,6 +38,6 @@ public class ProductTypeController {
             return "redirect:/add/type";
         }
         this.type.addType(typeProductDTO);
-        return "redirect:/";
+        return "redirect:/add/type";
     }
 }

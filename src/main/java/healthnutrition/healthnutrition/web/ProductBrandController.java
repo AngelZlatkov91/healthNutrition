@@ -38,6 +38,6 @@ public class ProductBrandController {
                return "redirect:/add/brand";
         }
         this.brandProductService.addBrand(brandProductDTO);
-        return "redirect:/";
+        return "redirect:/add/brand";
     }
 }

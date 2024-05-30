@@ -52,13 +52,13 @@ public class UserServiceImpl implements UserService {
     public void edit(EditUserDTO editUserDTO, String userEmail) {
         Optional<UserEntity> byEmail = userRepositories.findByEmail(userEmail);
 
-        if (editUserDTO.getFullName() != null) {
+        if (!editUserDTO.getFullName().isEmpty()) {
             byEmail.get().setFullName(editUserDTO.getFullName());
         }
-        if (editUserDTO.getPhone() != null) {
+        if (!editUserDTO.getPhone().isEmpty()) {
             byEmail.get().setPhone(editUserDTO.getPhone());
         }
-        if (editUserDTO.getEmail() != null) {
+        if (!editUserDTO.getEmail().isEmpty()) {
             byEmail.get().setEmail(editUserDTO.getEmail());
         }
         this.userRepositories.save(byEmail.get());
