@@ -39,6 +39,7 @@ public class SecurityConfig {
                         .requestMatchers("/","/users/login","/register", "/users/login-error").permitAll()
                         .requestMatchers("/products/all").permitAll()
                         .requestMatchers("/articles/all").permitAll()
+                        .requestMatchers("/home").permitAll()
                         .requestMatchers(HttpMethod.GET,"/offer/**").permitAll()
                         .requestMatchers("error").permitAll()
                         .requestMatchers("/add/brand").hasRole(UserRoleEnum.ADMIN.name())
@@ -56,7 +57,7 @@ public class SecurityConfig {
                             // the names of the input fields (in ou case auth-login.html
                             .usernameParameter("email")
                             .passwordParameter("password")
-                            .defaultSuccessUrl("/")
+                            .defaultSuccessUrl("/home")
                             .failureForwardUrl("/users/login-error");
                 }
         ).logout(
@@ -65,7 +66,7 @@ public class SecurityConfig {
                             // the url where we should post something in order to perform logout
                             .logoutUrl("/users/logout")
                             // where to go logged out?
-                            .logoutSuccessUrl("/")
+                            .logoutSuccessUrl("/home")
                             // invalidate the http session
                             .invalidateHttpSession(true);
                 }
@@ -83,7 +84,7 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(UserRepositories userRepository) {
-        // this service translates between the mobilele users and roles
+        // this service translates between the  users and roles
         // to representation which spring security understands;
         return new HealthNutritionUserDetailsService(userRepository);
     }

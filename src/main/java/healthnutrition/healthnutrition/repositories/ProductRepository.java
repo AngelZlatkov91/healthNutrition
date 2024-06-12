@@ -23,6 +23,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             String key1, String key2,String key3, Pageable pageable
     );
 
+    void deleteByUuid(UUID uuid);
+
 
 
 

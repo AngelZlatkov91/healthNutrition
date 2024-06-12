@@ -6,9 +6,12 @@ import healthnutrition.healthnutrition.services.ProductService;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
 import healthnutrition.healthnutrition.services.TypeProductService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -67,6 +70,12 @@ public class ProductController {
     @GetMapping("/product/add-shoppingCart/{uuid}")
     public String addProductToCart(@PathVariable("uuid") UUID uuid) {
         this.shoppingCartService.addProductToShoppingCart(uuid);
+        return "redirect:/products/all";
+    }
+
+    @DeleteMapping("/product/remove/{uuid}")
+    public String delete(@PathVariable("uuid") UUID uuid) {
+        productService.deleteProduct(uuid);
         return "redirect:/products/all";
     }
 

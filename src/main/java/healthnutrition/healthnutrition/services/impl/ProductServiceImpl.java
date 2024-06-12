@@ -8,6 +8,7 @@ import healthnutrition.healthnutrition.repositories.BrandRepository;
 import healthnutrition.healthnutrition.repositories.ProductRepository;
 import healthnutrition.healthnutrition.repositories.TypeRepository;
 import healthnutrition.healthnutrition.services.ProductService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -58,6 +59,12 @@ public class ProductServiceImpl implements ProductService {
     public ProductDetailsDTO getProductDetails(UUID uuid) {
         Product byUuid = productRepository.findByUuid(uuid);
         return mapAsDetails(byUuid);
+    }
+
+    @Override
+    @Transactional
+    public void deleteProduct(UUID uuid) {
+        this.productRepository.deleteByUuid(uuid);
     }
 
 
