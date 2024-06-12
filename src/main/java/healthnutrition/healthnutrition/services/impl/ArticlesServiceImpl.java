@@ -4,7 +4,7 @@ import healthnutrition.healthnutrition.models.dto.ArticlesDTO;
 import healthnutrition.healthnutrition.models.entitys.Articles;
 import healthnutrition.healthnutrition.repositories.ArticlesRepositories;
 import healthnutrition.healthnutrition.services.ArticlesService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,22 +16,21 @@ import java.util.UUID;
 @Service
 public class ArticlesServiceImpl implements ArticlesService {
     private final ArticlesRepositories articlesRepositories;
+    private final ModelMapper mapper;
 
 
 
-    public ArticlesServiceImpl(ArticlesRepositories articlesRepositories) {
+    public ArticlesServiceImpl(ArticlesRepositories articlesRepositories, ModelMapper mapper) {
         this.articlesRepositories = articlesRepositories;
 
+        this.mapper = mapper;
     }
 
 
     @Override
     public void addArticle(ArticlesDTO articlesDTO) {
-        Articles articles = new Articles();
+        Articles articles = mapper.map(articlesDTO, Articles.class);
         articles.setUuid(UUID.randomUUID());
-        articles.setTitle(articlesDTO.getTitle());
-        articles.setDescription(articlesDTO.getDescription());
-        articles.setImageUrl(articlesDTO.getImageUrl());
         this.articlesRepositories.save(articles);
     }
 
@@ -59,11 +58,11 @@ public class ArticlesServiceImpl implements ArticlesService {
     }
 
     private ArticlesDTO map (Articles articles) {
-        ArticlesDTO article = new ArticlesDTO();
+        ArticlesDTO article = this.mapper.map(articles,ArticlesDTO.class);
         article.setId(articles.getUuid().toString());
-        article.setTitle(articles.getTitle());
-        article.setDescription(articles.getDescription());
-        article.setImageUrl(articles.getImageUrl());
+//        article.setTitle(articles.getTitle());
+//        article.setDescription(articles.getDescription());
+//        article.setImageUrl(articles.getImageUrl());
         return article;
     }
 

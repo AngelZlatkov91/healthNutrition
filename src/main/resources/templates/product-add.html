@@ -32,7 +32,7 @@
                             th:label="${brand.brand()}"
                             th:text="${brand.brand()}"
                             th:value="${brand.brand()}"
-                            th:selected="*{brand()} == ${brand.brand()}">
+                            th:selected="*{getBrand()} == ${brand.brand()}">
                             Brand
                         </option>
 
@@ -54,7 +54,7 @@
                             th:label="${type.type()}"
                             th:text="${type.type()}"
                             th:value="${type.type()}"
-                             th:selected="*{type()} == ${type.type()}">
+                             th:selected="*{getType()} == ${type.type()}">
                     </option>
                 </select>
                 <p class="invalid-feedback errors alert alert-danger">

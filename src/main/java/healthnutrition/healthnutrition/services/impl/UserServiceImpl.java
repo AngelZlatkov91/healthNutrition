@@ -8,6 +8,7 @@ import healthnutrition.healthnutrition.models.entitys.UserEntity;
 import healthnutrition.healthnutrition.models.enums.UserRoleEnum;
 import healthnutrition.healthnutrition.repositories.UserRepositories;
 import healthnutrition.healthnutrition.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,12 +22,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepositories userRepositories;
     private final PasswordEncoder passwordEncoder;
+    private final ModelMapper mapper;
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    public UserServiceImpl(UserRepositories userRepositories, PasswordEncoder passwordEncoder, ApplicationEventPublisher applicationEventPublisher) {
+    public UserServiceImpl(UserRepositories userRepositories, PasswordEncoder passwordEncoder, ModelMapper mapper, ApplicationEventPublisher applicationEventPublisher) {
         this.userRepositories = userRepositories;
         this.passwordEncoder = passwordEncoder;
+        this.mapper = mapper;
         this.applicationEventPublisher = applicationEventPublisher;
     }
 
@@ -65,10 +68,10 @@ public class UserServiceImpl implements UserService {
     }
 
     private UserEntity map(UserRegisterDTo userRegisterDTo) {
-        UserEntity user = new UserEntity();
-        user.setFullName(userRegisterDTo.getFullName());
-        user.setEmail(userRegisterDTo.getEmail());
-        user.setPhone(userRegisterDTo.getPhone());
+        UserEntity user = this.mapper.map(userRegisterDTo,UserEntity.class);
+//        user.setFullName(userRegisterDTo.getFullName());
+//        user.setEmail(userRegisterDTo.getEmail());
+//        user.setPhone(userRegisterDTo.getPhone());
         user.setPassword(passwordEncoder.encode(userRegisterDTo.getPassword()));
         if (this.userRepositories.count() ==0){
             user.setRole(UserRoleEnum.ADMIN);

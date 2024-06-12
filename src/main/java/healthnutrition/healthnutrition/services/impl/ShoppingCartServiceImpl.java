@@ -6,6 +6,7 @@ import healthnutrition.healthnutrition.repositories.ProductRepository;
 import healthnutrition.healthnutrition.repositories.ShoppingCartRepositories;
 import healthnutrition.healthnutrition.repositories.UserRepositories;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,16 +24,19 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
      private final ShoppingCartDTO shoppingCartDTO;
      private final ProductInCartRepositories productInCartRepositories;
 
+     private final ModelMapper mapper;
+
 
 
 
 
      @Autowired
-    public ShoppingCartServiceImpl(ProductRepository productRepository, ShoppingCartRepositories shoppingCartRepositories, UserRepositories userRepositories, ProductInCartRepositories productInCartRepositories) {
+    public ShoppingCartServiceImpl(ProductRepository productRepository, ShoppingCartRepositories shoppingCartRepositories, UserRepositories userRepositories, ProductInCartRepositories productInCartRepositories, ModelMapper mapper) {
         this.productRepository = productRepository;
         this.shoppingCartRepositories = shoppingCartRepositories;
         this.userRepositories = userRepositories;
          this.productInCartRepositories = productInCartRepositories;
+         this.mapper = mapper;
          this.shoppingCartDTO = new ShoppingCartDTO();
      }
 
@@ -93,10 +97,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             Double totalPrice = 0.0;
             ArchiveShoppingCartDTO archiveShoppingCartDTO = new ArchiveShoppingCartDTO();
             for (ProductInCart productInCart : shop.getProducts()) {
-                ArchiveProductInCartDTO archiveProductInCartDTO = new ArchiveProductInCartDTO();
-                archiveProductInCartDTO.setName(productInCart.getName());
-                archiveProductInCartDTO.setQuantity(productInCart.getQuantity());
-                archiveProductInCartDTO.setSinglePrice(productInCart.getSinglePrice());
+                ArchiveProductInCartDTO archiveProductInCartDTO = this.mapper.map(productInCart, ArchiveProductInCartDTO.class);
+//                archiveProductInCartDTO.setName(productInCart.getName());
+//                archiveProductInCartDTO.setQuantity(productInCart.getQuantity());
+//                archiveProductInCartDTO.setSinglePrice(productInCart.getSinglePrice());
                 totalPrice = totalPrice + (productInCart.getQuantity() * productInCart.getSinglePrice());
                 archiveShoppingCartDTO.getArchive().add(archiveProductInCartDTO);
             }
@@ -115,23 +119,23 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         List<ShoppingCart> allByDate = this.shoppingCartRepositories.findAllByDate(LocalDate.now());
         for (ShoppingCart cart : allByDate) {
             UserEntity user = cart.getUser();
-            Address address = cart.getUser().getAddress();
-            String addressFormat = String.format("%s %s %s",address.getCity(),address.getPostCode(),address.getAddress());
-            String deliverFormat = String.format("%s %s %.2f",address.getFirm(),address.getDeliveryAddress(),address.getPriceForDelivery());
-            OrderDTO orderDTO = new OrderDTO();
-            orderDTO.setFullName(user.getFullName());
-            orderDTO.setEmail(user.getEmail());
-            orderDTO.setPhone(user.getPhone());
-            orderDTO.setAddress(addressFormat);
-            orderDTO.setDeliver(deliverFormat);
+            Address userAddress = cart.getUser().getAddress();
+            String address = String.format("%s %s %s",userAddress.getCity(),userAddress.getPostCode(),userAddress.getAddress());
+            String deliver = String.format("%s %s %.2f",userAddress.getFirm(),userAddress.getDeliveryAddress(),userAddress.getPriceForDelivery());
+            OrderDTO orderDTO =this.mapper.map(user,OrderDTO.class);
+//            orderDTO.setFullName(user.getFullName());
+//            orderDTO.setEmail(user.getEmail());
+//            orderDTO.setPhone(user.getPhone());
+            orderDTO.setAddress(address);
+            orderDTO.setDeliver(deliver);
             ArchiveShoppingCartDTO archiveShoppingCartDTO = new ArchiveShoppingCartDTO();
             List<ArchiveProductInCartDTO> archive = new ArrayList<>();
             Double price = 0.0;
             for (ProductInCart pr : cart.getProducts()) {
-                ArchiveProductInCartDTO archiveProductInCartDTO = new ArchiveProductInCartDTO();
-                archiveProductInCartDTO.setName(pr.getName());
-                archiveProductInCartDTO.setQuantity(pr.getQuantity());
-                archiveProductInCartDTO.setSinglePrice(pr.getSinglePrice());
+                ArchiveProductInCartDTO archiveProductInCartDTO = this.mapper.map(pr,ArchiveProductInCartDTO.class);
+//                archiveProductInCartDTO.setName(pr.getName());
+//                archiveProductInCartDTO.setQuantity(pr.getQuantity());
+//                archiveProductInCartDTO.setSinglePrice(pr.getSinglePrice());
                 archive.add(archiveProductInCartDTO);
                 price = price + (pr.getQuantity() * pr.getSinglePrice());
             }
@@ -149,9 +153,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     private ProductInCartDTO findProduct(UUID uuid) {
         Product byUuid = this.productRepository.findByUuid(uuid);
-        ProductInCartDTO product = new ProductInCartDTO();
-        product.setName(byUuid.getName());
-        product.setPrice(byUuid.getPrice());
+        ProductInCartDTO product = this.mapper.map(byUuid,ProductInCartDTO.class);
+//        product.setName(byUuid.getName());
+//        product.setPrice(byUuid.getPrice());
         product.increaseQuantity();
         return product;
     }
@@ -159,7 +163,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private ShoppingCart addProduct (String user) {
          List<ProductInCart> products = new ArrayList<>();
         Optional<UserEntity> byEmail = this.userRepositories.findByEmail(user);
-
 
         for (ProductInCartDTO productFromCart : this.shoppingCartDTO.getProducts().values()) {
             Optional<Product> byName = this.productRepository.findByName(productFromCart.getName());
