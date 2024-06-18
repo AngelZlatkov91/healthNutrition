@@ -43,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/offer/**").permitAll()
                         .requestMatchers("error").permitAll()
                         .requestMatchers("/add/brand").hasRole(UserRoleEnum.ADMIN.name())
+                        .requestMatchers("/orders").hasRole(UserRoleEnum.ADMIN.name())
                         .requestMatchers("/product-add").hasRole(UserRoleEnum.ADMIN.name())
                         .requestMatchers("/add/type").hasRole(UserRoleEnum.ADMIN.name())
                         .requestMatchers("/add/article").hasRole(UserRoleEnum.ADMIN.name())

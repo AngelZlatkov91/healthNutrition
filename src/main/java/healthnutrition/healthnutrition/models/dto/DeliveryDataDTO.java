@@ -2,17 +2,30 @@ package healthnutrition.healthnutrition.models.dto;
 
 import healthnutrition.healthnutrition.models.enums.DeliveryAddress;
 import healthnutrition.healthnutrition.models.enums.DeliveryFirmEnum;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.apache.kafka.common.protocol.types.Field;
 
 public class DeliveryDataDTO {
+    @NotEmpty(message = "The city cannot be empty!")
+    @Size(min = 2,max = 20)
     private String city;
+    @NotEmpty(message = "The post code cannot be empty!")
+    @Size(min = 3,max = 5)
     private String postCode;
+    @NotEmpty(message = "The address cannot be empty!")
     private String address;
-    private DeliveryFirmEnum firm;
+
+    @NotEmpty(message = "The deliver Firm is required")
+    private String firm;
     private Double priceForDelivery;
-    private DeliveryAddress deliveryAddress;
+    @NotEmpty(message = "The deliver address is required")
+    private String deliveryAddress;
     public DeliveryDataDTO(){}
 
-    public DeliveryDataDTO(String city, String postCode, String address, DeliveryFirmEnum firm, Double priceForDelivery, DeliveryAddress deliveryAddress) {
+    public DeliveryDataDTO(String city, String postCode, String address, String firm, Double priceForDelivery, String deliveryAddress) {
         this.city = city;
         this.postCode = postCode;
         this.address = address;
@@ -45,11 +58,11 @@ public class DeliveryDataDTO {
         this.address = address;
     }
 
-    public DeliveryFirmEnum getFirm() {
+    public String getFirm() {
         return firm;
     }
 
-    public void setFirm(DeliveryFirmEnum firm) {
+    public void setFirm(String firm) {
         this.firm = firm;
 
     }
@@ -62,11 +75,11 @@ public class DeliveryDataDTO {
         this.priceForDelivery = priceForDelivery;
     }
 
-    public DeliveryAddress getDeliveryAddress() {
+    public String getDeliveryAddress() {
         return deliveryAddress;
     }
 
-    public void setDeliveryAddress(DeliveryAddress deliveryAddress) {
+    public void setDeliveryAddress(String deliveryAddress) {
         this.deliveryAddress = deliveryAddress;
 
     }
@@ -76,14 +89,14 @@ public class DeliveryDataDTO {
     }
 
     public void add() {
-        Double price = 0.0;
-        switch (deliveryAddress) {
-            case OFFICE -> price  =  0.50;
-            case ADDRESS -> price = 5.50;
+        double price = 0.0;
+        switch (this.deliveryAddress) {
+            case "OFFICE" -> price  =  0.50;
+            case "ADDRESS" -> price = 5.50;
         }
-        switch (firm){
-            case SPEEDY -> price = price + 2.50;
-            case EKONT -> price = price  + 3.50;
+        switch (this.firm){
+            case "SPEEDY" -> price = price + 2.50;
+            case "EKONT" -> price = price  + 3.50;
         }
         setPriceForDelivery(price);
     }

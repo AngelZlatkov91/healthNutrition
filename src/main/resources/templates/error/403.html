@@ -11,15 +11,13 @@
 <div>
     <nav th:replace="~{navbar/navbar}"></nav>
 </div>
-
-
 <div class="container-fluid">
-    <h5 class="text-center text-red mt-5 ">
-        Ops,the thingy that you are looking for is no longer here !
-    </h5>
-    <img th:src="@{/images/broken-car.png}" alt="Broken car">
+    <h3 class="text-center text-red mt-5 ">
+        "You are not authorized to access this resource."
+    </h3>
+    <h3 class="text-center text-red mt-5 ">
     <a th:href="@{/home}">Go home...</a>
-    <br/>
+    </h3>
 </div>
 
 <div>

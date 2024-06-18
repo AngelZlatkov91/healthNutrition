@@ -53,8 +53,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 
     @Override
-    public double calculateTotalPrice() {
-         double totalPrice = 0.0;
+    public Double calculateTotalPrice() {
+         Double totalPrice = 0.0;
          for (ProductInCartDTO product : this.shoppingCartDTO.getProducts().values()) {
              totalPrice = totalPrice + (product.getQuantity() * product.getPrice());
          }
@@ -150,6 +150,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return allOrdersDTO;
     }
 
+    @Override
+    public Long allShoppingCart() {
+        return this.shoppingCartRepositories.count();
+    }
+
+    @Override
+    public void delete() {
+
+    }
+
 
     private ProductInCartDTO findProduct(UUID uuid) {
         Product byUuid = this.productRepository.findByUuid(uuid);
@@ -173,8 +183,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
            products.add(productInCart);
            this.productInCartRepositories.save(productInCart);
         }
-
-        this.shoppingCartDTO.empty();
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setDeliveryNumber(UUID.randomUUID());
         shoppingCart.setUser(byEmail.get());
@@ -182,6 +190,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCart.setDate(LocalDate.now());
         shoppingCart.setPrice(calculateTotalPrice());
         byEmail.get().getShoppingCarts().add(shoppingCart);
+        this.shoppingCartDTO.empty();
         this.shoppingCartRepositories.save(shoppingCart);
         return shoppingCart;
     }

@@ -33,7 +33,7 @@
                         min="3" max="20" class="form-control"
                         placeholder="fullName "/>
                 <p class="errors alert alert-danger invalid-feedback" th:each="error: ${#fields.hasErrors('fullName')}">
-                    FullName cannot be empty!.
+                    Full Name size must be between 3 and 20 characters!
                 </p>
             </div>
         </div>
@@ -47,7 +47,7 @@
                        type="text"
                        min="2" max="20" class="form-control"
                        placeholder="Email"/>
-                <p class="errors alert alert-danger invalid-feedback">
+                <p class="errors alert alert-danger invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}">
                     Email is required.
                 </p>
             </div>
@@ -59,7 +59,7 @@
                        th:errorclass="is-invalid"
                        min="12"
                        type="number"/>
-                <p class="errors alert alert-danger invalid-feedback">
+                <p class="errors alert alert-danger invalid-feedback" th:if="${#fields.hasErrors('age')}" th:errorclass="error" th:errors="*{age}">
                     Age must be more than 12!
                 </p>
             </div>
@@ -72,7 +72,7 @@
                        th:errorclass="is-invalid"
                        min="9" class="form-control"
                        placeholder="Phone"/>
-                <p class="errors alert alert-danger invalid-feedback">
+                <p class="errors alert alert-danger invalid-feedback" th:if="${#fields.hasErrors('phone')}" th:errorclass="error" th:errors="*{phone}">
                     Phone is required.
                 </p>
             </div>
@@ -86,7 +86,7 @@
                        th:errorclass="is-invalid"
                        type="password" min="4" max="20" class="form-control"
                        placeholder="Password"/>
-                <p class="errors alert alert-danger invalid-feedback">
+                <p class="errors alert alert-danger invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}">
                     Password is required.
                 </p>
             </div>
@@ -99,7 +99,7 @@
                    th:errorclass="is-invalid"
                    type="password" min="4" max="20" class="form-control"
                    placeholder="Confirm Password"/>
-            <p class="errors alert alert-danger invalid-feedback">
+            <p class="errors alert alert-danger invalid-feedback" th:if="${#fields.hasErrors('confirmPassword')}" th:errorclass="error" th:errors="*{confirmPassword}">
                 Password conformation is required.
             </p>
         </div>

@@ -12,7 +12,7 @@ public interface ShoppingCartService {
 
 
 
-    double calculateTotalPrice();
+    Double calculateTotalPrice();
 
     UUID finalStep(String user);
 
@@ -27,4 +27,8 @@ public interface ShoppingCartService {
     ArchiveDTO allShoppingCarts(String user);
 
     AllOrdersDTO allOrdersToSend();
+    Long allShoppingCart();
+
+    void delete();
+
 }

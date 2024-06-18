@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head th:replace="~{navbar/header}">
 
@@ -13,88 +14,92 @@
 </div>
 <div class="container">
     <h2 class="text-center text-white">Add Address</h2>
-    <form th:method="POST"
-          th:action="@{/delivery}"
-          th:object="${data}"
+    <form  th:method="POST"
+           th:action="@{/delivery}"
+           th:object="${data}"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
-        <div class="row">
-            <div class="form-group col-md-6 mb-3">
-               <label for="city" class="text-white font-weight-bold">City</label>
-                <input  id="city"
-                    name="city"
-                    th:field="*{city}"
-
-                    type="text"
-                    />
-               <p class="errors alert alert-danger">
-                City cannot be empty!.
-               </p>
-            </div>
+        <div class="form-group col-md-6 mb-3">
+            <label class="text-center text-white font-weight-bold" for="city">City</label>
+            <input id="city"
+                   type="text"
+                   th:name="city"
+                   th:field="*{city}"
+                   th:errorclass="is-invalid"
+                   class="form-control"/>
+            <p class="invalid-feedback errors alert alert-danger" th:if="${#fields.hasErrors('city')}" th:errorclass="error" th:errors="*{city}" >
+                The city is required.
+            </p>
         </div>
-        <div class="row">
-            <div class="form-group col-md-6 mb-3">
-                <label for="postCode" class="text-white font-weight-bold">Post Code</label>
-                <input id="postCode"
-                       name="postCode"
-                       th:field="*{postCode}"
+        <div class="form-group col-md-6 mb-3">
+            <label for="postCode" class="text-white font-weight-bold">Post Code</label>
+            <input id="postCode"
+                   type="text"
+                   th:name="postCode"
+                   th:field="*{postCode}"
+                   th:errorclass="is-invalid"
+                   class="form-control"
+                   />
+            <p  class="invalid-feedback errors alert alert-danger" th:if="${#fields.hasErrors('postCode')}" th:errorclass="error" th:errors="*{postCode}">
+                Post Code is required.
+            </p>
+        </div>
 
-                       type="text"/>
-                <p class="errors alert alert-danger ">
-                    Post Code is required.
-                </p>
-            </div>
-            <div class="form-group col-md-6 mb-3">
-                <label class="text-center text-white font-weight-bold" for="address">Address</label>
-                <input id="address"
-                       type="text"
-                       name="address"
-                       th:field="*{address}"
-                       />
-                <p class=" errors alert alert-danger">
-                    The brand is required.
-                </p>
-            </div>
+        <div class="form-group">
+          <label class="text-white font-weight-bold" for="address">Address</label>
+             <textarea id="address"
+              type="text"
+              th:name="address"
+              th:field="*{address}"
+                       th:errorclass="is-invalid"
+              ></textarea>
+           <p class="invalid-feedback errors alert alert-danger" th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}">
+        Address is required.
+            </p>
         </div>
         <div class="row">
             <div class="form-group col-md-6 mb-3">
                 <label class="text-center text-white font-weight-bold" for="firm">Delivery Firm</label>
                 <select id="firm"
                        th:name="firm"
-
+                        type="text"
+                        th:errorclass="is-invalid"
                         class="form-control">
                    <option value="">- Select name -</option>
                    <option th:each="t : ${nameFirm}"
+
                         th:text="${t}"
                         th:value="${t}"
                         th:selected="${t} == *{firm}">
                    </option>
                 </select>
-                <p class=" errors alert alert-danger">
+                <p class="invalid-feedback errors alert alert-danger ">
                     Name is required.
                 </p>
             </div>
             <div class="form-group col-md-6 mb-3">
                 <label class="text-center text-white font-weight-bold" for="deliveryAddress">Delivery Firm</label>
                 <select id="deliveryAddress"
+                        type="text"
                        th:name="deliveryAddress"
-
+                       th:errorclass="is-invalid"
                         class="form-control">
                     <option value="">- Select delivery Address -</option>
                     <option th:each="e : ${address}"
+
                             th:text="${e}"
                             th:value="${e}"
-                            th:selected="${e} == *{deliveryAddress}">
+                             th:selected="${e} == *{deliveryAddress}">
                     </option>
                 </select>
-                <p class="errors alert alert-danger">
+                 <p class="invalid-feedback errors alert alert-danger">
                     The delivery Address is required.
                 </p>
-            </div>
-        </div>
+             </div>
+         </div>
         <div class="row">
-            <div class="col col-md-4">
+             <div class="col col-md-4">
                 <div class="card-body">
-                    <input type="submit" class="btn btn-info btn-lg" value="Submit Address"/>
+                     <input type="submit" class="btn btn-info btn-lg" value="Submit Address"/>
                 </div>
             </div>
         </div>
@@ -102,7 +107,7 @@
 </div>
 
 <div>
-    <th:block th:replace="~{navbar/footer}"/>
+
 </div>
 
 </body>

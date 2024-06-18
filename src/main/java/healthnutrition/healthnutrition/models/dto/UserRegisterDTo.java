@@ -17,10 +17,11 @@ public class UserRegisterDTo {
     private String fullName;
     @Positive
     @Min(12)
+    @Max(80)
     @NotNull(message = "The age should be more or equals to 12!")
     private int age;
     @NotBlank(message = "The Phone cannot be empty!")
-    @Size(min = 9)
+    @Size(min = 9, max = 20)
     @UniqueUserPhone
     private String phone;
     @NotBlank(message = "The Password cannot be empty!")

@@ -54,18 +54,27 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void edit(EditUserDTO editUserDTO, String userEmail) {
         Optional<UserEntity> byEmail = userRepositories.findByEmail(userEmail);
+        boolean isEdit = false;
 
         if (!editUserDTO.getFullName().isEmpty()) {
             byEmail.get().setFullName(editUserDTO.getFullName());
+            isEdit =true;
         }
         if (!editUserDTO.getPhone().isEmpty()) {
             byEmail.get().setPhone(editUserDTO.getPhone());
+            isEdit =true;
         }
         if (!editUserDTO.getEmail().isEmpty()) {
             byEmail.get().setEmail(editUserDTO.getEmail());
+            isEdit =true;
         }
-        this.userRepositories.save(byEmail.get());
+      if (isEdit) {
+          this.userRepositories.save(byEmail.get());
+      }
+
     }
+
+
 
     private UserEntity map(UserRegisterDTo userRegisterDTo) {
         UserEntity user = this.mapper.map(userRegisterDTo,UserEntity.class);
