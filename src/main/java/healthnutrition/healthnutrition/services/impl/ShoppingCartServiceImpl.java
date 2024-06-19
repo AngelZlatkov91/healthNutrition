@@ -6,6 +6,7 @@ import healthnutrition.healthnutrition.repositories.ProductRepository;
 import healthnutrition.healthnutrition.repositories.ShoppingCartRepositories;
 import healthnutrition.healthnutrition.repositories.UserRepositories;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
+import org.apache.kafka.common.protocol.types.Field;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -155,10 +156,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return this.shoppingCartRepositories.count();
     }
 
-    @Override
-    public void delete() {
-
-    }
 
 
     private ProductInCartDTO findProduct(UUID uuid) {
@@ -194,6 +191,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         this.shoppingCartRepositories.save(shoppingCart);
         return shoppingCart;
     }
+
 
 
 

@@ -1,20 +1,20 @@
 package healthnutrition.healthnutrition.config;
 
-import healthnutrition.healthnutrition.services.ShoppingCartService;
+import healthnutrition.healthnutrition.services.ProductService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MyScheduledTasks {
 
-private final ShoppingCartService shoppingCartService;
+private final ProductService productService;
 
-    public MyScheduledTasks(ShoppingCartService shoppingCartService) {
-        this.shoppingCartService = shoppingCartService;
+    public MyScheduledTasks(ProductService productService) {
+        this.productService = productService;
     }
 
     @Scheduled(cron = "* 0 9,21 * * *")
-    public void toUser() {
-     this.shoppingCartService.delete();
+    public String QuantitySellerProducts() {
+        return this.productService.sellerProductQuantity();
     }
 }

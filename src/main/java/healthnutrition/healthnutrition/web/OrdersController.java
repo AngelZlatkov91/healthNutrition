@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class OrdersController {
 
-    private ShoppingCartService shoppingCartService;
+    private final ShoppingCartService shoppingCartService;
 
     public OrdersController(ShoppingCartService shoppingCartService) {
         this.shoppingCartService = shoppingCartService;

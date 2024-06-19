@@ -29,6 +29,7 @@ public interface ShoppingCartService {
     AllOrdersDTO allOrdersToSend();
     Long allShoppingCart();
 
-    void delete();
+
+
 
 }

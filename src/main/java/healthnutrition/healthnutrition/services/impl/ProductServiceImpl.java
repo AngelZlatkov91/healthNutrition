@@ -5,6 +5,7 @@ import healthnutrition.healthnutrition.models.entitys.BrandProduct;
 import healthnutrition.healthnutrition.models.entitys.Product;
 import healthnutrition.healthnutrition.models.entitys.TypeProduct;
 import healthnutrition.healthnutrition.repositories.BrandRepository;
+import healthnutrition.healthnutrition.repositories.ProductInCartRepositories;
 import healthnutrition.healthnutrition.repositories.ProductRepository;
 import healthnutrition.healthnutrition.repositories.TypeRepository;
 import healthnutrition.healthnutrition.services.ProductService;
@@ -26,12 +27,14 @@ public class ProductServiceImpl implements ProductService {
     private final TypeRepository typeRepository;
     private final BrandRepository brandRepository;
     private final ModelMapper mapper;
+    private final ProductInCartRepositories productInCartRepositories;
 
-    public ProductServiceImpl(ProductRepository productRepository, TypeRepository typeRepository, BrandRepository brandRepository, ModelMapper mapper) {
+    public ProductServiceImpl(ProductRepository productRepository, TypeRepository typeRepository, BrandRepository brandRepository, ModelMapper mapper, ProductInCartRepositories productInCartRepositories) {
         this.productRepository = productRepository;
         this.typeRepository = typeRepository;
         this.brandRepository = brandRepository;
         this.mapper = mapper;
+        this.productInCartRepositories = productInCartRepositories;
     }
 
     @Override
@@ -65,6 +68,11 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public void deleteProduct(UUID uuid) {
         this.productRepository.deleteByUuid(uuid);
+    }
+
+    @Override
+    public String sellerProductQuantity() {
+        return this.productInCartRepositories.QuantitySellerProduct();
     }
 
 

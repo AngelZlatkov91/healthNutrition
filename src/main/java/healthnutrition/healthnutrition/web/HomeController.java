@@ -1,13 +1,11 @@
 package healthnutrition.healthnutrition.web;
 
+import healthnutrition.healthnutrition.config.MyScheduledTasks;
 import healthnutrition.healthnutrition.models.dto.ArticlesDTO;
 import healthnutrition.healthnutrition.models.dto.GetBrandsDTO;
 import healthnutrition.healthnutrition.models.dto.GetTypesDTO;
 import healthnutrition.healthnutrition.models.dto.ProductDetailsDTO;
-import healthnutrition.healthnutrition.services.ArticlesService;
-import healthnutrition.healthnutrition.services.BrandProductService;
-import healthnutrition.healthnutrition.services.ProductService;
-import healthnutrition.healthnutrition.services.TypeProductService;
+import healthnutrition.healthnutrition.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 public class HomeController {
@@ -24,12 +21,16 @@ public class HomeController {
     private final ArticlesService articlesService;
     private final BrandProductService brandProductService;
     private final TypeProductService typeProductService;
+    private final MyScheduledTasks myScheduledTasks;
 
-    public HomeController(ProductService productService, ArticlesService articlesService, BrandProductService brandProductService, TypeProductService typeProductService) {
+
+    public HomeController(ProductService productService, ArticlesService articlesService, BrandProductService brandProductService, TypeProductService typeProductService, MyScheduledTasks myScheduledTasks) {
         this.productService = productService;
         this.articlesService = articlesService;
         this.brandProductService = brandProductService;
         this.typeProductService = typeProductService;
+
+        this.myScheduledTasks = myScheduledTasks;
     }
 
 
@@ -39,6 +40,8 @@ public class HomeController {
         List<GetBrandsDTO> brands = brandProductService.allBrands();
         List<GetTypesDTO> types = typeProductService.allTypes();
         ArticlesDTO article = articlesService.getArticle();
+        String quantitySellerProducts = this.myScheduledTasks.QuantitySellerProducts();
+        model.addAttribute("quantity",quantitySellerProducts);
         model.addAttribute("brands", brands);
         model.addAttribute("types",types);
         model.addAttribute("article",article);
