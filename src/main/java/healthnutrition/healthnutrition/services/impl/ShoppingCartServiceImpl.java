@@ -1,12 +1,11 @@
 package healthnutrition.healthnutrition.services.impl;
-import healthnutrition.healthnutrition.models.dto.*;
+import healthnutrition.healthnutrition.models.dto.cartDTOS.*;
 import healthnutrition.healthnutrition.models.entitys.*;
 import healthnutrition.healthnutrition.repositories.ProductInCartRepositories;
 import healthnutrition.healthnutrition.repositories.ProductRepository;
 import healthnutrition.healthnutrition.repositories.ShoppingCartRepositories;
 import healthnutrition.healthnutrition.repositories.UserRepositories;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
-import org.apache.kafka.common.protocol.types.Field;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,7 +79,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void decrease(String getName) {
-        this.shoppingCartDTO.getProducts().get(getName).decreaseQuantity();
+         if (this.shoppingCartDTO.getProducts().get(getName).getQuantity() > 1) {
+             this.shoppingCartDTO.getProducts().get(getName).decreaseQuantity();
+         }
     }
 
     @Override

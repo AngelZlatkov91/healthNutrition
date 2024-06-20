@@ -1,5 +1,5 @@
 package healthnutrition.healthnutrition.services.impl;
-import healthnutrition.healthnutrition.models.dto.DeliveryDataDTO;
+import healthnutrition.healthnutrition.models.dto.cartDTOS.DeliveryDataDTO;
 import healthnutrition.healthnutrition.models.entitys.Address;
 import healthnutrition.healthnutrition.models.entitys.UserEntity;
 import healthnutrition.healthnutrition.repositories.DeliveryDataRepositories;

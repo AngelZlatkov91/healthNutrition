@@ -1,12 +1,10 @@
 package healthnutrition.healthnutrition.web;
 
-import healthnutrition.healthnutrition.models.dto.ArticlesDTO;
+import healthnutrition.healthnutrition.models.dto.articlesDTOS.ArticlesDTO;
 import healthnutrition.healthnutrition.services.ArticlesService;
-import healthnutrition.healthnutrition.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

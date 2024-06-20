@@ -1,7 +1,7 @@
 package healthnutrition.healthnutrition.web;
-import healthnutrition.healthnutrition.models.dto.ArchiveDTO;
-import healthnutrition.healthnutrition.models.dto.EditUserDTO;
-import healthnutrition.healthnutrition.models.dto.UserUpdateDTO;
+import healthnutrition.healthnutrition.models.dto.cartDTOS.ArchiveDTO;
+import healthnutrition.healthnutrition.models.dto.userDTOS.EditUserDTO;
+import healthnutrition.healthnutrition.models.dto.userDTOS.UserUpdateDTO;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
 import healthnutrition.healthnutrition.services.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

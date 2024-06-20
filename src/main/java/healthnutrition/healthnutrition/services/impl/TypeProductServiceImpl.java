@@ -1,7 +1,7 @@
 package healthnutrition.healthnutrition.services.impl;
 
-import healthnutrition.healthnutrition.models.dto.GetTypesDTO;
-import healthnutrition.healthnutrition.models.dto.TypeProductDTO;
+import healthnutrition.healthnutrition.models.dto.productDTOS.GetTypesDTO;
+import healthnutrition.healthnutrition.models.dto.productDTOS.TypeProductDTO;
 import healthnutrition.healthnutrition.models.entitys.TypeProduct;
 import healthnutrition.healthnutrition.repositories.TypeRepository;
 import healthnutrition.healthnutrition.services.TypeProductService;

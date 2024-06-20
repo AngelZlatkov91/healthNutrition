@@ -1,6 +1,6 @@
 package healthnutrition.healthnutrition.services.impl;
 
-import healthnutrition.healthnutrition.models.dto.ArticlesDTO;
+import healthnutrition.healthnutrition.models.dto.articlesDTOS.ArticlesDTO;
 import healthnutrition.healthnutrition.models.entitys.Articles;
 import healthnutrition.healthnutrition.repositories.ArticlesRepositories;
 import healthnutrition.healthnutrition.services.ArticlesService;
@@ -17,7 +17,6 @@ import java.util.UUID;
 public class ArticlesServiceImpl implements ArticlesService {
     private final ArticlesRepositories articlesRepositories;
     private final ModelMapper mapper;
-
 
 
     public ArticlesServiceImpl(ArticlesRepositories articlesRepositories, ModelMapper mapper) {

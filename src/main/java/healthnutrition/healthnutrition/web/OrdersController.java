@@ -1,6 +1,6 @@
 package healthnutrition.healthnutrition.web;
 
-import healthnutrition.healthnutrition.models.dto.AllOrdersDTO;
+import healthnutrition.healthnutrition.models.dto.cartDTOS.AllOrdersDTO;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

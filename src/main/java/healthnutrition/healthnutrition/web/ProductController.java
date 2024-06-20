@@ -1,13 +1,11 @@
 package healthnutrition.healthnutrition.web;
-import healthnutrition.healthnutrition.models.dto.ProductCreateDTO;
-import healthnutrition.healthnutrition.models.dto.ProductDetailsDTO;
+import healthnutrition.healthnutrition.models.dto.productDTOS.ProductCreateDTO;
+import healthnutrition.healthnutrition.models.dto.productDTOS.ProductDetailsDTO;
 import healthnutrition.healthnutrition.services.BrandProductService;
 import healthnutrition.healthnutrition.services.ProductService;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
 import healthnutrition.healthnutrition.services.TypeProductService;
 import jakarta.validation.Valid;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;

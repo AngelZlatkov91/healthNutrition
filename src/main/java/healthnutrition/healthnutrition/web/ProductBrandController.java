@@ -1,6 +1,6 @@
 package healthnutrition.healthnutrition.web;
 
-import healthnutrition.healthnutrition.models.dto.BrandProductDTO;
+import healthnutrition.healthnutrition.models.dto.productDTOS.BrandProductDTO;
 import healthnutrition.healthnutrition.services.BrandProductService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;

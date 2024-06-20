@@ -1,8 +1,8 @@
 package healthnutrition.healthnutrition.services;
 
-import healthnutrition.healthnutrition.models.dto.EditUserDTO;
-import healthnutrition.healthnutrition.models.dto.UserRegisterDTo;
-import healthnutrition.healthnutrition.models.dto.UserUpdateDTO;
+import healthnutrition.healthnutrition.models.dto.userDTOS.EditUserDTO;
+import healthnutrition.healthnutrition.models.dto.userDTOS.UserRegisterDTo;
+import healthnutrition.healthnutrition.models.dto.userDTOS.UserUpdateDTO;
 
 public interface UserService {
     void registerUser(UserRegisterDTo userRegisterDTo);

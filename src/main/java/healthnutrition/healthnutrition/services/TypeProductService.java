@@ -1,7 +1,7 @@
 package healthnutrition.healthnutrition.services;
 
-import healthnutrition.healthnutrition.models.dto.GetTypesDTO;
-import healthnutrition.healthnutrition.models.dto.TypeProductDTO;
+import healthnutrition.healthnutrition.models.dto.productDTOS.GetTypesDTO;
+import healthnutrition.healthnutrition.models.dto.productDTOS.TypeProductDTO;
 
 import java.util.List;
 

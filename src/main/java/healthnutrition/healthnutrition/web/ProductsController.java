@@ -1,5 +1,5 @@
 package healthnutrition.healthnutrition.web;
-import healthnutrition.healthnutrition.models.dto.ProductDetailsDTO;
+import healthnutrition.healthnutrition.models.dto.productDTOS.ProductDetailsDTO;
 import healthnutrition.healthnutrition.services.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -5,9 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
+@RequestMapping("/users")
 public class UserLoginController {
 
     private final UserService userService;
@@ -17,12 +19,12 @@ public class UserLoginController {
     }
 
 
-    @GetMapping("/users/login")
+    @GetMapping("/login")
     public String login(){
         return "auth-login";
     }
 
-    @PostMapping("/users/login-error")
+    @PostMapping("/login-error")
     public String onFailure(@ModelAttribute("email") String email, Model model) {
          model.addAttribute("email",email);
         model.addAttribute("bad_credentials","true");

@@ -1,7 +1,7 @@
 package healthnutrition.healthnutrition.services;
 
-import healthnutrition.healthnutrition.models.dto.ProductCreateDTO;
-import healthnutrition.healthnutrition.models.dto.ProductDetailsDTO;
+import healthnutrition.healthnutrition.models.dto.productDTOS.ProductCreateDTO;
+import healthnutrition.healthnutrition.models.dto.productDTOS.ProductDetailsDTO;
 
 import java.util.List;
 import java.util.UUID;

@@ -1,5 +1,7 @@
 package healthnutrition.healthnutrition.web;
-import healthnutrition.healthnutrition.models.dto.*;
+import healthnutrition.healthnutrition.models.dto.cartDTOS.DeliveryDataDTO;
+import healthnutrition.healthnutrition.models.dto.cartDTOS.ProductInCartDTO;
+import healthnutrition.healthnutrition.models.dto.cartDTOS.ShoppingCartDTO;
 import healthnutrition.healthnutrition.models.enums.DeliveryAddress;
 import healthnutrition.healthnutrition.models.enums.DeliveryFirmEnum;
 import healthnutrition.healthnutrition.services.DeliveryDataService;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.UUID;
 

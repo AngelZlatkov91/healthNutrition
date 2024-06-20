@@ -1,10 +1,10 @@
 package healthnutrition.healthnutrition.web;
 
 import healthnutrition.healthnutrition.config.MyScheduledTasks;
-import healthnutrition.healthnutrition.models.dto.ArticlesDTO;
-import healthnutrition.healthnutrition.models.dto.GetBrandsDTO;
-import healthnutrition.healthnutrition.models.dto.GetTypesDTO;
-import healthnutrition.healthnutrition.models.dto.ProductDetailsDTO;
+import healthnutrition.healthnutrition.models.dto.articlesDTOS.ArticlesDTO;
+import healthnutrition.healthnutrition.models.dto.productDTOS.GetBrandsDTO;
+import healthnutrition.healthnutrition.models.dto.productDTOS.GetTypesDTO;
+import healthnutrition.healthnutrition.models.dto.productDTOS.ProductDetailsDTO;
 import healthnutrition.healthnutrition.services.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

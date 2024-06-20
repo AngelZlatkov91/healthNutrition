@@ -1,9 +1,9 @@
 package healthnutrition.healthnutrition.services.impl;
 
 import healthnutrition.healthnutrition.event.UserRegisterEvent;
-import healthnutrition.healthnutrition.models.dto.EditUserDTO;
-import healthnutrition.healthnutrition.models.dto.UserRegisterDTo;
-import healthnutrition.healthnutrition.models.dto.UserUpdateDTO;
+import healthnutrition.healthnutrition.models.dto.userDTOS.EditUserDTO;
+import healthnutrition.healthnutrition.models.dto.userDTOS.UserRegisterDTo;
+import healthnutrition.healthnutrition.models.dto.userDTOS.UserUpdateDTO;
 import healthnutrition.healthnutrition.models.entitys.UserEntity;
 import healthnutrition.healthnutrition.models.enums.UserRoleEnum;
 import healthnutrition.healthnutrition.repositories.UserRepositories;

@@ -1,7 +1,7 @@
 package healthnutrition.healthnutrition.services.impl;
 
-import healthnutrition.healthnutrition.models.dto.BrandProductDTO;
-import healthnutrition.healthnutrition.models.dto.GetBrandsDTO;
+import healthnutrition.healthnutrition.models.dto.productDTOS.BrandProductDTO;
+import healthnutrition.healthnutrition.models.dto.productDTOS.GetBrandsDTO;
 import healthnutrition.healthnutrition.models.entitys.BrandProduct;
 import healthnutrition.healthnutrition.repositories.BrandRepository;
 import healthnutrition.healthnutrition.services.BrandProductService;
