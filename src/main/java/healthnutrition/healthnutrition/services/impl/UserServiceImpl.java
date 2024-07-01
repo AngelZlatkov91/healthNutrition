@@ -4,7 +4,7 @@ import healthnutrition.healthnutrition.event.UserRegisterEvent;
 import healthnutrition.healthnutrition.models.dto.userDTOS.EditUserDTO;
 import healthnutrition.healthnutrition.models.dto.userDTOS.UserRegisterDTo;
 import healthnutrition.healthnutrition.models.dto.userDTOS.UserUpdateDTO;
-import healthnutrition.healthnutrition.models.entitys.UserEntity;
+import healthnutrition.healthnutrition.models.entitys.User;
 import healthnutrition.healthnutrition.models.enums.UserRoleEnum;
 import healthnutrition.healthnutrition.repositories.UserRepositories;
 import healthnutrition.healthnutrition.services.UserService;
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserUpdateDTO getUserData(String userName) {
-        Optional<UserEntity> byEmail = this.userRepositories.findByEmail(userName);
+        Optional<User> byEmail = this.userRepositories.findByEmail(userName);
           UserUpdateDTO user = new UserUpdateDTO();
           user.setEmail(byEmail.get().getEmail());
           user.setFullName(byEmail.get().getFullName());
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void edit(EditUserDTO editUserDTO, String userEmail) {
-        Optional<UserEntity> byEmail = userRepositories.findByEmail(userEmail);
+        Optional<User> byEmail = userRepositories.findByEmail(userEmail);
         boolean isEdit = false;
 
         if (!editUserDTO.getFullName().isEmpty()) {
@@ -76,8 +76,8 @@ public class UserServiceImpl implements UserService {
 
 
 
-    private UserEntity map(UserRegisterDTo userRegisterDTo) {
-        UserEntity user = this.mapper.map(userRegisterDTo,UserEntity.class);
+    private User map(UserRegisterDTo userRegisterDTo) {
+        User user = this.mapper.map(userRegisterDTo, User.class);
 //        user.setFullName(userRegisterDTo.getFullName());
 //        user.setEmail(userRegisterDTo.getEmail());
 //        user.setPhone(userRegisterDTo.getPhone());

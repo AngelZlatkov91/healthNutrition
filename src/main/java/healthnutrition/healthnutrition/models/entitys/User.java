@@ -4,15 +4,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
 @Entity
 @Table(name = "users")
-public class UserEntity extends BaseEntity{
+public class User extends BaseEntity{
     @Column(nullable = false,unique = true)
     @Email
     private String email;
@@ -36,7 +34,7 @@ public class UserEntity extends BaseEntity{
     private Set<ShoppingCart> shoppingCarts;
 
 
-    public UserEntity() {
+    public User() {
        this.shoppingCarts = new HashSet<>();
     }
 

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public class TypeProductDTO {
    @NotBlank
-     @UniqueTypeProduct
+   @UniqueTypeProduct
     private String type;
 
     public String getType() {

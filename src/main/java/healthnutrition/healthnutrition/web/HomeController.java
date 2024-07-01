@@ -40,8 +40,8 @@ public class HomeController {
         List<GetBrandsDTO> brands = brandProductService.allBrands();
         List<GetTypesDTO> types = typeProductService.allTypes();
         ArticlesDTO article = articlesService.getArticle();
-        String quantitySellerProducts = this.myScheduledTasks.QuantitySellerProducts();
-        model.addAttribute("quantity",quantitySellerProducts);
+
+
         model.addAttribute("brands", brands);
         model.addAttribute("types",types);
         model.addAttribute("article",article);

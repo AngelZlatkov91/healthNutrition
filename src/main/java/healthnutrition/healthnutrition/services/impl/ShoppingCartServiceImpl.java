@@ -92,7 +92,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ArchiveDTO allShoppingCarts(String user) {
         ArchiveDTO archiveDTO = new ArchiveDTO();
-        Optional<UserEntity> byEmail = this.userRepositories.findByEmail(user);
+        Optional<User> byEmail = this.userRepositories.findByEmail(user);
         List<ShoppingCart> allByUser = this.shoppingCartRepositories.findAllByUserOrderByDateDesc(byEmail.get());
         List<ArchiveShoppingCartDTO> allCarts = new ArrayList<>();
         for (ShoppingCart shop : allByUser) {
@@ -120,7 +120,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
          List<OrderDTO> orderDTOList = new ArrayList<>();
         List<ShoppingCart> allByDate = this.shoppingCartRepositories.findAllByDate(LocalDate.now());
         for (ShoppingCart cart : allByDate) {
-            UserEntity user = cart.getUser();
+            User user = cart.getUser();
             Address userAddress = cart.getUser().getAddress();
             String address = String.format("%s %s %s",userAddress.getCity(),userAddress.getPostCode(),userAddress.getAddress());
             String deliver = String.format("%s %s %.2f",userAddress.getFirm(),userAddress.getDeliveryAddress(),userAddress.getPriceForDelivery());
@@ -170,7 +170,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     private ShoppingCart addProduct (String user) {
          List<ProductInCart> products = new ArrayList<>();
-        Optional<UserEntity> byEmail = this.userRepositories.findByEmail(user);
+        Optional<User> byEmail = this.userRepositories.findByEmail(user);
 
         for (ProductInCartDTO productFromCart : this.shoppingCartDTO.getProducts().values()) {
             Optional<Product> byName = this.productRepository.findByName(productFromCart.getName());

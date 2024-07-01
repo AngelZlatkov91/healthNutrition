@@ -1,7 +1,7 @@
 package healthnutrition.healthnutrition.services.impl;
 import healthnutrition.healthnutrition.models.dto.cartDTOS.DeliveryDataDTO;
 import healthnutrition.healthnutrition.models.entitys.Address;
-import healthnutrition.healthnutrition.models.entitys.UserEntity;
+import healthnutrition.healthnutrition.models.entitys.User;
 import healthnutrition.healthnutrition.repositories.DeliveryDataRepositories;
 import healthnutrition.healthnutrition.repositories.UserRepositories;
 import healthnutrition.healthnutrition.services.DeliveryDataService;
@@ -26,7 +26,7 @@ public class DeliveryDataServiceImpl implements DeliveryDataService {
 
     @Override
     public void addAddress(DeliveryDataDTO deliveryDataDTO, String user) {
-        Optional<UserEntity> byEmail = this.userRepositories.findByEmail(user);
+        Optional<User> byEmail = this.userRepositories.findByEmail(user);
         deliveryDataDTO.add();
         Address address = this.mapper.map(deliveryDataDTO, Address.class);
 //                  address.setCity(deliveryDataDTO.getCity());

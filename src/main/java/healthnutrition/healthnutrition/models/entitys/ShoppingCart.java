@@ -12,7 +12,7 @@ public class ShoppingCart extends BaseEntity {
     @JdbcTypeCode(Types.VARCHAR)
     private UUID deliveryNumber;
     @ManyToOne
-    private UserEntity user;
+    private User user;
     @OneToMany
     private List<ProductInCart> products;
     @Column
@@ -37,11 +37,11 @@ public class ShoppingCart extends BaseEntity {
         setGivenToDeliveriFirm(true);
     }
 
-    public UserEntity getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(UserEntity user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
