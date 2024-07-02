@@ -27,7 +27,7 @@ public class BrandProductServiceImpl implements BrandProductService {
     @Override
     public List<GetBrandsDTO> allBrands() {
         return this.brandRepository.findAll().stream()
-                .map(brand -> new GetBrandsDTO(brand.getBrand()))
+                .map(brand -> new GetBrandsDTO(brand.getBrand(), brand.getImageUrl()))
                 .collect(Collectors.toList());
     }
 }

@@ -42,9 +42,12 @@ public class HomeController {
         ArticlesDTO article = articlesService.getArticle();
 
 
+            model.addAttribute("article",article);
+
+
         model.addAttribute("brands", brands);
         model.addAttribute("types",types);
-        model.addAttribute("article",article);
+
         return "home";
     }
 

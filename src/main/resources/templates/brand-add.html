@@ -30,6 +30,16 @@
                     The brand is required.
                 </p>
             </div>
+            <div class="form-group">
+                <label class="text-white font-weight-bold" for="imageUrl">Image URL</label>
+                <input id="imageUrl"
+                       th:name="imageUrl"
+                       th:errorclass="is-invalid"
+                       th:field="*{imageUrl}"
+                       type="url"
+                       class="form-control"
+                       placeholder="Put product image URL here">
+            </div>
         </div>
         <div class="row">
             <div class="col col-md-4">

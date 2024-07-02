@@ -28,8 +28,10 @@
         <div th:each="brand: ${brands}"
              class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
             <span class="card-img-top-wrapper text-center">
-                <a class="text-center nav-link" th:text="${brand.brand()}"
-                th:href="@{/search/{searchKey}(searchKey=${brand.brand()})}"></a>
+                <a
+                th:href="@{/search/{searchKey}(searchKey=${brand.brand()})}">
+                    <img class="card-img-top" th:src="*{brand.imageUrl()}" alt="Article image">
+                </a>
             </span>
         </div>
     </div>

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.Optional;
 
@@ -37,8 +38,16 @@ class TypeRepositoryTest {
 
     @Test
     public void addExistingType(){
-      typeRepository.save(typeProduct);
-      assertEquals(1,typeRepository.count());
+        TypeProduct typeProduct1 = new TypeProduct();
+        typeProduct1.setType("Protein");
+
+        Exception exception = assertThrows(DataIntegrityViolationException.class, () -> {
+            typeRepository.save(typeProduct1);
+        });
+        String expectedMessage = "could not execute statement";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
 

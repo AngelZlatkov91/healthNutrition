@@ -15,11 +15,6 @@ public class UserRegisterDTo {
     @Size(min = 3,max = 20)
     @NotBlank(message = "The fullName cannot be empty!")
     private String fullName;
-    @Positive
-    @Min(12)
-    @Max(80)
-    @NotNull(message = "The age should be more or equals to 12!")
-    private int age;
     @NotBlank(message = "The Phone cannot be empty!")
     @Size(min = 9, max = 20)
     @UniqueUserPhone
@@ -47,13 +42,6 @@ public class UserRegisterDTo {
         this.fullName = fullName;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
 
     public String getPhone() {
         return phone;

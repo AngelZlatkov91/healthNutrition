@@ -68,6 +68,19 @@ class ArticlesServiceImplTest {
         Page<ArticlesDTO> articlesDTOS = articlesService.allArticles(pageable);
         assertEquals(1,articlesDTOS.stream().count());
     }
+    @Test
+    public void getAllArticle() {
+        ArticlesDTO articlesDTO = articlesDTO();
+        ArticlesDTO articlesDTO1 = new ArticlesDTO();
+        articlesDTO1.setTitle("second article");
+        articlesDTO1.setDescription("description");
+        articlesService.addArticle(articlesDTO);
+        articlesService.addArticle(articlesDTO1);
+        ArticlesDTO articlesDTOS = articlesService.getArticle();
+        assertNotNull(articlesDTOS);
+    }
+
+
 
 
 

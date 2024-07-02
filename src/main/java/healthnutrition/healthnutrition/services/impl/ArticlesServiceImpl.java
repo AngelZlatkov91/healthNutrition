@@ -47,11 +47,15 @@ public class ArticlesServiceImpl implements ArticlesService {
 
     @Override
     public ArticlesDTO getArticle() {
+        if (articlesRepositories.count() == 0){
+            return null;
+        }
         Random random = new Random();
         Long size = random.nextLong(0,this.articlesRepositories.count());
         if (size > this.articlesRepositories.count() || size <= 0) {
             size = this.articlesRepositories.count();
         }
+
         Optional<Articles> byId = articlesRepositories.findById(size);
         return map(byId.get());
     }

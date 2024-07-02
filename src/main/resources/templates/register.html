@@ -18,7 +18,7 @@
 
     <!-- Registration form start -->
     <form
-            th:action="@{/register}"
+            th:action="@{/users/register}"
             th:method="POST"
             th:object="${userRegistrationDTO}"
             class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
@@ -49,18 +49,6 @@
                        placeholder="Email"/>
                 <p class="errors alert alert-danger invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}">
                     Email is required.
-                </p>
-            </div>
-            <div class="form-group col-md-6 mb-3">
-                <label for="age" class="text-white font-weight-bold">Age</label>
-                <input id="age"
-                       name="age"
-                       th:field="*{age}"
-                       th:errorclass="is-invalid"
-                       min="12"
-                       type="number"/>
-                <p class="errors alert alert-danger invalid-feedback" th:if="${#fields.hasErrors('age')}" th:errorclass="error" th:errors="*{age}">
-                    Age must be more than 12!
                 </p>
             </div>
             <div class="form-group col-md-6 mb-3">

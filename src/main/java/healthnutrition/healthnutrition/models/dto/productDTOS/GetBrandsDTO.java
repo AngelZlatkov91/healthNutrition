@@ -1,4 +1,4 @@
 package healthnutrition.healthnutrition.models.dto.productDTOS;
 
-public record GetBrandsDTO (String brand) {
+public record GetBrandsDTO (String brand, String imageUrl) {
 }

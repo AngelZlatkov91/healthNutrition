@@ -80,6 +80,21 @@ class UserServiceImplTest {
         UserUpdateDTO userData = userService.getUserData("ango_z@abv.bg");
         assertEquals(userData.getEmail(),editUserDTO.getEmail());
     }
+    @Test
+    public void editUserDataAll(){
+        UserRegisterDTo userRegisterDTo = userDTO();
+        userService.registerUser(userRegisterDTo);
+        EditUserDTO editUserDTO = new EditUserDTO();
+        editUserDTO.setFullName("Ivaylo");
+        editUserDTO.setPhone("0878343740");
+        editUserDTO.setEmail("ango_z@abv.bg");
+        userService.edit(editUserDTO,userRegisterDTo.getEmail());
+
+        UserUpdateDTO userData = userService.getUserData("ango_z@abv.bg");
+        assertEquals(userData.getEmail(),editUserDTO.getEmail());
+        assertEquals(userData.getFullName(),editUserDTO.getFullName());
+
+    }
 
 
 
@@ -89,7 +104,6 @@ class UserServiceImplTest {
         userRegisterDTo.setFullName("Angel zlatkov");
         userRegisterDTo.setEmail("angoz@abv.bg");
         userRegisterDTo.setPhone("0893451814");
-        userRegisterDTo.setAge(33);
         userRegisterDTo.setPassword("1324");
         userRegisterDTo.setConfirmPassword("1324");
         return userRegisterDTo;
