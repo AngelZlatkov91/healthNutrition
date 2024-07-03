@@ -24,8 +24,6 @@ public class User extends BaseEntity{
     @Column(nullable = false)
     private String password;
 
-    @ManyToOne
-    private Address address;
 
     @Enumerated(EnumType.STRING)
     private UserRoleEnum role;
@@ -72,13 +70,6 @@ public class User extends BaseEntity{
         this.password = password;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
 
 
     public UserRoleEnum getRole() {

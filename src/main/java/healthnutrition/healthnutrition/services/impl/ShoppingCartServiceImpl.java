@@ -1,10 +1,7 @@
 package healthnutrition.healthnutrition.services.impl;
 import healthnutrition.healthnutrition.models.dto.cartDTOS.*;
 import healthnutrition.healthnutrition.models.entitys.*;
-import healthnutrition.healthnutrition.repositories.ProductInCartRepositories;
-import healthnutrition.healthnutrition.repositories.ProductRepository;
-import healthnutrition.healthnutrition.repositories.ShoppingCartRepositories;
-import healthnutrition.healthnutrition.repositories.UserRepositories;
+import healthnutrition.healthnutrition.repositories.*;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +17,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final ProductRepository productRepository;
     private final ShoppingCartRepositories shoppingCartRepositories;
      private final UserRepositories userRepositories;
+     private final DeliveryDataRepositories deliveryDataRepositories;
 
      private final ShoppingCartDTO shoppingCartDTO;
      private final ProductInCartRepositories productInCartRepositories;
@@ -31,10 +29,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 
      @Autowired
-    public ShoppingCartServiceImpl(ProductRepository productRepository, ShoppingCartRepositories shoppingCartRepositories, UserRepositories userRepositories, ProductInCartRepositories productInCartRepositories, ModelMapper mapper) {
+    public ShoppingCartServiceImpl(ProductRepository productRepository, ShoppingCartRepositories shoppingCartRepositories, UserRepositories userRepositories, DeliveryDataRepositories deliveryDataRepositories, ProductInCartRepositories productInCartRepositories, ModelMapper mapper) {
         this.productRepository = productRepository;
         this.shoppingCartRepositories = shoppingCartRepositories;
         this.userRepositories = userRepositories;
+         this.deliveryDataRepositories = deliveryDataRepositories;
          this.productInCartRepositories = productInCartRepositories;
          this.mapper = mapper;
          this.shoppingCartDTO = new ShoppingCartDTO();
@@ -62,8 +61,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public UUID finalStep(String user) {
-        ShoppingCart shoppingCart = addProduct(user);
+    public UUID finalStep(String user,DeliveryDataDTO data) {
+        ShoppingCart shoppingCart = addProduct(user,data);
         return shoppingCart.getDeliveryNumber();
     }
 
@@ -121,7 +120,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         List<ShoppingCart> allByDate = this.shoppingCartRepositories.findAllByDate(LocalDate.now());
         for (ShoppingCart cart : allByDate) {
             User user = cart.getUser();
-            Address userAddress = cart.getUser().getAddress();
+            Address userAddress = cart.getAddress();
             String address = String.format("%s %s %s",userAddress.getCity(),userAddress.getPostCode(),userAddress.getAddress());
             String deliver = String.format("%s %s %.2f",userAddress.getFirm(),userAddress.getDeliveryAddress(),userAddress.getPriceForDelivery());
             OrderDTO orderDTO =this.mapper.map(user,OrderDTO.class);
@@ -168,7 +167,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return product;
     }
 
-    private ShoppingCart addProduct (String user) {
+    private ShoppingCart addProduct (String user,DeliveryDataDTO data) {
          List<ProductInCart> products = new ArrayList<>();
         Optional<User> byEmail = this.userRepositories.findByEmail(user);
 
@@ -184,6 +183,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setDeliveryNumber(UUID.randomUUID());
         shoppingCart.setUser(byEmail.get());
+        shoppingCart.setAddress(address(data));
         shoppingCart.setProducts(products);
         shoppingCart.setDate(LocalDate.now());
         shoppingCart.setPrice(calculateTotalPrice());
@@ -193,9 +193,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCart;
     }
 
-
-
-
+    private Address address(DeliveryDataDTO data) {
+         data.add();
+         Address address = this.mapper.map(data,Address.class);
+            deliveryDataRepositories.save(address);
+         return address;
+    }
 
 
 }

@@ -10,17 +10,21 @@ import java.util.*;
 public class ShoppingCart extends BaseEntity {
 
     @JdbcTypeCode(Types.VARCHAR)
+    @Column(nullable = false)
     private UUID deliveryNumber;
     @ManyToOne
     private User user;
+    @ManyToOne
+    private Address address;
     @OneToMany
     private List<ProductInCart> products;
-    @Column
+    @Column(nullable = false)
     private LocalDate date;
-    @Column
+    @Column(nullable = false)
     private Double price;
 
-    @Column
+
+    @Column(nullable = false)
     private boolean isGivenToDeliveriFirm;
 
     public ShoppingCart (){
@@ -75,5 +79,13 @@ public class ShoppingCart extends BaseEntity {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

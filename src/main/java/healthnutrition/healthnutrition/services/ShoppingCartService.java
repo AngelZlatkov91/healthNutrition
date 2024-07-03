@@ -2,6 +2,7 @@ package healthnutrition.healthnutrition.services;
 
 import healthnutrition.healthnutrition.models.dto.cartDTOS.AllOrdersDTO;
 import healthnutrition.healthnutrition.models.dto.cartDTOS.ArchiveDTO;
+import healthnutrition.healthnutrition.models.dto.cartDTOS.DeliveryDataDTO;
 import healthnutrition.healthnutrition.models.dto.cartDTOS.ShoppingCartDTO;
 
 import java.util.UUID;
@@ -15,7 +16,7 @@ public interface ShoppingCartService {
 
     Double calculateTotalPrice();
 
-    UUID finalStep(String user);
+    UUID finalStep(String user, DeliveryDataDTO data);
 
     ShoppingCartDTO productInCart();
 

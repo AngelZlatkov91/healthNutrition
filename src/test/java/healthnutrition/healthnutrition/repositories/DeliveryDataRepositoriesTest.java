@@ -50,7 +50,6 @@ class DeliveryDataRepositoriesTest {
         });
         String expectedMessage = "could not execute statement";
         String actualMessage = exception.getMessage();
-
         assertTrue(actualMessage.contains(expectedMessage));
     }
 

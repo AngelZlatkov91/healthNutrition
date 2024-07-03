@@ -4,7 +4,6 @@ import healthnutrition.healthnutrition.models.dto.cartDTOS.ProductInCartDTO;
 import healthnutrition.healthnutrition.models.dto.cartDTOS.ShoppingCartDTO;
 import healthnutrition.healthnutrition.models.enums.DeliveryAddress;
 import healthnutrition.healthnutrition.models.enums.DeliveryFirmEnum;
-import healthnutrition.healthnutrition.services.DeliveryDataService;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,14 +27,13 @@ public class ShopCartController {
 
     private final ShoppingCartService shoppingCartService;
 
-    private final DeliveryDataService deliveryDataService;
     private double price;
     private UUID uuid;
     private  int size;
 
-    public ShopCartController(ShoppingCartService shoppingCartService, DeliveryDataService deliveryDataService) {
+    public ShopCartController(ShoppingCartService shoppingCartService) {
         this.shoppingCartService = shoppingCartService;
-        this.deliveryDataService = deliveryDataService;
+
         this.price = 0.0;
         this.uuid = null;
         this.size = 0;
@@ -106,8 +104,7 @@ public class ShopCartController {
     public String finalDelivery(@Valid DeliveryDataDTO data,
                                       BindingResult bindingResult,
                                        RedirectAttributes rAtt,
-                                @AuthenticationPrincipal UserDetails user){
-
+                                @AuthenticationPrincipal UserDetails user) {
 
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.data",bindingResult);
@@ -115,10 +112,10 @@ public class ShopCartController {
           return "redirect:/delivery";
         }
         String userEmail = user.getUsername();
-        this.deliveryDataService.addAddress(data,userEmail);
+        data.add();
         this.price = this.price + data.getPriceForDelivery();
        // model.addAttribute("price",price);
-        UUID step = this.shoppingCartService.finalStep(userEmail);
+        UUID step = this.shoppingCartService.finalStep(userEmail,data);
         this.uuid = step;
          return "redirect:/succses-delivery";
     }
