@@ -29,7 +29,7 @@ public interface ShoppingCartService {
     ArchiveDTO allShoppingCarts(String user);
 
     AllOrdersDTO allOrdersToSend();
-    Long allShoppingCart();
+
 
 
 

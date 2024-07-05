@@ -3,13 +3,12 @@ import healthnutrition.healthnutrition.models.dto.cartDTOS.*;
 import healthnutrition.healthnutrition.models.entitys.*;
 import healthnutrition.healthnutrition.repositories.*;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.*;
-
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
@@ -41,6 +40,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 
     @Override
+    //add product to cart
     public void addProductToShoppingCart(UUID uuid) {
         ProductInCartDTO product = findProduct(uuid);
         if (this.shoppingCartDTO.getProducts().containsKey(product.getName())) {
@@ -49,9 +49,29 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             this.shoppingCartDTO.getProducts().put(product.getName(),product);
         }
     }
+    @Override
+    // remove product from card
+    public void remove(String getName) {
+        this.shoppingCartDTO.getProducts().remove(getName);
+    }
+
+    @Override
+    // decrease quantity product
+    public void decrease(String getName) {
+        if (this.shoppingCartDTO.getProducts().get(getName).getQuantity() > 1) {
+            this.shoppingCartDTO.getProducts().get(getName).decreaseQuantity();
+        }
+    }
+
+    @Override
+    // increase quantity product
+    public void increase(String getName) {
+        this.shoppingCartDTO.getProducts().get(getName).increaseQuantity();
+    }
 
 
     @Override
+    // calculate the price for all product in cart
     public Double calculateTotalPrice() {
          Double totalPrice = 0.0;
          for (ProductInCartDTO product : this.shoppingCartDTO.getProducts().values()) {
@@ -61,34 +81,27 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+
     public UUID finalStep(String user,DeliveryDataDTO data) {
-        ShoppingCart shoppingCart = addProduct(user,data);
+        Optional<User> byEmail = this.userRepositories.findByEmail(user);
+        ShoppingCart shoppingCart = addProduct(data);
+        shoppingCart.setUser(byEmail.get());
+        byEmail.get().getShoppingCarts().add(shoppingCart);
+
+        this.shoppingCartRepositories.save(shoppingCart);
         return shoppingCart.getDeliveryNumber();
     }
 
     @Override
+    // get al product for current shopping cart
     public ShoppingCartDTO productInCart() {
         return this.shoppingCartDTO;
     }
 
-    @Override
-    public void remove(String getName) {
-        this.shoppingCartDTO.getProducts().remove(getName);
-    }
+
 
     @Override
-    public void decrease(String getName) {
-         if (this.shoppingCartDTO.getProducts().get(getName).getQuantity() > 1) {
-             this.shoppingCartDTO.getProducts().get(getName).decreaseQuantity();
-         }
-    }
-
-    @Override
-    public void increase(String getName) {
-        this.shoppingCartDTO.getProducts().get(getName).increaseQuantity();
-    }
-
-    @Override
+    // all shopping cart  from current user
     public ArchiveDTO allShoppingCarts(String user) {
         ArchiveDTO archiveDTO = new ArchiveDTO();
         Optional<User> byEmail = this.userRepositories.findByEmail(user);
@@ -114,6 +127,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    // only for admin to see all shopping cart for the day
     public AllOrdersDTO allOrdersToSend() {
          AllOrdersDTO allOrdersDTO = new AllOrdersDTO();
          List<OrderDTO> orderDTOList = new ArrayList<>();
@@ -151,10 +165,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return allOrdersDTO;
     }
 
-    @Override
-    public Long allShoppingCart() {
-        return this.shoppingCartRepositories.count();
-    }
+
 
 
 
@@ -167,10 +178,24 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return product;
     }
 
-    private ShoppingCart addProduct (String user,DeliveryDataDTO data) {
+    protected ShoppingCart addProduct (DeliveryDataDTO data) {
          List<ProductInCart> products = new ArrayList<>();
-        Optional<User> byEmail = this.userRepositories.findByEmail(user);
+        addProductToListForShoppingCart(products);
+        ShoppingCart shoppingCart = new ShoppingCart();
+        addDataTpShoppingCart(data, shoppingCart, products);
+        return shoppingCart;
+    }
 
+    private void addDataTpShoppingCart(DeliveryDataDTO data, ShoppingCart shoppingCart, List<ProductInCart> products) {
+        shoppingCart.setDeliveryNumber(UUID.randomUUID());
+        shoppingCart.setAddress(address(data));
+        shoppingCart.setProducts(products);
+        shoppingCart.setDate(LocalDate.now());
+        shoppingCart.setPrice(calculateTotalPrice());
+        this.shoppingCartDTO.empty();
+    }
+
+    private void addProductToListForShoppingCart(List<ProductInCart> products) {
         for (ProductInCartDTO productFromCart : this.shoppingCartDTO.getProducts().values()) {
             Optional<Product> byName = this.productRepository.findByName(productFromCart.getName());
            ProductInCart productInCart = new ProductInCart();
@@ -180,17 +205,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
            products.add(productInCart);
            this.productInCartRepositories.save(productInCart);
         }
-        ShoppingCart shoppingCart = new ShoppingCart();
-        shoppingCart.setDeliveryNumber(UUID.randomUUID());
-        shoppingCart.setUser(byEmail.get());
-        shoppingCart.setAddress(address(data));
-        shoppingCart.setProducts(products);
-        shoppingCart.setDate(LocalDate.now());
-        shoppingCart.setPrice(calculateTotalPrice());
-        byEmail.get().getShoppingCarts().add(shoppingCart);
-        this.shoppingCartDTO.empty();
-        this.shoppingCartRepositories.save(shoppingCart);
-        return shoppingCart;
     }
 
     private Address address(DeliveryDataDTO data) {
