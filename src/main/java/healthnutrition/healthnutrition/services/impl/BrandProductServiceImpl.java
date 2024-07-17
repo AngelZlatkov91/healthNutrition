@@ -21,10 +21,12 @@ public class BrandProductServiceImpl implements BrandProductService {
         this.mapper = mapper;
     }
     @Override
+    // add brand product
     public void addBrand(BrandProductDTO brandProductDTO) {
         this.brandRepository.save(this.mapper.map(brandProductDTO,BrandProduct.class));
     }
     @Override
+    // get all brands
     public List<GetBrandsDTO> allBrands() {
         return this.brandRepository.findAll().stream()
                 .map(brand -> new GetBrandsDTO(brand.getBrand(), brand.getImageUrl()))

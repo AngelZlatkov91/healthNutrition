@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.UUID;
 
-@RestController
+@Controller
 public class ArticleController {
     private final ArticlesService articlesService;
 

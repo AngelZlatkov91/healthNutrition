@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    // register user with private method map
     public void registerUser(UserRegisterDTo userRegisterDTo) {
         this.userRepositories.save(map(userRegisterDTo));
         applicationEventPublisher.publishEvent(new UserRegisterEvent("UserService",
@@ -42,6 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    // get user data from currency login user
     public UserUpdateDTO getUserData(String userName) {
         Optional<User> byEmail = this.userRepositories.findByEmail(userName);
           UserUpdateDTO user = new UserUpdateDTO();
@@ -52,6 +54,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    // edit currency user data transactional
     public void edit(EditUserDTO editUserDTO, String userEmail) {
         Optional<User> byEmail = userRepositories.findByEmail(userEmail);
         boolean isEdit = false;

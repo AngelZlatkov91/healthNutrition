@@ -3,6 +3,7 @@ package healthnutrition.healthnutrition.services.impl;
 import healthnutrition.healthnutrition.models.dto.articlesDTOS.ArticlesDTO;
 import healthnutrition.healthnutrition.models.entitys.Articles;
 import healthnutrition.healthnutrition.repositories.ArticlesRepositories;
+import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -76,8 +78,13 @@ class ArticlesServiceImplTest {
         articlesDTO1.setDescription("description");
         articlesService.addArticle(articlesDTO);
         articlesService.addArticle(articlesDTO1);
-        ArticlesDTO articlesDTOS = articlesService.getArticle();
-        assertNotNull(articlesDTOS);
+        assertThrows(NoSuchElementException.class, () -> {
+            articlesService.getArticle();
+        });
+    }
+    @Test
+    public void getAllArticle_Empty() {
+        assertNull(articlesService.getArticle());
     }
 
 

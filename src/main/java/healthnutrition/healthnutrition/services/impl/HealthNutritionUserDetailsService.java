@@ -24,7 +24,7 @@ public class HealthNutritionUserDetailsService implements UserDetailsService {
                 .map(HealthNutritionUserDetailsService::map)
                 .orElseThrow(() -> new UsernameNotFoundException("User " + email + " not found"));
     }
-
+// map form user to userDetails service
     private static UserDetails map(User user) {
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getEmail())
@@ -32,6 +32,7 @@ public class HealthNutritionUserDetailsService implements UserDetailsService {
                 .authorities(map(user.getRole()))
                 .build();
     }
+    // autorization from role
     private static GrantedAuthority map(UserRoleEnum userRoleEntity){
         return new SimpleGrantedAuthority("ROLE_" + userRoleEntity.name());
 

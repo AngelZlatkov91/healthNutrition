@@ -89,14 +89,6 @@ public class ShopCartController {
         if (this.size == 0) {
             return new ModelAndView("redirect:/home");
         }
-//        if (!model.containsAttribute("data")) {
-//            model.addAttribute("data", DeliveryDataDTO.empty());
-//        }
-//
-//        List<DeliveryFirmEnum> firmName = Arrays.stream(DeliveryFirmEnum.values()).toList();
-//        List<DeliveryAddress> add = Arrays.stream(DeliveryAddress.values()).toList();
-//        model.addAttribute("nameFirm",firmName);
-//        model.addAttribute("address",add);
         return new ModelAndView("delivery");
     }
 

@@ -16,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/users")
 public class UserRegistrationController {
 
-
     private final UserService userService;
 
     public UserRegistrationController(UserService userService) {
@@ -33,6 +32,8 @@ public class UserRegistrationController {
         return "register";
     }
 
+
+
     @PostMapping("/register")
     public ModelAndView register(@Valid UserRegisterDTo userRegistrationDTO,
                                  BindingResult bindingResult,
@@ -40,7 +41,7 @@ public class UserRegistrationController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegistrationDTO",bindingResult);
             redirectAttributes.addFlashAttribute("userRegistrationDTO", userRegistrationDTO);
-            return new ModelAndView("redirect:/register");
+            return new ModelAndView("redirect:/users/register");
         }
         this.userService.registerUser(userRegistrationDTO);
      return new ModelAndView("redirect:/login");

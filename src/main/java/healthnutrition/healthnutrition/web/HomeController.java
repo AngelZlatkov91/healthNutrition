@@ -21,16 +21,13 @@ public class HomeController {
     private final ArticlesService articlesService;
     private final BrandProductService brandProductService;
     private final TypeProductService typeProductService;
-    private final MyScheduledTasks myScheduledTasks;
 
 
-    public HomeController(ProductService productService, ArticlesService articlesService, BrandProductService brandProductService, TypeProductService typeProductService, MyScheduledTasks myScheduledTasks) {
+    public HomeController(ProductService productService, ArticlesService articlesService, BrandProductService brandProductService, TypeProductService typeProductService) {
         this.productService = productService;
         this.articlesService = articlesService;
         this.brandProductService = brandProductService;
         this.typeProductService = typeProductService;
-
-        this.myScheduledTasks = myScheduledTasks;
     }
 
 
@@ -40,21 +37,15 @@ public class HomeController {
         List<GetBrandsDTO> brands = brandProductService.allBrands();
         List<GetTypesDTO> types = typeProductService.allTypes();
         ArticlesDTO article = articlesService.getArticle();
-
-
-            model.addAttribute("article",article);
-
-
+        model.addAttribute("article",article);
         model.addAttribute("brands", brands);
         model.addAttribute("types",types);
-
         return "home";
     }
 
     @GetMapping("/search")
     public  String search(Model model, @PathVariable("searchKey")@RequestParam(defaultValue = "") String searchKey) {
         model.addAttribute("searchKey",searchKey);
-
         List<ProductDetailsDTO> allProducts = productService.getAllProducts(searchKey);
         model.addAttribute("products",allProducts);
         return "search";

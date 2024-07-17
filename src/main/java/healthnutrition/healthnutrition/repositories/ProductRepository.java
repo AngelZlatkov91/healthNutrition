@@ -14,15 +14,16 @@ import java.util.UUID;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
 
+    // find product by name - name is unique
     Optional<Product> findByName(String value);
 
-
+    // find product by uuia
     Product findByUuid(UUID uuid);
-
+  // for search bar
     List<Product> findByNameContainingIgnoreCaseOrBrantBrandContainingIgnoreCaseOrTypeTypeContainingIgnoreCase(
             String key1, String key2,String key3, Pageable pageable
     );
-
+     // delete product with uuid from admin
     void deleteByUuid(UUID uuid);
 
 

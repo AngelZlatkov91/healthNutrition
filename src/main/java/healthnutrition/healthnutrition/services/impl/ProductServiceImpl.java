@@ -38,27 +38,29 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    // add product for admin
     public void addProduct(ProductCreateDTO productCreateDTO){
-
         this.productRepository.save(map(productCreateDTO));
     }
 
 
 
     @Override
+    // get all product by search key
     public List<ProductDetailsDTO> getAllProducts(String searchKey) {
         Pageable pageable = PageRequest.of(0,10);
         if (searchKey.equals("")) {
-            return productRepository.findAll(pageable).map(this::mapSummary).toList();
+            return productRepository.findAll(pageable).map(this::mapAsDetails).toList();
         } else {
             List<ProductDetailsDTO> collect = productRepository.findByNameContainingIgnoreCaseOrBrantBrandContainingIgnoreCaseOrTypeTypeContainingIgnoreCase(
-                    searchKey, searchKey, searchKey, pageable).stream().map(this::mapSummary).collect(Collectors.toList());
+                    searchKey, searchKey, searchKey, pageable).stream().map(this::mapAsDetails).collect(Collectors.toList());
             searchKey = "";
             return collect;
         }
     }
 
     @Override
+    // get product details with uuid
     public ProductDetailsDTO getProductDetails(UUID uuid) {
         Product byUuid = productRepository.findByUuid(uuid);
         return mapAsDetails(byUuid);
@@ -66,16 +68,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
+    // delete product for admin with uuid
     public void deleteProduct(UUID uuid) {
         this.productRepository.deleteByUuid(uuid);
     }
 
     @Override
+    // select product quantity for sheduling
     public String sellerProductQuantity() {
         return this.productInCartRepositories.QuantitySellerProduct();
     }
 
-
+        // map product entity to productDetailsDTO
     private ProductDetailsDTO mapAsDetails(Product product) {
         ProductDetailsDTO productDetailsDTO = this.mapper.map(product,ProductDetailsDTO.class);
         productDetailsDTO.setId(product.getUuid().toString());
@@ -88,17 +92,17 @@ public class ProductServiceImpl implements ProductService {
         return productDetailsDTO;
     }
 
-    private ProductDetailsDTO mapSummary(Product product) {
-        ProductDetailsDTO productDetailsDTO = this.mapper.map(product,ProductDetailsDTO.class);
-        productDetailsDTO.setId(product.getUuid().toString());
-//        productDetailsDTO.setName(product.getName());
-//        productDetailsDTO.setPrice(product.getPrice());
-//        productDetailsDTO.setImageUrl(product.getImageUrl());
-        productDetailsDTO.setType(product.getType().getType());
-        productDetailsDTO.setBrant(product.getBrant().getBrand());
-        return productDetailsDTO;
-    }
-
+//    private ProductDetailsDTO mapSummary(Product product) {
+//        ProductDetailsDTO productDetailsDTO = this.mapper.map(product,ProductDetailsDTO.class);
+//        productDetailsDTO.setId(product.getUuid().toString());
+////        productDetailsDTO.setName(product.getName());
+////        productDetailsDTO.setPrice(product.getPrice());
+////        productDetailsDTO.setImageUrl(product.getImageUrl());
+//        productDetailsDTO.setType(product.getType().getType());
+//        productDetailsDTO.setBrant(product.getBrant().getBrand());
+//        return productDetailsDTO;
+//    }
+    // create product from ProductCreateDTO
     private Product map(ProductCreateDTO productCreateDTO) {
             Product product = this.mapper.map(productCreateDTO,Product.class);
             Optional<TypeProduct> byType = this.typeRepository.findByType(productCreateDTO.getType());

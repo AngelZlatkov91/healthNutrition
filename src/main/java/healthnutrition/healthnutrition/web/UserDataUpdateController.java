@@ -4,14 +4,17 @@ import healthnutrition.healthnutrition.models.dto.userDTOS.EditUserDTO;
 import healthnutrition.healthnutrition.models.dto.userDTOS.UserUpdateDTO;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
 import healthnutrition.healthnutrition.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UserDataUpdateController {
@@ -45,7 +48,14 @@ public class UserDataUpdateController {
     }
 
     @PostMapping("/edit")
-    public String edit(EditUserDTO editUserDTO, @AuthenticationPrincipal UserDetails user) {
+    public String edit(@Valid EditUserDTO editUserDTO, BindingResult br
+            , RedirectAttributes rat, @AuthenticationPrincipal UserDetails user) {
+        if (br.hasErrors()) {
+            rat.addFlashAttribute("org.springframework.validation.BindingResult.editUserDTO",br);
+
+            rat.addFlashAttribute("editUserDTO",editUserDTO);
+            return "redirect:/edit";
+        }
         String userEmail = user.getUsername();
         this.userService.edit(editUserDTO,userEmail);
         return "redirect:/home";

@@ -22,11 +22,13 @@ public class TypeProductServiceImpl implements TypeProductService {
     }
 
     @Override
+    // add type for product from admin
     public void addType(TypeProductDTO typeProductDTO) {
         this.typeRepository.save(this.mapper.map(typeProductDTO,TypeProduct.class));
     }
 
     @Override
+    // get all types
     public List<GetTypesDTO> allTypes() {
         return this.typeRepository.findAll().stream().map(type-> new GetTypesDTO(type.getType())).collect(Collectors.toList());
     }

@@ -6,6 +6,7 @@ import healthnutrition.healthnutrition.services.ProductService;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
 import healthnutrition.healthnutrition.services.TypeProductService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -71,6 +72,7 @@ public class ProductController {
 
     @DeleteMapping("/product/remove/{uuid}")
     public String delete(@PathVariable("uuid") UUID uuid) {
+
         productService.deleteProduct(uuid);
         return "redirect:/products/all";
     }

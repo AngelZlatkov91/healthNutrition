@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{navbar/header}">
+
+</head>
+
+<body>
+
+<div>
+    <nav th:replace="~{navbar/navbar}"></nav>
+</div>
+<div class="container-fluid">
+    <h3 class="text-center text-red mt-5 ">
+        "You are not authorized to access this resource."
+    </h3>
+    <h3 class="text-center text-red mt-5 ">
+        <a th:href="@{/home}">Go home...</a>
+    </h3>
+</div>
+
+<div>
+    <footer> </footer>
+</div>

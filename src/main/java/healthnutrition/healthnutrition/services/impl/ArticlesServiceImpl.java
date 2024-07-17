@@ -25,7 +25,7 @@ public class ArticlesServiceImpl implements ArticlesService {
         this.mapper = mapper;
     }
 
-
+// add article from admin
     @Override
     public void addArticle(ArticlesDTO articlesDTO) {
         Articles articles = mapper.map(articlesDTO, Articles.class);
@@ -33,18 +33,21 @@ public class ArticlesServiceImpl implements ArticlesService {
         this.articlesRepositories.save(articles);
     }
 
+    // get all articles
     @Override
     public Page<ArticlesDTO> allArticles(Pageable pageable) {
       return this.articlesRepositories.findAll(pageable)
               .map(this::map);
     }
 
+    // get article with uuid
     @Override
     public ArticlesDTO getArticle(UUID uuid) {
        Articles articles =  this.articlesRepositories.findByUuid(uuid);
         return map(articles);
     }
 
+    // get random article from repositories with id
     @Override
     public ArticlesDTO getArticle() {
         if (articlesRepositories.count() == 0){
@@ -59,7 +62,7 @@ public class ArticlesServiceImpl implements ArticlesService {
         Optional<Articles> byId = articlesRepositories.findById(size);
         return map(byId.get());
     }
-
+// map article entity to article dto
     private ArticlesDTO map (Articles articles) {
         ArticlesDTO article = this.mapper.map(articles,ArticlesDTO.class);
         article.setId(articles.getUuid().toString());
