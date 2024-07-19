@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -33,30 +34,30 @@ public class HomeController {
 
 
     @GetMapping("/home")
-    public String home(Model model){
+    public ModelAndView home(Model model){
         List<GetBrandsDTO> brands = brandProductService.allBrands();
         List<GetTypesDTO> types = typeProductService.allTypes();
         ArticlesDTO article = articlesService.getArticle();
         model.addAttribute("article",article);
         model.addAttribute("brands", brands);
         model.addAttribute("types",types);
-        return "home";
+        return new ModelAndView("home");
     }
 
     @GetMapping("/search")
-    public  String search(Model model, @PathVariable("searchKey")@RequestParam(defaultValue = "") String searchKey) {
+    public  ModelAndView search(Model model, @PathVariable("searchKey")@RequestParam(defaultValue = "") String searchKey) {
         model.addAttribute("searchKey",searchKey);
         List<ProductDetailsDTO> allProducts = productService.getAllProducts(searchKey);
         model.addAttribute("products",allProducts);
-        return "search";
+        return new ModelAndView("search");
     }
 
     @GetMapping("/search/{searchKey}")
-    public  String searchBy(Model model, @PathVariable("searchKey") String searchKey) {
+    public  ModelAndView searchBy(Model model, @PathVariable("searchKey") String searchKey) {
         model.addAttribute("searchKey",searchKey);
         List<ProductDetailsDTO> allProducts = productService.getAllProducts(searchKey);
         model.addAttribute("products",allProducts);
-        return "search";
+        return new ModelAndView("search");
     }
 
 

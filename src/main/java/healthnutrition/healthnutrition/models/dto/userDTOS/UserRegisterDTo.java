@@ -6,24 +6,24 @@ import jakarta.validation.constraints.*;
 
 @FieldMatch(first = "password",
 second = "confirmPassword",
-message = "Passwords should match")
+message = "{register.user.password.match}")
 public class UserRegisterDTo {
     @Email
-    @NotBlank(message = "The email cannot be empty!")
+    @NotBlank(message = "{register.user.email}")
     @UniqueUserEmail
     private String email;
-    @Size(min = 3,max = 20)
-    @NotBlank(message = "The fullName cannot be empty!")
+    @Size(min = 3,max = 20, message = "{register.user.userName.length}")
+    @NotBlank(message = "{register.user.userName.empty}")
     private String fullName;
-    @NotBlank(message = "The Phone cannot be empty!")
-    @Size(min = 9, max = 20)
+    @NotBlank(message = "{register.user.phone.empty}")
+    @Size(min = 9, max = 20, message = "{register.user.phone.length}")
     @UniqueUserPhone
     private String phone;
-    @NotBlank(message = "The Password cannot be empty!")
-    @Size(min = 4,max = 20)
+    @NotBlank(message = "{register.user.password.empty}")
+    @Size(min = 4,max = 20, message = "{register.user.password.length}")
     private String password;
-    @NotBlank(message = "The Password cannot be empty!")
-    @Size(min = 4,max = 20)
+    @NotBlank(message = "{register.user.password.empty}")
+    @Size(min = 4,max = 20, message = "{register.user.password.length}")
     private String confirmPassword;
 
     public String getEmail() {

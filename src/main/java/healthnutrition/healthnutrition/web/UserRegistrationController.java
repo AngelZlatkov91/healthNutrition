@@ -28,8 +28,8 @@ public class UserRegistrationController {
 
 
     @GetMapping("/register")
-    public String register() {
-        return "register";
+    public ModelAndView register() {
+        return new ModelAndView ("register");
     }
 
 

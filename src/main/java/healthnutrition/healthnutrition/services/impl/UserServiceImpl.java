@@ -13,10 +13,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Optional;
-
-
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -25,6 +22,8 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper mapper;
 
     private final ApplicationEventPublisher applicationEventPublisher;
+
+
 
     public UserServiceImpl(UserRepositories userRepositories, PasswordEncoder passwordEncoder, ModelMapper mapper, ApplicationEventPublisher applicationEventPublisher) {
         this.userRepositories = userRepositories;
@@ -92,4 +91,6 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
+
+
 }

@@ -5,6 +5,7 @@ import healthnutrition.healthnutrition.services.ShoppingCartService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class OrdersController {
@@ -17,9 +18,9 @@ public class OrdersController {
 
 
     @GetMapping("/orders")
-    public String orders(Model model) {
+    public ModelAndView orders(Model model) {
         AllOrdersDTO allOrdersDTO = this.shoppingCartService.allOrdersToSend();
         model.addAttribute("allOrders",allOrdersDTO);
-        return "orders";
+        return new ModelAndView("orders");
     }
 }

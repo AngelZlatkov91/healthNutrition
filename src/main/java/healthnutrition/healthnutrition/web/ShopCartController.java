@@ -93,7 +93,7 @@ public class ShopCartController {
     }
 
     @PostMapping("/delivery")
-    public String finalDelivery(@Valid DeliveryDataDTO data,
+    public ModelAndView finalDelivery(@Valid DeliveryDataDTO data,
                                       BindingResult bindingResult,
                                        RedirectAttributes rAtt,
                                 @AuthenticationPrincipal UserDetails user) {
@@ -101,7 +101,7 @@ public class ShopCartController {
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.data",bindingResult);
             rAtt.addFlashAttribute("data",data);
-          return "redirect:/delivery";
+          return new ModelAndView ("redirect:/delivery");
         }
         String userEmail = user.getUsername();
         data.add();
@@ -109,7 +109,7 @@ public class ShopCartController {
        // model.addAttribute("price",price);
         UUID step = this.shoppingCartService.finalStep(userEmail,data);
         this.uuid = step;
-         return "redirect:/succses-delivery";
+         return  new ModelAndView("redirect:/succses-delivery");
     }
 
     @GetMapping("/succses-delivery")

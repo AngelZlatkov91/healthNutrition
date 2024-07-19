@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Constraint(validatedBy = UniqueUserPhoneValidator.class)
 public @interface UniqueUserPhone {
-    String message() default "The phone all ready exist";
+    String message() default "{register.user.phone.unique}";
     Class<?>[] groups()default {};
 
     Class<? extends Payload>[] payload() default {};

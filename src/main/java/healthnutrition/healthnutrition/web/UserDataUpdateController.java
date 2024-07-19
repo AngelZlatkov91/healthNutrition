@@ -43,22 +43,22 @@ public class UserDataUpdateController {
     }
 
     @GetMapping("/edit")
-    public String edit(){
-        return "edit";
+    public ModelAndView edit(){
+        return new ModelAndView("edit");
     }
 
     @PostMapping("/edit")
-    public String edit(@Valid EditUserDTO editUserDTO, BindingResult br
+    public ModelAndView edit(@Valid EditUserDTO editUserDTO, BindingResult br
             , RedirectAttributes rat, @AuthenticationPrincipal UserDetails user) {
         if (br.hasErrors()) {
             rat.addFlashAttribute("org.springframework.validation.BindingResult.editUserDTO",br);
 
             rat.addFlashAttribute("editUserDTO",editUserDTO);
-            return "redirect:/edit";
+            return new ModelAndView("redirect:/edit");
         }
         String userEmail = user.getUsername();
         this.userService.edit(editUserDTO,userEmail);
-        return "redirect:/home";
+        return new ModelAndView("redirect:/home");
     }
 
 

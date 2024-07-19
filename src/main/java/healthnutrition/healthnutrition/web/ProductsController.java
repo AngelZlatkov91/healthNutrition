@@ -4,6 +4,8 @@ import healthnutrition.healthnutrition.services.ProductService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
+
 import java.util.List;
 @Controller
 public class ProductsController {
@@ -14,10 +16,10 @@ public class ProductsController {
     }
 
     @GetMapping("/products/all")
-    public String all(Model model) {
+    public ModelAndView all(Model model) {
         List<ProductDetailsDTO> allProducts = productService.getAllProducts("");
         model.addAttribute("products",allProducts);
-        return "products";
+        return new ModelAndView( "products");
     }
 
 

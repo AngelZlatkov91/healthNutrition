@@ -24,7 +24,7 @@
             class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
             <div class="form-group col-md-6 mb-3">
-                <label for="fullName" class="text-white font-weight-bold">Full name</label>
+                <label for="fullName" class="text-white font-weight-bold" th:text="#{register_user_fullName}">Full name</label>
                 <input  id="fullName"
                         name="fullName"
                         th:field="*{fullName}"
@@ -32,14 +32,14 @@
                         type="text"
                         min="3" max="20" class="form-control"
                         placeholder="fullName "/>
-                <p class="errors alert alert-danger invalid-feedback" th:each="error: ${#fields.hasErrors('fullName')}">
+                <p class="errors alert alert-danger invalid-feedback" th:if="${#fields.hasErrors('fullName')}" th:errorclass="error" th:errors="*{fullName}">
                     Full Name size must be between 3 and 20 characters!
                 </p>
             </div>
         </div>
         <div class="row">
             <div class="form-group col-md-6 mb-3">
-                <label for="email" class="text-white font-weight-bold">Email</label>
+                <label for="email" class="text-white font-weight-bold" th:text="#{register_user_email}">Email</label>
                 <input id="email"
                        name="email"
                        th:field="*{email}"
@@ -52,7 +52,7 @@
                 </p>
             </div>
             <div class="form-group col-md-6 mb-3">
-                <label for="phone" class="text-white font-weight-bold">Phone</label>
+                <label for="phone" class="text-white font-weight-bold" th:text="#{register_user_phone}">Phone</label>
                 <input id="phone"
                        name="phone"
                        type="text"
@@ -67,7 +67,7 @@
 
             <div class="form-group col-md-6 mb-3">
                 <label for="password"
-                       class="text-white font-weight-bold">Password</label>
+                       class="text-white font-weight-bold" th:text="#{register_user_password}">Password</label>
                 <input id="password"
                        name="password"
                        th:field="*{password}"
@@ -80,7 +80,7 @@
             </div>
         <div class="form-group col-md-6 mb-3">
             <label for="confirmPassword"
-                   class="text-white font-weight-bold">Confirm Password</label>
+                   class="text-white font-weight-bold" th:text="#{register_user_confirmPassword}">Confirm Password</label>
             <input id="confirmPassword"
                    name="confirmPassword"
                    th:field="*{confirmPassword}"

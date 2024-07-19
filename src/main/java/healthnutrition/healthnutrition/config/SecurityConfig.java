@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
@@ -39,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers("/","/users/login","/users/register", "/users/login-error").permitAll()
                         .requestMatchers("/products/all").permitAll()
                         .requestMatchers("/articles/all").permitAll()
+                        .requestMatchers("/api/products").permitAll()
                         .requestMatchers("/home").permitAll()
                         .requestMatchers(HttpMethod.GET,"/offer/**").permitAll()
                         .requestMatchers("error").permitAll()
@@ -49,7 +51,14 @@ public class SecurityConfig {
                         .requestMatchers("/add/article").hasRole(UserRoleEnum.ADMIN.name())
                         .requestMatchers("/delivery").permitAll()
                         // all other requests are authenticated
-                        .anyRequest().authenticated()).formLogin(
+                        .anyRequest().authenticated())
+                .csrf(AbstractHttpConfigurer::disable)
+//                .authorizeHttpRequests(
+//                        authorize ->
+//                                authorize.requestMatchers(HttpMethod.GET, "/api/products").permitAll()
+//                                        .anyRequest().authenticated()
+//                )
+                .formLogin(
                 formLogin -> {
                     formLogin
                             // redirect here when we access something which is not allowed

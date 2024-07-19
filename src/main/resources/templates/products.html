@@ -25,24 +25,24 @@
             <ul class="offer-details list-group list-group-flush">
                 <li class="list-group-item">
                     <div class="card-text">
-                        <span>• Price</span>
+                        <span th:text="#{product_price}">• Price</span>
                         <th:block th:text="*{price}">123</th:block>
 
                     </div>
                     <div class="card-text">
-                        <span>• Type</span>
+                        <span th:text="#{product_type}">• Type</span>
                         <th:block th:text="*{type}">TYPE</th:block>
 
                     </div>
                     <div class="card-text">
-                        <span>• Brand</span>
+                        <span th:text="#{product_brand}">• Brand</span>
                         <th:block th:text="*{brant}">BRAND</th:block>
 
                     </div>
                 </li>
             </ul>
             <div class="card-body">
-                <a class="btn btn-info btn-lg" th:href="@{/product/{uuid}(uuid=*{id})}">Details</a>
+                <a class="btn btn-info btn-lg" th:href="@{/product/{uuid}(uuid=*{id})}" th:text="#{details_of_all}">Details</a>
             </div>
             <div class="card-body" sec:authorize="hasRole('ADMIN')">
                 <form th:method="delete"

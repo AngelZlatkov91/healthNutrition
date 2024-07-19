@@ -49,17 +49,17 @@ public class ArticleController {
         return  new ModelAndView("redirect:/home");
     }
     @GetMapping("/article/{uuid}")
-    public String details(@PathVariable("uuid") UUID uuid, Model model) {
+    public ModelAndView details(@PathVariable("uuid") UUID uuid, Model model) {
         ArticlesDTO articlesDTO = articlesService.getArticle(uuid);
         model.addAttribute("article",articlesDTO);
-        return "article-details";
+        return new ModelAndView( "article-details");
     }
 
     @GetMapping("/articles/all")
-    public String all(Model model, Pageable pageable) {
+    public ModelAndView all(Model model, Pageable pageable) {
         Page<ArticlesDTO> allArticles = this.articlesService.allArticles(pageable);
         model.addAttribute("articles",allArticles);
-        return "articles";
+        return new ModelAndView("articles");
     }
 
 

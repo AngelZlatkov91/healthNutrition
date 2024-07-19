@@ -16,6 +16,7 @@ public class UserLoginController {
 
     @GetMapping("/login")
     public String login(){
+
         return "auth-login";
     }
 
@@ -23,6 +24,7 @@ public class UserLoginController {
     public String onFailure(@ModelAttribute("email") String email, Model model) {
          model.addAttribute("email",email);
         model.addAttribute("bad_credentials","true");
+
         return "auth-login";
     }
 

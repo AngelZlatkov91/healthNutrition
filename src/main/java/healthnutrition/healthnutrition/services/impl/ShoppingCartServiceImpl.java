@@ -81,7 +81,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-
     public UUID finalStep(String user,DeliveryDataDTO data) {
         Optional<User> byEmail = this.userRepositories.findByEmail(user);
         ShoppingCart shoppingCart = addProduct(data);

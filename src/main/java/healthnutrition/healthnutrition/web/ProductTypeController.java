@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -24,20 +25,20 @@ public class ProductTypeController {
     }
 
     @GetMapping("/add/type")
-    public String addType(){
-        return "type-add";
+    public ModelAndView addType(){
+        return new ModelAndView("type-add");
     }
     @PostMapping("/add/type")
-    public String addType(@Valid TypeProductDTO typeProductDTO,
+    public ModelAndView addType(@Valid TypeProductDTO typeProductDTO,
                           BindingResult bindingResult,
                           RedirectAttributes rAtt) {
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("typeProductDTO",typeProductDTO);
             rAtt.addFlashAttribute(
                     "org.springframework.validation.BindingResult.typeProductDTO",bindingResult);
-            return "redirect:/add/type";
+            return new ModelAndView("redirect:/add/type");
         }
         this.type.addType(typeProductDTO);
-        return "redirect:/add/type";
+        return new ModelAndView( "redirect:/add/type");
     }
 }
