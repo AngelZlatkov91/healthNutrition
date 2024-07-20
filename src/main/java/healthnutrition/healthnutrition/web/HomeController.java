@@ -45,7 +45,7 @@ public class HomeController {
     }
 
     @GetMapping("/search")
-    public  ModelAndView search(Model model, @PathVariable("searchKey")@RequestParam(defaultValue = "") String searchKey) {
+    public  ModelAndView search(@PathVariable("searchKey") @RequestParam(defaultValue = "") String searchKey, Model model) {
         model.addAttribute("searchKey",searchKey);
         List<ProductDetailsDTO> allProducts = productService.getAllProducts(searchKey);
         model.addAttribute("products",allProducts);

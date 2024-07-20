@@ -13,17 +13,35 @@
     <nav th:replace="~{navbar/navbar}"></nav>
 </div>
 <div class="container-fluid">
-    <form  class="form-inline my-4 my-lg-0"
-           th:action="@{/search}" method="get">
-        <input class="form-control mr-sm-2 "
-               type="search"
-               name="searchKey"
-               th:value="${searchKey}"
-               placeholder="searchKey"
-               aria-label="Search" required>
-        <button class="btn btn-outline-success my-2 my-sm-0" value="searchKey" type="submit" th:href="@{/search}" th:text="#{search_key}">Search</button>
-    </form>
-    <h2 class="text-center text-dark mt-5" th:text="#{brand_product}">Brands</h2>
+    <div class="container">
+        <div class="row height d-flex justify-content-center align-items-center">
+            <div class="col-md-8">
+                <form class="search"
+                     th:action="@{/search}"
+                     th:method="get">
+                    <i class="fa fa-search">
+                    </i>
+                    <input class="form-control"
+                            type="search"
+                           name="searchKey"
+                           th:value="${searchKey}"
+                           placeholder="search">
+                    <button class="btn btn-primary" type="submit" value="searchKey" th:href="@{/search}" >Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+<!--    <form  class="form-inline my-4 my-lg-0"-->
+<!--           th:action="@{/search}" th:method="get">-->
+<!--        <input class="form-control mr-sm-2"-->
+<!--               type="search"-->
+<!--               name="searchKey"-->
+<!--               th:value="${searchKey}"-->
+<!--               placeholder="searchKey"-->
+<!--               aria-label="Search" required>-->
+<!--        <button class="btn btn-outline-success my-2 my-sm-0" value="searchKey" type="submit" th:href="@{/search}" th:text="#{search_key}">Search</button>-->
+<!--    </form>-->
+    <h5 class="text-center text-dark mt-5" th:text="#{brand_product}">Brands</h5>
     <div class="offers row mx-auto bg-transparent d-flex flex-row justify-content-center">
         <div th:each="brand: ${brands}"
              class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
@@ -35,7 +53,7 @@
             </span>
         </div>
     </div>
-    <h2 class="text-center text-dark mt-5" th:text="#{type_product}">Types</h2>
+    <h5 class="text-center text-dark mt-5" th:text="#{type_product}">Types</h5>
     <div class="offers row mx-auto bg-transparent d-flex flex-row justify-content-center">
         <div th:each="type: ${types}"
              class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">

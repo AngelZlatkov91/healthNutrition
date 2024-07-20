@@ -13,14 +13,14 @@ public class ProductInCart extends BaseEntity{
     private int quantity;
 
     @Column(nullable = false)
-    private Double singlePrice;
+    private Double price;
 
-    public Double getSinglePrice() {
-        return singlePrice;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setSinglePrice(Double singlePrice) {
-        this.singlePrice = singlePrice;
+    public void setPrice(Double singlePrice) {
+        this.price = singlePrice;
     }
 
     public String getName() {

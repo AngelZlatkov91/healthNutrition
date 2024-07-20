@@ -24,11 +24,11 @@ class ProductInCartRepositoriesTest {
         product = new ProductInCart();
         product.setName("Isolate");
         product.setQuantity(1);
-        product.setSinglePrice(50.00);
+        product.setPrice(50.00);
         product1 = new ProductInCart();
         product1.setName("tribulos");
         product1.setQuantity(2);
-        product1.setSinglePrice(50.00);
+        product1.setPrice(50.00);
         productInCartRepositories.save(product);
         productInCartRepositories.save(product1);
     }

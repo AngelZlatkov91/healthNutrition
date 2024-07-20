@@ -81,14 +81,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public UUID finalStep(String user,DeliveryDataDTO data) {
+    @Transactional
+    public void finalStep(String user,DeliveryDataDTO data) {
         Optional<User> byEmail = this.userRepositories.findByEmail(user);
         ShoppingCart shoppingCart = addProduct(data);
         shoppingCart.setUser(byEmail.get());
         byEmail.get().getShoppingCarts().add(shoppingCart);
-
+        Address address = shoppingCart.getAddress();
+        List<ProductInCart> products = shoppingCart.getProducts();
+        this.deliveryDataRepositories.save(address);
+        this.productInCartRepositories.saveAll(products);
         this.shoppingCartRepositories.save(shoppingCart);
-        return shoppingCart.getDeliveryNumber();
+
     }
 
     @Override
@@ -114,7 +118,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 //                archiveProductInCartDTO.setName(productInCart.getName());
 //                archiveProductInCartDTO.setQuantity(productInCart.getQuantity());
 //                archiveProductInCartDTO.setSinglePrice(productInCart.getSinglePrice());
-                totalPrice = totalPrice + (productInCart.getQuantity() * productInCart.getSinglePrice());
+                totalPrice = totalPrice + (productInCart.getQuantity() * productInCart.getPrice());
                 archiveShoppingCartDTO.getArchive().add(archiveProductInCartDTO);
             }
             archiveShoppingCartDTO.setDate(shop.getDate());
@@ -151,7 +155,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 //                archiveProductInCartDTO.setQuantity(pr.getQuantity());
 //                archiveProductInCartDTO.setSinglePrice(pr.getSinglePrice());
                 archive.add(archiveProductInCartDTO);
-                price = price + (pr.getQuantity() * pr.getSinglePrice());
+                price = price + (pr.getQuantity() * pr.getPrice());
             }
             archiveShoppingCartDTO.setTotalPrice(price);
             archiveShoppingCartDTO.setDate(cart.getDate());
@@ -178,39 +182,32 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     protected ShoppingCart addProduct (DeliveryDataDTO data) {
-         List<ProductInCart> products = new ArrayList<>();
-        addProductToListForShoppingCart(products);
-        ShoppingCart shoppingCart = new ShoppingCart();
-        addDataTpShoppingCart(data, shoppingCart, products);
-        return shoppingCart;
+        List<ProductInCart> products = addProductToListForShoppingCart();
+        return addDataTpShoppingCart(data, products);
     }
 
-    private void addDataTpShoppingCart(DeliveryDataDTO data, ShoppingCart shoppingCart, List<ProductInCart> products) {
+    private ShoppingCart addDataTpShoppingCart(DeliveryDataDTO data,  List<ProductInCart> products) {
+        ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setDeliveryNumber(UUID.randomUUID());
         shoppingCart.setAddress(address(data));
         shoppingCart.setProducts(products);
         shoppingCart.setDate(LocalDate.now());
         shoppingCart.setPrice(calculateTotalPrice());
         this.shoppingCartDTO.empty();
+        return shoppingCart;
     }
 
-    private void addProductToListForShoppingCart(List<ProductInCart> products) {
+    private List<ProductInCart> addProductToListForShoppingCart() {
+         List<ProductInCart> products = new ArrayList<>();
         for (ProductInCartDTO productFromCart : this.shoppingCartDTO.getProducts().values()) {
-            Optional<Product> byName = this.productRepository.findByName(productFromCart.getName());
-           ProductInCart productInCart = new ProductInCart();
-           productInCart.setName(byName.get().getName());
-           productInCart.setQuantity(productFromCart.getQuantity());
-           productInCart.setSinglePrice(byName.get().getPrice());
+           ProductInCart productInCart = this.mapper.map(productFromCart,ProductInCart.class);
            products.add(productInCart);
-           this.productInCartRepositories.save(productInCart);
         }
+        return products;
     }
 
     private Address address(DeliveryDataDTO data) {
-         data.add();
-         Address address = this.mapper.map(data,Address.class);
-            deliveryDataRepositories.save(address);
-         return address;
+         return this.mapper.map(data,Address.class);
     }
 
 

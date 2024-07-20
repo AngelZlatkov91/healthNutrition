@@ -2,6 +2,8 @@ package healthnutrition.healthnutrition.models.entitys;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,10 +18,8 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private Double price;
 
-
     @Column(columnDefinition = "LONGTEXT",length = 50000000)
     private String imageUrl;
-
     @ManyToOne
     private TypeProduct type;
     @ManyToOne
@@ -28,6 +28,7 @@ public class Product extends BaseEntity {
 
 
     public Product(){
+
     }
 
     public UUID getUuid() {
