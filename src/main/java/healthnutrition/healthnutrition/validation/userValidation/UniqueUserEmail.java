@@ -12,6 +12,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Constraint(validatedBy = UniqueUserEmailValidator.class)
 public @interface UniqueUserEmail {
+    // user email search if exist in database
     String message() default "{register.user.email.unique}";
     Class<?>[] groups()default {};
 

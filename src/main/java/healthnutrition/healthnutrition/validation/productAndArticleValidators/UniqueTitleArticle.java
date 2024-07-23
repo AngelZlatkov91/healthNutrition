@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Constraint(validatedBy = UniqueTitleArticleValidator.class)
 public @interface UniqueTitleArticle {
-
+    // title for the new article search if exist in database
     String message() default "The title for this Article should be unique";
     Class<?>[] groups()default {};
 

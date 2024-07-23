@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Constraint(validatedBy = FieldMatchValidator.class)
 public @interface FieldMatch {
-
+    // user password check  if is equals
      String first();
 
      String second();

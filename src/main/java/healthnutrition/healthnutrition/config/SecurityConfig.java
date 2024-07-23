@@ -39,10 +39,11 @@ public class SecurityConfig {
                         // allow anyone to see the home page the registration and the login form
                         .requestMatchers("/","/users/login","/users/register", "/users/login-error").permitAll()
                         .requestMatchers("/products/all").permitAll()
+                        .requestMatchers("/product/{uuid}").permitAll()
+                        .requestMatchers("/search/{searchKey}").permitAll()
                         .requestMatchers("/articles/all").permitAll()
                         .requestMatchers("/api/products").permitAll()
                         .requestMatchers("/home").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/offer/**").permitAll()
                         .requestMatchers("error").permitAll()
                         .requestMatchers("/add/brand").hasRole(UserRoleEnum.ADMIN.name())
                         .requestMatchers("/orders").hasRole(UserRoleEnum.ADMIN.name())
@@ -69,6 +70,7 @@ public class SecurityConfig {
                             .passwordParameter("password")
                             .defaultSuccessUrl("/home")
                             .failureForwardUrl("/users/login-error");
+
                 }
         ).logout(
                 logout-> {

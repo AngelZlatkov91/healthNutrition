@@ -1,4 +1,4 @@
-package healthnutrition.healthnutrition.web;
+package healthnutrition.healthnutrition.web.AdminController;
 
 import healthnutrition.healthnutrition.models.dto.productDTOS.TypeProductDTO;
 import healthnutrition.healthnutrition.services.TypeProductService;
@@ -28,6 +28,7 @@ public class ProductTypeController {
     public ModelAndView addType(){
         return new ModelAndView("type-add");
     }
+    // adding product type from admin
     @PostMapping("/add/type")
     public ModelAndView addType(@Valid TypeProductDTO typeProductDTO,
                           BindingResult bindingResult,

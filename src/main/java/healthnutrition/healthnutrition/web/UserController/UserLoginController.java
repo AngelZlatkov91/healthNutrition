@@ -1,4 +1,4 @@
-package healthnutrition.healthnutrition.web;
+package healthnutrition.healthnutrition.web.UserController;
 import healthnutrition.healthnutrition.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,20 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/users")
 public class UserLoginController {
-
-
-
     @GetMapping("/login")
     public String login(){
 
         return "auth-login";
     }
-
     @PostMapping("/login-error")
     public String onFailure(@ModelAttribute("email") String email, Model model) {
          model.addAttribute("email",email);
         model.addAttribute("bad_credentials","true");
-
         return "auth-login";
     }
 

@@ -2,7 +2,7 @@ package healthnutrition.healthnutrition.models.dto.cartDTOS;
 public class ArchiveProductInCartDTO {
     private String name;
 
-    private Double singlePrice;
+    private Double price;
     private int quantity;
 
 
@@ -16,12 +16,12 @@ public class ArchiveProductInCartDTO {
 
 
 
-    public Double getSinglePrice() {
-        return singlePrice;
+    public Double getPrice() {
+        return price;
     }
 
-    public void setSinglePrice(Double singlePrice) {
-        this.singlePrice = singlePrice;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public int getQuantity() {

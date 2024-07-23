@@ -17,7 +17,7 @@
                 <th:block th:each="product : ${products}">
                     <div class="text-center mb-4 pb-lg-2">
                         <span th:text="${product.getName()} + '      '"></span>
-                        <a class="ml-3 text-danger" th:href="@{/remove/product/{getName} (getName=${product.getName()})}"> Remove </a>
+                        <a class="ml-3 text-danger" th:href="@{/remove/product/{getName} (getName=${product.getName()})}" th:text="#{remove_product_from_cart}"> Remove </a>
 
 
                         <a class="ui-button text-danger "   th:min="1" th:href="@{/decrease/product/{getName} (getName=${product.getName()})}">  -  </a>
@@ -28,12 +28,12 @@
                     </div>
                  </th:block>
                 <div class="col-5 bg-danger rounded m-auto">
-                    <span th:text="'Total price   ' + ${price}"></span>
+                    <span th:text="#{total_price} + '   ' + ${price}"></span>
                 </div>
             </div>
 
             <div class="row mt-3 mb-3">
-                <a class="card-link" th:href="@{/delivery}">Final Step</a>
+                <a class="card-link" th:href="@{/delivery}" th:text="#{final_step_cart}">Buy</a>
             </div>
         </div>
     </div>

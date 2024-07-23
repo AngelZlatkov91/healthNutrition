@@ -1,4 +1,4 @@
-package healthnutrition.healthnutrition.web;
+package healthnutrition.healthnutrition.web.UserController;
 
 import healthnutrition.healthnutrition.config.MyScheduledTasks;
 import healthnutrition.healthnutrition.models.dto.articlesDTOS.ArticlesDTO;
@@ -31,8 +31,7 @@ public class HomeController {
         this.typeProductService = typeProductService;
     }
 
-
-
+    // home view
     @GetMapping("/home")
     public ModelAndView home(Model model){
         List<GetBrandsDTO> brands = brandProductService.allBrands();
@@ -43,17 +42,9 @@ public class HomeController {
         model.addAttribute("types",types);
         return new ModelAndView("home");
     }
-
-    @GetMapping("/search")
-    public  ModelAndView search(@PathVariable("searchKey") @RequestParam(defaultValue = "") String searchKey, Model model) {
-        model.addAttribute("searchKey",searchKey);
-        List<ProductDetailsDTO> allProducts = productService.getAllProducts(searchKey);
-        model.addAttribute("products",allProducts);
-        return new ModelAndView("search");
-    }
-
+    // get product by search key
     @GetMapping("/search/{searchKey}")
-    public  ModelAndView searchBy(Model model, @PathVariable("searchKey") String searchKey) {
+    public  ModelAndView searchBy( @PathVariable("searchKey") @RequestParam(defaultValue = "") String searchKey, Model model) {
         model.addAttribute("searchKey",searchKey);
         List<ProductDetailsDTO> allProducts = productService.getAllProducts(searchKey);
         model.addAttribute("products",allProducts);

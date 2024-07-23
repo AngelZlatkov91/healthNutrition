@@ -1,5 +1,6 @@
 package healthnutrition.healthnutrition.models.entitys;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.JdbcTypeCode;
 import java.sql.Types;
 import java.time.LocalDate;

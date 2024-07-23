@@ -12,6 +12,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Constraint(validatedBy = UniqueUserPhoneValidator.class)
 public @interface UniqueUserPhone {
+    // user phone search if exist in database
     String message() default "{register.user.phone.unique}";
     Class<?>[] groups()default {};
 

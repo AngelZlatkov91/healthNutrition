@@ -19,6 +19,7 @@ private final StatisticRepositories statisticRepositories;
         this.statisticRepositories = statisticRepositories;
     }
 
+    // scheduled task two times per day - 9 - and 21 save static for seller product per day
     @Scheduled(cron = "* 0 9,21 * * *")
     public void QuantitySellerProducts() {
       Integer quantity = Integer.parseInt(this.productService.sellerProductQuantity());

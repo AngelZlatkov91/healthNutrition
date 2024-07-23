@@ -1,4 +1,4 @@
-package healthnutrition.healthnutrition.web;
+package healthnutrition.healthnutrition.web.AdminController;
 
 import healthnutrition.healthnutrition.models.dto.articlesDTOS.ArticlesDTO;
 import healthnutrition.healthnutrition.services.ArticlesService;
@@ -6,7 +6,6 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +15,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.UUID;
 
 @Controller
-public class ArticleController {
+public class ArticleAddController {
     private final ArticlesService articlesService;
 
 
-    public ArticleController(ArticlesService articlesService) {
+    public ArticleAddController(ArticlesService articlesService) {
         this.articlesService = articlesService;
 
     }
@@ -33,7 +32,7 @@ public class ArticleController {
         return new ModelAndView("add-article");
     }
 
-
+    // add article from admin
     @PostMapping("/add/article")
     public ModelAndView addArticle(@Valid ArticlesDTO articlesDTO,
                                    BindingResult bindingResult,
@@ -48,20 +47,5 @@ public class ArticleController {
         this.articlesService.addArticle(articlesDTO);
         return  new ModelAndView("redirect:/home");
     }
-    @GetMapping("/article/{uuid}")
-    public ModelAndView details(@PathVariable("uuid") UUID uuid, Model model) {
-        ArticlesDTO articlesDTO = articlesService.getArticle(uuid);
-        model.addAttribute("article",articlesDTO);
-        return new ModelAndView( "article-details");
-    }
-
-    @GetMapping("/articles/all")
-    public ModelAndView all(Model model, Pageable pageable) {
-        Page<ArticlesDTO> allArticles = this.articlesService.allArticles(pageable);
-        model.addAttribute("articles",allArticles);
-        return new ModelAndView("articles");
-    }
-
-
 
 }

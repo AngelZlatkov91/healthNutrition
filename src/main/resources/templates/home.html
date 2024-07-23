@@ -2,13 +2,9 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
 <head th:replace="~{navbar/header}">
-
 </head>
-
 <body>
-
 <div>
     <nav th:replace="~{navbar/navbar}"></nav>
 </div>
@@ -17,7 +13,7 @@
         <div class="row height d-flex justify-content-center align-items-center">
             <div class="col-md-8">
                 <form class="search"
-                     th:action="@{/search}"
+                     th:action="@{/search/{searchKey}}"
                      th:method="get">
                     <i class="fa fa-search">
                     </i>
@@ -26,7 +22,7 @@
                            name="searchKey"
                            th:value="${searchKey}"
                            placeholder="search">
-                    <button class="btn btn-primary" type="submit" value="searchKey" th:href="@{/search}" >Search</button>
+                    <button class="btn btn-primary" type="submit" value="searchKey" th:href="@{/search/{searchKey}(searchKey=*{searchKey})}" th:text="#{search_key}" >Search</button>
                 </form>
             </div>
         </div>

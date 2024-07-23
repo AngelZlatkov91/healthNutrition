@@ -51,7 +51,7 @@
                     <span class="bg-danger text-center" th:text=" 'Date Made: ' + ${order.getArchiveDTO().getDate()} + ': Total price: ' + ${order.getArchiveDTO().getTotalPrice()}"></span>
                     <th:block th:each="product : ${order.getArchiveDTO().getArchive()}">
                         <div class="row rounded badge-secondary text-center">
-                            <span th:text="'Name: ' + ${product.getName()} + '; Quantity: ' + ${product.getQuantity()} + '; Price: ' + ${product.getSinglePrice()}" ></span>
+                            <span th:text="'Name: ' + ${product.getName()} + '; Quantity: ' + ${product.getQuantity()} + '; Price: ' + ${product.getPrice()}" ></span>
                         </div>
                 </th:block>
             </div>

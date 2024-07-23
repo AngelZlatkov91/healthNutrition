@@ -17,7 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // find product by name - name is unique
     Optional<Product> findByName(String value);
 
-    // find product by uuia
+    // find product by uuid
     Product findByUuid(UUID uuid);
   // for search bar
     List<Product> findByNameContainingIgnoreCaseOrBrantBrandContainingIgnoreCaseOrTypeTypeContainingIgnoreCase(

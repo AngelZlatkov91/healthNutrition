@@ -2,10 +2,7 @@ package healthnutrition.healthnutrition.models.entitys;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
-
 @Entity
 @Table(name = "products")
 public class Product extends BaseEntity {
@@ -25,10 +22,7 @@ public class Product extends BaseEntity {
     @ManyToOne
     private BrandProduct brant;
 
-
-
     public Product(){
-
     }
 
     public UUID getUuid() {
@@ -62,10 +56,6 @@ public class Product extends BaseEntity {
     public void setPrice(Double price) {
         this.price = price;
     }
-
-
-
-
 
 
     public TypeProduct getType() {

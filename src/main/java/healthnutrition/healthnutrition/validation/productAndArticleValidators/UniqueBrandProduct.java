@@ -12,6 +12,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Constraint(validatedBy = UniqueBrandProductValidator.class)
 public @interface UniqueBrandProduct {
+    // brand products search if exist in database
     String message() default "The brand should be unique";
     Class<?>[] groups()default {};
 

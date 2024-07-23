@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = UniqueTypeProductValidator.class)
 public @interface UniqueTypeProduct {
 
-
+    // type products search if exist in database
     String message() default "The type should be unique";
     Class<?>[] groups()default {};
 

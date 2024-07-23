@@ -1,4 +1,4 @@
-package healthnutrition.healthnutrition.web;
+package healthnutrition.healthnutrition.web.UserController;
 import healthnutrition.healthnutrition.models.dto.userDTOS.UserRegisterDTo;
 import healthnutrition.healthnutrition.services.UserService;
 import jakarta.validation.Valid;
@@ -11,13 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 @Controller
 @RequestMapping("/users")
 public class UserRegistrationController {
-
     private final UserService userService;
-
     public UserRegistrationController(UserService userService) {
         this.userService = userService;
     }
@@ -26,13 +23,10 @@ public class UserRegistrationController {
         return new UserRegisterDTo();
     }
 
-
     @GetMapping("/register")
     public ModelAndView register() {
         return new ModelAndView ("register");
     }
-
-
 
     @PostMapping("/register")
     public ModelAndView register(@Valid UserRegisterDTo userRegistrationDTO,

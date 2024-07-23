@@ -1,4 +1,4 @@
-package healthnutrition.healthnutrition.web;
+package healthnutrition.healthnutrition.web.UserController;
 
 import healthnutrition.healthnutrition.models.dto.cartDTOS.DeliveryDataDTO;
 import healthnutrition.healthnutrition.models.enums.DeliveryAddress;
@@ -43,7 +43,7 @@ public class DeliveryController {
     public ModelAndView finalDelivery() {
         return new ModelAndView("delivery");
     }
-
+    // view for delivery data to send shopping cart and final step for order
     @PostMapping("/delivery")
     public ModelAndView finalDelivery(@Valid DeliveryDataDTO data,
                                       BindingResult bindingResult,

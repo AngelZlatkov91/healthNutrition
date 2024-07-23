@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ShoppingCartServiceImplTest {
     @Autowired
     private ShoppingCartServiceImpl shoppingCartService;
+
     @Autowired
     private ShoppingCartRepositories shoppingCartRepositories;
     @Autowired

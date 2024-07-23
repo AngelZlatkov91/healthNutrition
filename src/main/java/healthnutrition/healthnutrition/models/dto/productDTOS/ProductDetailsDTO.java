@@ -1,14 +1,17 @@
 package healthnutrition.healthnutrition.models.dto.productDTOS;
-
-
 public class ProductDetailsDTO {
     private String id;
-   private String name;
+    private String name;
     private String description;
     private Double price;
-   private String imageUrl;
+    private String imageUrl;
     private String type;
-     private String brant;
+    private String brant;
+
+
+    public ProductDetailsDTO(){
+    }
+
 
     public String getId() {
         return id;
@@ -65,4 +68,5 @@ public class ProductDetailsDTO {
     public void setBrant(String brant) {
         this.brant = brant;
     }
+
 }

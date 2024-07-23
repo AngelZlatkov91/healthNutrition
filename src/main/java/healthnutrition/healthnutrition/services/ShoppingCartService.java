@@ -12,8 +12,6 @@ public interface ShoppingCartService {
 
     void addProductToShoppingCart(UUID uuid);
 
-
-
     Double calculateTotalPrice();
 
     void finalStep(String user, DeliveryDataDTO data);
@@ -26,9 +24,7 @@ public interface ShoppingCartService {
 
     void increase(String getName);
 
-    ArchiveDTO allShoppingCarts(String user);
 
-    AllOrdersDTO allOrdersToSend();
 
 
 

@@ -1,22 +1,21 @@
 package healthnutrition.healthnutrition.models.dto.cartDTOS;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 public class DeliveryDataDTO {
-    @NotEmpty(message = "The city cannot be empty!")
-    @Size(min = 2,max = 20)
+    @NotBlank(message = "{deliver.city.user.empty}")
     private String city;
-    @NotEmpty(message = "The post code cannot be empty!")
-    @Size(min = 3,max = 5)
+    @NotBlank(message = "{deliver.postCode.user.empty}")
     private String postCode;
-    @NotEmpty(message = "The address cannot be empty!")
+    @NotBlank(message = "{deliver.street.user.empty}")
     private String address;
 
-    @NotEmpty(message = "The deliver Firm is required")
+    @NotBlank(message = "{deliver.firm.user.empty}")
     private String firm;
     private Double priceForDelivery;
-    @NotEmpty(message = "The deliver address is required")
+    @NotBlank(message = "{deliver.type.user.empty}")
     private String deliveryAddress;
     public DeliveryDataDTO(){}
 
@@ -86,8 +85,8 @@ public class DeliveryDataDTO {
     public void add() {
         double price = 0.0;
         switch (this.deliveryAddress) {
-            case "OFFICE" -> price  =  0.50;
-            case "ADDRESS" -> price = 5.50;
+            case "OFFICE" -> price  = price +  0.50;
+            case "ADDRESS" -> price = price + 5.50;
         }
         switch (this.firm){
             case "SPEEDY" -> price = price + 2.50;

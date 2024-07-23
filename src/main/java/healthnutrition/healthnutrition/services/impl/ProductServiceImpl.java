@@ -15,6 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -74,7 +75,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    // select product quantity for sheduling
+    // select product quantity for scheduling
     public String sellerProductQuantity() {
         return this.productInCartRepositories.QuantitySellerProduct();
     }
@@ -83,25 +84,13 @@ public class ProductServiceImpl implements ProductService {
     private ProductDetailsDTO mapAsDetails(Product product) {
         ProductDetailsDTO productDetailsDTO = this.mapper.map(product,ProductDetailsDTO.class);
         productDetailsDTO.setId(product.getUuid().toString());
-//        productDetailsDTO.setDescription(product.getDescription());
-//        productDetailsDTO.setPrice(product.getPrice());
-//        productDetailsDTO.setName(product.getName());
-//        productDetailsDTO.setImageUrl(product.getImageUrl());
         productDetailsDTO.setBrant(product.getBrant().getBrand());
         productDetailsDTO.setType(product.getType().getType());
         return productDetailsDTO;
     }
 
-//    private ProductDetailsDTO mapSummary(Product product) {
-//        ProductDetailsDTO productDetailsDTO = this.mapper.map(product,ProductDetailsDTO.class);
-//        productDetailsDTO.setId(product.getUuid().toString());
-////        productDetailsDTO.setName(product.getName());
-////        productDetailsDTO.setPrice(product.getPrice());
-////        productDetailsDTO.setImageUrl(product.getImageUrl());
-//        productDetailsDTO.setType(product.getType().getType());
-//        productDetailsDTO.setBrant(product.getBrant().getBrand());
-//        return productDetailsDTO;
-//    }
+
+
     // create product from ProductCreateDTO
     private Product map(ProductCreateDTO productCreateDTO) {
             Product product = this.mapper.map(productCreateDTO,Product.class);

@@ -1,7 +1,8 @@
-package healthnutrition.healthnutrition.web;
+package healthnutrition.healthnutrition.web.UserController;
 import healthnutrition.healthnutrition.models.dto.cartDTOS.ArchiveDTO;
 import healthnutrition.healthnutrition.models.dto.userDTOS.EditUserDTO;
 import healthnutrition.healthnutrition.models.dto.userDTOS.UserUpdateDTO;
+import healthnutrition.healthnutrition.services.ArchiveShoppingCartService;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
 import healthnutrition.healthnutrition.services.UserService;
 import jakarta.validation.Valid;
@@ -18,25 +19,24 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UserDataUpdateController {
-
     private final UserService userService;
-    private final ShoppingCartService shoppingCartService;
+    private final ArchiveShoppingCartService allShoppingCarts;
 
-    public UserDataUpdateController(UserService userService, ShoppingCartService shoppingCartService) {
+    public UserDataUpdateController(UserService userService, ArchiveShoppingCartService allShoppingCarts) {
         this.userService = userService;
-        this.shoppingCartService = shoppingCartService;
+        this.allShoppingCarts = allShoppingCarts;
     }
 
     @ModelAttribute("editUserDTO")
     public EditUserDTO initForm(){
         return new EditUserDTO();
     }
-
+    // user get profile and all shopping cart
     @GetMapping("/profile")
     public ModelAndView updateProfile(@AuthenticationPrincipal UserDetails user, Model model) {
         String userName = user.getUsername();
         UserUpdateDTO userData  = this.userService.getUserData(userName);
-        ArchiveDTO archiveShoppingCartDTOS = this.shoppingCartService.allShoppingCarts(userName);
+        ArchiveDTO archiveShoppingCartDTOS = this.allShoppingCarts.allShoppingCarts(userName);
         model.addAttribute("archive",archiveShoppingCartDTOS);
         model.addAttribute("user", userData);
         return new ModelAndView("profile");
@@ -46,7 +46,7 @@ public class UserDataUpdateController {
     public ModelAndView edit(){
         return new ModelAndView("edit");
     }
-
+   // if user want to edit his data - fullName, email, phone
     @PostMapping("/edit")
     public ModelAndView edit(@Valid EditUserDTO editUserDTO, BindingResult br
             , RedirectAttributes rat, @AuthenticationPrincipal UserDetails user) {

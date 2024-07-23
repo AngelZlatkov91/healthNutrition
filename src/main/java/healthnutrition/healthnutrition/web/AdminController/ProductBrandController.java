@@ -1,4 +1,4 @@
-package healthnutrition.healthnutrition.web;
+package healthnutrition.healthnutrition.web.AdminController;
 
 import healthnutrition.healthnutrition.models.dto.productDTOS.BrandProductDTO;
 import healthnutrition.healthnutrition.services.BrandProductService;

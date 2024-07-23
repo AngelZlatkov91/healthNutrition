@@ -32,7 +32,7 @@ public class HealthNutritionUserDetailsService implements UserDetailsService {
                 .authorities(map(user.getRole()))
                 .build();
     }
-    // autorization from role
+    // authorization from role
     private static GrantedAuthority map(UserRoleEnum userRoleEntity){
         return new SimpleGrantedAuthority("ROLE_" + userRoleEntity.name());
 
