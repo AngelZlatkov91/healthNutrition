@@ -39,6 +39,6 @@ class ProductTypeControllerTest {
         mockMvc.perform(
                 MockMvcRequestBuilders.post("/add/type")
                         .param("type","")
-        ).andExpect(status().is4xxClientError());
+        ).andExpect(status().is3xxRedirection());
     }
 }

@@ -50,6 +50,23 @@ public class HomeController {
         model.addAttribute("products",allProducts);
         return new ModelAndView("search");
     }
+     // get all product by brand
+    @GetMapping("/brand/{searchKey}")
+    public  ModelAndView searchByBrand( @PathVariable("searchKey")  String searchKey, Model model) {
+        model.addAttribute("searchKey",searchKey);
+        List<ProductDetailsDTO> allProducts = productService.getAllProducts(searchKey);
+        model.addAttribute("products",allProducts);
+        return new ModelAndView("search");
+    }
+    // get all product by type
+    @GetMapping("/type/{searchKey}")
+    public  ModelAndView searchByType( @PathVariable("searchKey")  String searchKey, Model model) {
+        model.addAttribute("searchKey",searchKey);
+        List<ProductDetailsDTO> allProducts = productService.getAllProducts(searchKey);
+        model.addAttribute("products",allProducts);
+        return new ModelAndView("search");
+    }
+
 
 
 

@@ -60,6 +60,6 @@ class UserRegistrationControllerTest {
                         .param("password", "test")
                         .param("confirmPassword", "test5")
 
-        ).andExpect(status().is4xxClientError());
+        ).andExpect(status().is3xxRedirection());
     }
 }

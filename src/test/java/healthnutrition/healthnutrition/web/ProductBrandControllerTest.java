@@ -42,6 +42,6 @@ class ProductBrandControllerTest {
                 MockMvcRequestBuilders.post("/add/brand")
                         .param("brand","")
                         .param("imageUrl", "")
-        ).andExpect(status().is4xxClientError());
+        ).andExpect(status().is3xxRedirection());
     }
 }

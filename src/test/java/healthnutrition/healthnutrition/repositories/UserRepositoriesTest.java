@@ -80,6 +80,19 @@ class UserRepositoriesTest {
         assertTrue(actualMessage.contains(expectedMessage));
 
     }
+    @Test
+    public void throwUserWithExistPhone(){
+        User user1 = difrenUser();
+        user1.setPhone("0893451814");
+        Exception exception = assertThrows(DataIntegrityViolationException.class, () -> {
+            userRepositories.save(user1);
+        });
+        String expectedMessage = "could not execute statement";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+
+    }
 
 
 

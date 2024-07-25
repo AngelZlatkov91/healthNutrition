@@ -1,5 +1,4 @@
 package healthnutrition.healthnutrition.config;
-
 import healthnutrition.healthnutrition.models.enums.UserRoleEnum;
 import healthnutrition.healthnutrition.repositories.UserRepositories;
 import healthnutrition.healthnutrition.services.impl.HealthNutritionUserDetailsService;
@@ -7,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -20,9 +18,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+
     private  final String rememberMeKey;
 
-    public SecurityConfig (@Value("${healthNutrition.remember.me.key}") String rememberMe) {
+    public SecurityConfig ( @Value("${healthNutrition.remember.me.key}") String rememberMe) {
         this.rememberMeKey =rememberMe;
     }
 
@@ -37,20 +36,31 @@ public class SecurityConfig {
 
                         .requestMatchers("/swagger-ui/**","/v3/api-docs/**").permitAll()
                         // allow anyone to see the home page the registration and the login form
+                        // all request matchers permit all
                         .requestMatchers("/","/users/login","/users/register", "/users/login-error").permitAll()
                         .requestMatchers("/products/all").permitAll()
                         .requestMatchers("/product/{uuid}").permitAll()
                         .requestMatchers("/search/{searchKey}").permitAll()
+                        .requestMatchers("/brand/{searchKey}").permitAll()
+                        .requestMatchers("/type/{searchKey}").permitAll()
                         .requestMatchers("/articles/all").permitAll()
-                        .requestMatchers("/api/products").permitAll()
+                        .requestMatchers("/delivery").permitAll()
                         .requestMatchers("/home").permitAll()
                         .requestMatchers("error").permitAll()
+
+                        // requestMatchers for rest controller
+                        .requestMatchers("/api/products").permitAll()
+                        .requestMatchers("/api/get/product/{uuid}").permitAll()
+                        .requestMatchers("/api/create/product").hasRole(UserRoleEnum.ADMIN.name())
+                        .requestMatchers("/api/remove/product/{uuid}").hasRole(UserRoleEnum.ADMIN.name())
+
+                        // all request matchers permit only Admin
                         .requestMatchers("/add/brand").hasRole(UserRoleEnum.ADMIN.name())
                         .requestMatchers("/orders").hasRole(UserRoleEnum.ADMIN.name())
                         .requestMatchers("/product-add").hasRole(UserRoleEnum.ADMIN.name())
                         .requestMatchers("/add/type").hasRole(UserRoleEnum.ADMIN.name())
                         .requestMatchers("/add/article").hasRole(UserRoleEnum.ADMIN.name())
-                        .requestMatchers("/delivery").permitAll()
+
                         // all other requests are authenticated
                         .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
