@@ -15,7 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -42,6 +41,7 @@ public class ProductServiceImpl implements ProductService {
     // add product for admin
     public void addProduct(ProductCreateDTO productCreateDTO){
         this.productRepository.save(map(productCreateDTO));
+
     }
 
 
@@ -80,7 +80,8 @@ public class ProductServiceImpl implements ProductService {
         return this.productInCartRepositories.QuantitySellerProduct();
     }
 
-        // map product entity to productDetailsDTO
+
+    // map product entity to productDetailsDTO
     private ProductDetailsDTO mapAsDetails(Product product) {
         ProductDetailsDTO productDetailsDTO = this.mapper.map(product,ProductDetailsDTO.class);
         productDetailsDTO.setId(product.getUuid().toString());

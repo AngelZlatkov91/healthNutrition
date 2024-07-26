@@ -1,71 +1,62 @@
 package healthnutrition.healthnutrition.web.AdminController;
-
 import healthnutrition.healthnutrition.models.dto.productDTOS.ProductCreateDTO;
 import healthnutrition.healthnutrition.models.dto.productDTOS.ProductDetailsDTO;
-
-import healthnutrition.healthnutrition.services.ProductService;
-
-import org.springframework.http.MediaType;
+import healthnutrition.healthnutrition.services.RestProductService;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 
 
-
+@CrossOrigin("*")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/products/")
 public class RestControllerGetProducts {
     // very simple rest controller  to do more specific
            // TODO
-    private final ProductService productService;
+    private final RestProductService restProductService;
 
-    public RestControllerGetProducts(ProductService productService) {
-        this.productService = productService;
+    public RestControllerGetProducts(RestProductService restProductService) {
+        this.restProductService = restProductService;
     }
 
+
     // get all products permit all
-    @GetMapping(value = "/products", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public ResponseEntity<List<ProductDetailsDTO>> getAllOffers() {
 
         return ResponseEntity.ok(
-                productService.getAllProducts("")
+                restProductService.getAllProducts()
         );
     }
     // get product by uuid permit all
-    @GetMapping(value = "/get/product/{uuid}", produces =  MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProductDetailsDTO> getById(@PathVariable("uuid") UUID uuid) {
-
-        return ResponseEntity
-                .ok(productService.getProductDetails(uuid));
+    @GetMapping(value = "/get/product/{id}")
+    public ResponseEntity<ProductDetailsDTO> getById(@PathVariable("id") Long id) {
+       Optional<ProductDetailsDTO> productDetails = restProductService.getProductById(id);
+        return productDetails.(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
     // remove product by uuid permit only admin
 
-    @DeleteMapping("/remove/product/{uuid}")
-    public ResponseEntity<ProductDetailsDTO> deleteById(@PathVariable("uuid") UUID uuid) {
-        productService.deleteProduct(uuid);
+    @DeleteMapping("/remove/{id}")
+    public ResponseEntity<ProductDetailsDTO> deleteById(@PathVariable("id") Long id) {
+        restProductService.deleteProduct(id);
         return ResponseEntity
                 .noContent()
                 .build();
     }
     // create product  permit only admin
-    @PostMapping("/create/product")
+    @PostMapping("/create")
     public ResponseEntity<ProductCreateDTO> createOffer(
-            @RequestBody ProductCreateDTO productCreateDTO
+            @RequestBody ProductCreateDTO productCreateDTO,
+            UriComponentsBuilder uriComponentsBuilder
     ) {
-          this.productService.addProduct(productCreateDTO);
-
-        return ResponseEntity.
-                created(
-                        ServletUriComponentsBuilder
-                                .fromCurrentRequest()
-                                .path("/{name}")
-                                .buildAndExpand(productCreateDTO.getName())
-                                .toUri()
-                ).body(productCreateDTO);
+        Long id = this.restProductService.addProduct(productCreateDTO);
+        return ResponseEntity.created(
+                uriComponentsBuilder.path("/api/product/{id}").build(id)
+        ).build();
     }
 
 

@@ -1,5 +1,6 @@
 package healthnutrition.healthnutrition.models.dto.productDTOS;
 public class ProductDetailsDTO {
+
     private String id;
     private String name;
     private String description;

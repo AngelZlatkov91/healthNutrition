@@ -50,9 +50,9 @@ public class SecurityConfig {
 
                         // requestMatchers for rest controller
                         .requestMatchers("/api/products").permitAll()
-                        .requestMatchers("/api/get/product/{uuid}").permitAll()
-                        .requestMatchers("/api/create/product").hasRole(UserRoleEnum.ADMIN.name())
-                        .requestMatchers("/api/remove/product/{uuid}").hasRole(UserRoleEnum.ADMIN.name())
+                        .requestMatchers("/api/products/create").permitAll()
+                        .requestMatchers("/api/products/get/product/{id}").permitAll()
+                        .requestMatchers("/api/products/remove/{id}").permitAll()
 
                         // all request matchers permit only Admin
                         .requestMatchers("/add/brand").hasRole(UserRoleEnum.ADMIN.name())
