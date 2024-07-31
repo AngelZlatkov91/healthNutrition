@@ -70,6 +70,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
 
+
     @Override
     // calculate the price for all product in cart
     public Double calculateTotalPrice() {

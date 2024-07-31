@@ -1,5 +1,4 @@
 package healthnutrition.healthnutrition.services.impl;
-
 import healthnutrition.healthnutrition.models.dto.productDTOS.ProductCreateDTO;
 import healthnutrition.healthnutrition.models.dto.productDTOS.ProductDetailsDTO;
 import healthnutrition.healthnutrition.models.entitys.BrandProduct;
@@ -9,14 +8,13 @@ import healthnutrition.healthnutrition.repositories.BrandRepository;
 import healthnutrition.healthnutrition.repositories.ProductRepository;
 import healthnutrition.healthnutrition.repositories.TypeRepository;
 import healthnutrition.healthnutrition.services.RestProductService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 @Service
 public class RestProductServiceImpl implements RestProductService {
 
@@ -35,19 +33,19 @@ public class RestProductServiceImpl implements RestProductService {
     @Override
     public List<ProductDetailsDTO> getAllProducts() {
         return productRepository.findAll(Pageable.unpaged()).map(RestProductServiceImpl::mapAsDetails).toList();
-
     }
 
     @Override
-    public Optional<ProductDetailsDTO> getProductById(Long id) {
-        Optional<Product> byId = this.productRepository.findById(id);
-
-        return  productRepository.findById(id).map(ProductServiceImpl::mapAsDetails);
+    public Optional<ProductDetailsDTO> getProductById(UUID uuid) {
+        Product byUuid = productRepository.findByUuid(uuid);
+        ProductDetailsDTO productDetailsDTO = mapAsDetails(byUuid);
+        return Optional.of(productDetailsDTO);
     }
 
     @Override
-    public void deleteProduct(Long id) {
-         this.productRepository.deleteById(id);
+    @Transactional
+    public void deleteProduct(UUID uuid) {
+         this.productRepository.deleteByUuid(uuid);
     }
 
     @Override

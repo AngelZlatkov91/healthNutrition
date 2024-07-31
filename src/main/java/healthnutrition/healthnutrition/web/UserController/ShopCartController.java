@@ -22,6 +22,7 @@ public class ShopCartController {
     public ModelAndView shoppingCart(Model model){
         ShoppingCartDTO shoppingCartDTO = this.shoppingCartService.productInCart();
         List<ProductInCartDTO> productFromShoppingCart = shoppingCartDTO.getProductFromShoppingCart();
+
         double priceForProducts = this.shoppingCartService.calculateTotalPrice();
         model.addAttribute("price",priceForProducts);
         return new ModelAndView("shoping_cart","products",productFromShoppingCart);

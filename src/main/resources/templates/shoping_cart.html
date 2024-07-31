@@ -32,7 +32,7 @@
                 </div>
             </div>
 
-            <div class="row mt-3 mb-3">
+            <div class="row mt-3 mb-3" th:if="${!products.isEmpty()}">
                 <a class="card-link" th:href="@{/delivery}" th:text="#{final_step_cart}">Buy</a>
             </div>
         </div>

@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/brand/{searchKey}").permitAll()
                         .requestMatchers("/type/{searchKey}").permitAll()
                         .requestMatchers("/articles/all").permitAll()
+                        .requestMatchers("/article/{uuid}").permitAll()
                         .requestMatchers("/delivery").permitAll()
                         .requestMatchers("/home").permitAll()
                         .requestMatchers("error").permitAll()
@@ -51,8 +52,8 @@ public class SecurityConfig {
                         // requestMatchers for rest controller
                         .requestMatchers("/api/products").permitAll()
                         .requestMatchers("/api/products/create").permitAll()
-                        .requestMatchers("/api/products/get/product/{id}").permitAll()
-                        .requestMatchers("/api/products/remove/{id}").permitAll()
+                        .requestMatchers("/api/products/get/product/{uuid}").permitAll()
+                        .requestMatchers("/api/products/remove/{uuid}").permitAll()
 
                         // all request matchers permit only Admin
                         .requestMatchers("/add/brand").hasRole(UserRoleEnum.ADMIN.name())
