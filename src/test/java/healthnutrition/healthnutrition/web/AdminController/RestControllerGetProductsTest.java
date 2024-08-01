@@ -6,8 +6,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-
-import com.jayway.jsonpath.JsonPath;
 import healthnutrition.healthnutrition.models.entitys.BrandProduct;
 import healthnutrition.healthnutrition.models.entitys.Product;
 import healthnutrition.healthnutrition.models.entitys.TypeProduct;
@@ -24,7 +22,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
-
 import java.util.Optional;
 import java.util.UUID;
 

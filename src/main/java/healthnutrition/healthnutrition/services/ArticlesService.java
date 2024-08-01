@@ -14,6 +14,6 @@ public interface ArticlesService {
     Page<ArticlesDTO> allArticles(Pageable pageable);
 
     ArticlesDTO getArticle(UUID uuid);
-    ArticlesDTO getArticle();
+
 
 }

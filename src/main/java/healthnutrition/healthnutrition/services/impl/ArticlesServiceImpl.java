@@ -47,28 +47,11 @@ public class ArticlesServiceImpl implements ArticlesService {
         return map(articles);
     }
 
-    // get random article from repositories with id
-    @Override
-    public ArticlesDTO getArticle() {
-        if (articlesRepositories.count() == 0){
-            return null;
-        }
-        Random random = new Random();
-        Long size = random.nextLong(0,this.articlesRepositories.count());
-        if (size > this.articlesRepositories.count() || size <= 0) {
-            size = this.articlesRepositories.count();
-        }
 
-        Optional<Articles> byId = articlesRepositories.findById(size);
-        return map(byId.get());
-    }
 // map article entity to article dto
     private ArticlesDTO map (Articles articles) {
         ArticlesDTO article = this.mapper.map(articles,ArticlesDTO.class);
         article.setId(articles.getUuid().toString());
-//        article.setTitle(articles.getTitle());
-//        article.setDescription(articles.getDescription());
-//        article.setImageUrl(articles.getImageUrl());
         return article;
     }
 

@@ -1,5 +1,4 @@
 package healthnutrition.healthnutrition.web.AdminController;
-
 import healthnutrition.healthnutrition.models.dto.productDTOS.BrandProductDTO;
 import healthnutrition.healthnutrition.services.BrandProductService;
 import jakarta.validation.Valid;

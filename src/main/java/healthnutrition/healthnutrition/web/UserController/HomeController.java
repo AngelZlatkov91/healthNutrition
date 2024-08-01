@@ -1,7 +1,4 @@
 package healthnutrition.healthnutrition.web.UserController;
-
-import healthnutrition.healthnutrition.config.MyScheduledTasks;
-import healthnutrition.healthnutrition.models.dto.articlesDTOS.ArticlesDTO;
 import healthnutrition.healthnutrition.models.dto.productDTOS.GetBrandsDTO;
 import healthnutrition.healthnutrition.models.dto.productDTOS.GetTypesDTO;
 import healthnutrition.healthnutrition.models.dto.productDTOS.ProductDetailsDTO;
@@ -19,14 +16,13 @@ import java.util.List;
 public class HomeController {
 
     private final ProductService productService;
-    private final ArticlesService articlesService;
     private final BrandProductService brandProductService;
     private final TypeProductService typeProductService;
 
 
-    public HomeController(ProductService productService, ArticlesService articlesService, BrandProductService brandProductService, TypeProductService typeProductService) {
+    public HomeController(ProductService productService,  BrandProductService brandProductService, TypeProductService typeProductService) {
         this.productService = productService;
-        this.articlesService = articlesService;
+
         this.brandProductService = brandProductService;
         this.typeProductService = typeProductService;
     }
@@ -36,15 +32,15 @@ public class HomeController {
     public ModelAndView home(Model model){
         List<GetBrandsDTO> brands = brandProductService.allBrands();
         List<GetTypesDTO> types = typeProductService.allTypes();
-        ArticlesDTO article = articlesService.getArticle();
-        model.addAttribute("article",article);
+
+
         model.addAttribute("brands", brands);
         model.addAttribute("types",types);
         return new ModelAndView("home");
     }
     // get product by search key
     @GetMapping("/search/{searchKey}")
-    public  ModelAndView searchBy( @PathVariable("searchKey") @RequestParam(defaultValue = "") String searchKey, Model model) {
+    public  ModelAndView searchBy( @PathVariable("searchKey") @RequestParam("") String searchKey, Model model) {
         model.addAttribute("searchKey",searchKey);
         List<ProductDetailsDTO> allProducts = productService.getAllProducts(searchKey);
         model.addAttribute("products",allProducts);
