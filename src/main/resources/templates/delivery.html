@@ -13,13 +13,13 @@
     </nav>
 </div>
 <div class="container">
-    <h4 class="text-center text-white">Add Address</h4>
+    <h4 class="text-center text-dark">Add Address</h4>
     <form  th:method="POST"
            th:action="@{/delivery}"
            th:object="${data}"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="form-group col-md-6 mb-3">
-            <label class="text-center text-white font-weight-bold" for="city" th:text="#{delivery_city_user}">City</label>
+            <label class="text-center text-dark font-weight-bold" for="city" th:text="#{delivery_city_user}">City</label>
             <input id="city"
                    type="text"
                    th:name="city"
@@ -31,7 +31,7 @@
             </p>
         </div>
         <div class="form-group col-md-6 mb-3">
-            <label for="postCode" class="text-white font-weight-bold" th:text="#{delivery_postKode_user}">Post Code</label>
+            <label for="postCode" class="text-dark font-weight-bold" th:text="#{delivery_postKode_user}">Post Code</label>
             <input id="postCode"
                    type="text"
                    th:name="postCode"
@@ -45,7 +45,7 @@
         </div>
 
         <div class="form-group">
-          <label class="text-white font-weight-bold" for="address" th:text="#{delivery_street_user}">Address</label>
+          <label class="text-dark font-weight-bold" for="address" th:text="#{delivery_street_user}">Address</label>
              <textarea id="address"
               type="text"
               th:name="address"
@@ -58,7 +58,7 @@
         </div>
         <div class="row">
             <div class="form-group col-md-6 mb-3">
-                <label class="text-center text-white font-weight-bold" for="firm" th:text="#{delivery_firmName_user}">Delivery Firm</label>
+                <label class="text-center text-dark font-weight-bold" for="firm" th:text="#{delivery_firmName_user}">Delivery Firm</label>
                 <select id="firm"
                        th:name="firm"
                         type="text"
@@ -77,7 +77,7 @@
                 </p>
             </div>
             <div class="form-group col-md-6 mb-3">
-                <label class="text-center text-white font-weight-bold" for="deliveryAddress" th:text="#{delivery_firmAddress_user}">Type delivery</label>
+                <label class="text-center text-dark font-weight-bold" for="deliveryAddress" th:text="#{delivery_firmAddress_user}">Type delivery</label>
                 <select id="deliveryAddress"
                         type="text"
                        th:name="deliveryAddress"

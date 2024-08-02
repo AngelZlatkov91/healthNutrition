@@ -17,7 +17,7 @@
           th:action="@{/users/login}"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="form-group">
-            <label for="email" class="text-white font-weight-bold" th:text="#{login_user_email}">Username</label>
+            <label for="email" class="text-dark font-weight-bold" th:text="#{login_user_email}">Username</label>
             <input  id="email"
                     name="email"
                     th:value="${email}"
@@ -26,7 +26,7 @@
                     placeholder="Email"/>
         </div>
         <div class="form-group">
-            <label for="password" class="text-white font-weight-bold" th:text="#{login_user_password}">Password</label>
+            <label for="password" class="text-dark font-weight-bold" th:text="#{login_user_password}">Password</label>
             <input  id="password"
                     name="password"
                     type="password" min="2"
@@ -34,7 +34,7 @@
                     placeholder="Password"/>
         </div>
         <div class="form-group">
-            <label for="rememberme" class="text-white font-weight-bold">Remember me</label>
+            <label for="rememberme" class="text-dark font-weight-bold">Remember me</label>
             <input   id="rememberme" name="rememberme"
                      type="checkbox"
                      class="form-control"/>

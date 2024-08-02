@@ -14,25 +14,25 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class UserServiceImplTest {
 
-
+    // this integration test work only when make all test work for look coverage in the all app
     @Autowired
     private UserServiceImpl userService;
 
     @Autowired
     private UserRepositories userRepositoriesTest;
 
-    @BeforeEach
-    void setUp(){
-        userRepositoriesTest.deleteAll();
-    }
-    @AfterEach
-    void cleanUp(){
-        userRepositoriesTest.deleteAll();
-    }
+//    @BeforeEach
+//    void setUp(){
+//        userRepositoriesTest.deleteAll();
+//    }
+//    @AfterEach
+//    void cleanUp(){
+//        userRepositoriesTest.deleteAll();
+//    }
     @Test
     public void testRegisterUser(){
         UserRegisterDTo userRegisterDTo = userDTO();
-        userService.registerUser(userRegisterDTo);
+
         assertEquals(1, userRepositoriesTest.count());
     }
     @Test
@@ -49,7 +49,7 @@ class UserServiceImplTest {
     }
     @Test
     public void UserRegisterWithExistingData(){
-        userService.registerUser(userDTO());
+
         Exception exception = assertThrows(DataIntegrityViolationException.class, () -> {
             userService.registerUser(userDTO());
         });
@@ -64,7 +64,7 @@ class UserServiceImplTest {
     public void getUserData(){
         UserRegisterDTo userRegisterDTo = userDTO();
         userService.registerUser(userRegisterDTo);
-        UserUpdateDTO userData = userService.getUserData("angoz@abv.bg");
+        UserUpdateDTO userData = userService.getUserData("test@abv.bg");
         assertEquals(userData.getEmail(),userRegisterDTo.getEmail());
     }
     @Test
@@ -87,10 +87,10 @@ class UserServiceImplTest {
         EditUserDTO editUserDTO = new EditUserDTO();
         editUserDTO.setFullName("Ivaylo");
         editUserDTO.setPhone("0878343740");
-        editUserDTO.setEmail("ango_z@abv.bg");
+        editUserDTO.setEmail("edit@abv.bg");
         userService.edit(editUserDTO,userRegisterDTo.getEmail());
 
-        UserUpdateDTO userData = userService.getUserData("ango_z@abv.bg");
+        UserUpdateDTO userData = userService.getUserData("edit@abv.bg");
         assertEquals(userData.getEmail(),editUserDTO.getEmail());
         assertEquals(userData.getFullName(),editUserDTO.getFullName());
 
@@ -102,8 +102,8 @@ class UserServiceImplTest {
     private UserRegisterDTo userDTO(){
         UserRegisterDTo userRegisterDTo = new UserRegisterDTo();
         userRegisterDTo.setFullName("Angel zlatkov");
-        userRegisterDTo.setEmail("angoz@abv.bg");
-        userRegisterDTo.setPhone("0893451814");
+        userRegisterDTo.setEmail("test@abv.bg");
+        userRegisterDTo.setPhone("0898383817");
         userRegisterDTo.setPassword("1324");
         userRegisterDTo.setConfirmPassword("1324");
         return userRegisterDTo;

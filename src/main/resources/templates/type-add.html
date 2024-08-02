@@ -13,14 +13,14 @@
     </nav>
 </div>
 <div class="container">
-    <h4 class="text-center text-white">Add Type</h4>
+    <h4 class="text-center text-dark">Add Type</h4>
     <form th:method="POST"
           th:action="@{/add/type}"
           th:object="${typeProductDTO}"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
             <div class="form-group col-md-6 mb-3">
-                <label class="text-center text-white font-weight-bold" for="type">Type</label>
+                <label class="text-center text-dark font-weight-bold" for="type">Type</label>
                 <input id="type"
                        type="text"
                        th:name="type"

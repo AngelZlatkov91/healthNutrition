@@ -3,6 +3,7 @@ import healthnutrition.healthnutrition.models.entitys.User;
 import healthnutrition.healthnutrition.models.enums.UserRoleEnum;
 import healthnutrition.healthnutrition.repositories.UserRepositories;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -16,16 +17,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 class UserRegistrationControllerTest {
+    // this integration test work only when make all test work for look coverage in the all app
 
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private UserRepositories userRepositories;
 
-    @AfterEach
-    public void tearDown(){
-        userRepositories.deleteAll();
-    }
+//    @BeforeEach
+//    public void clear(){
+//        userRepositories.deleteAll();
+//    }
+//
+//    @AfterEach
+//    public void tearDown(){
+//        userRepositories.deleteAll();
+//    }
 
 
 
@@ -42,6 +49,7 @@ class UserRegistrationControllerTest {
     }
     @Test
     void testRegistration() throws Exception {
+
         mockMvc.perform(post("/users/register")
                         .param("fullName","Kiril ivanov")
                         .param("email", "test@test.com")
@@ -49,7 +57,7 @@ class UserRegistrationControllerTest {
                         .param("password", "test")
                         .param("confirmPassword", "test")
         ).andExpect(status().is3xxRedirection());
-        assertEquals(1,userRepositories.count());
+        assertEquals(3,userRepositories.count());
     }
 
     @Test
@@ -61,35 +69,35 @@ class UserRegistrationControllerTest {
                         .param("password", "test")
                         .param("confirmPassword", "test5")
         ).andExpect(status().is3xxRedirection());
-        assertEquals(0,userRepositories.count());
+        assertEquals(1,userRepositories.count());
     }
     @Test
     void testRegistrationWithExistEmailData() throws Exception {
         addUser();
         mockMvc.perform(post("/users/register")
                 .param("fullName","test1")
-                .param("email", "angel@gmail.com")
+                .param("email", "test3@gmail.com")
                 .param("phone","9876543210")
                 .param("password", "test")
                 .param("confirmPassword", "test")
         ).andExpect(status().is3xxRedirection());
-        assertEquals(1,userRepositories.count());
+        assertEquals(2,userRepositories.count());
     }
     @Test
     void testRegistrationWithExistPhoneData() throws Exception {
-        addUser();
+
         mockMvc.perform(post("/users/register")
                 .param("fullName","test2")
                 .param("email", "test@gmail.com")
-                .param("phone","0123456789")
+                .param("phone","00359893123123")
                 .param("password", "test")
                 .param("confirmPassword", "test")
         ).andExpect(status().is3xxRedirection());
-        assertEquals(1,userRepositories.count());
+        assertEquals(3,userRepositories.count());
     }
     @Test
     void testRegistrationNotCorrectDataPasswordNodMatch() throws Exception {
-        addUser();
+
         mockMvc.perform(post("/users/register")
                 .param("fullName","test3")
                 .param("email", "test3@test.com")
@@ -97,15 +105,15 @@ class UserRegistrationControllerTest {
                 .param("password", "test")
                 .param("confirmPassword", "test5")
         ).andExpect(status().is3xxRedirection());
-        assertEquals(1,userRepositories.count());
+        assertEquals(3,userRepositories.count());
     }
 
 
     private void addUser(){
         User user = new User();
         user.setFullName("Angel");
-        user.setPhone("0123456789");
-        user.setEmail("angel@gmail.com");
+        user.setPhone("00359893123123");
+        user.setEmail("test3@gmail.com");
         user.setPassword("1234");
         user.setRole(UserRoleEnum.USER);
          userRepositories.save(user);

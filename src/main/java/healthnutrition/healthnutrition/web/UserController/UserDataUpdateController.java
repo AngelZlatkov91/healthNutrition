@@ -22,7 +22,8 @@ public class UserDataUpdateController {
     private final UserService userService;
     private final ArchiveShoppingCartService allShoppingCarts;
 
-    public UserDataUpdateController(UserService userService, ArchiveShoppingCartService allShoppingCarts) {
+    public UserDataUpdateController(UserService userService,
+                                    ArchiveShoppingCartService allShoppingCarts) {
         this.userService = userService;
         this.allShoppingCarts = allShoppingCarts;
     }
@@ -33,7 +34,8 @@ public class UserDataUpdateController {
     }
     // user get profile and all shopping cart
     @GetMapping("/profile")
-    public ModelAndView updateProfile(@AuthenticationPrincipal UserDetails user, Model model) {
+    public ModelAndView updateProfile(@AuthenticationPrincipal UserDetails user,
+                                      Model model) {
         String userName = user.getUsername();
         UserUpdateDTO userData  = this.userService.getUserData(userName);
         ArchiveDTO archiveShoppingCartDTOS = this.allShoppingCarts.allShoppingCarts(userName);
@@ -48,11 +50,12 @@ public class UserDataUpdateController {
     }
    // if user want to edit his data - fullName, email, phone
     @PostMapping("/edit")
-    public ModelAndView edit(@Valid EditUserDTO editUserDTO, BindingResult br
-            , RedirectAttributes rat, @AuthenticationPrincipal UserDetails user) {
+    public ModelAndView edit(@Valid EditUserDTO editUserDTO,
+                             BindingResult br,
+                             RedirectAttributes rat,
+                             @AuthenticationPrincipal UserDetails user) {
         if (br.hasErrors()) {
             rat.addFlashAttribute("org.springframework.validation.BindingResult.editUserDTO",br);
-
             rat.addFlashAttribute("editUserDTO",editUserDTO);
             return new ModelAndView("redirect:/edit");
         }
