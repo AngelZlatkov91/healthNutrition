@@ -45,10 +45,7 @@ public class UserServiceImpl implements UserService {
     // get user data from currency login user
     public UserUpdateDTO getUserData(String userName) {
         Optional<User> byEmail = this.userRepositories.findByEmail(userName);
-          UserUpdateDTO user = new UserUpdateDTO();
-          user.setEmail(byEmail.get().getEmail());
-          user.setFullName(byEmail.get().getFullName());
-        return user;
+        return this.mapper.map(byEmail.get(),UserUpdateDTO.class);
     }
 
     @Override
@@ -80,10 +77,8 @@ public class UserServiceImpl implements UserService {
 
     private User map(UserRegisterDTo userRegisterDTo) {
         User user = this.mapper.map(userRegisterDTo, User.class);
-//        user.setFullName(userRegisterDTo.getFullName());
-//        user.setEmail(userRegisterDTo.getEmail());
-//        user.setPhone(userRegisterDTo.getPhone());
         user.setPassword(passwordEncoder.encode(userRegisterDTo.getPassword()));
+        // init role for user
         if (this.userRepositories.count() ==0){
             user.setRole(UserRoleEnum.ADMIN);
         } else {

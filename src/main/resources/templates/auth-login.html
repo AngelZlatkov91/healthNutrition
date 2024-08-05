@@ -3,16 +3,13 @@
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{navbar/header}">
 </head>
-
 <body>
 <div>
     <nav th:replace="~{navbar/navbar}">
     </nav>
-
 </div>
-
-<div class="container">
-    <h3 class="text-center text-white">Login</h2>
+<div class="p-5 align-content-center bg-blur my-register-div">
+    <h4 class="text-center text-dark">Login</h4>
     <form th:method="POST"
           th:action="@{/users/login}"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
@@ -53,7 +50,6 @@
         </div>
     </form>
 </div>
-
 <div>
 <!--    <th:block th:replace="~{navbar/footer}"/>-->
 </div>

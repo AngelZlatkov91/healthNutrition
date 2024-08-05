@@ -8,7 +8,8 @@
     <nav th:replace="~{navbar/navbar}">
     </nav>
 </div>
-<div class="container">
+<div class="p-5 align-content-center bg-blur my-register-div">
+    <h4 class="text-center text-dark">Edit User</h4>
     <!-- edit form -->
     <form
             th:action="@{/edit}"
@@ -20,8 +21,9 @@
                 <label for="fullName" class="text-dark font-weight-bold" th:text="#{register_user_fullName}">Full name</label>
                 <input  id="fullName"
                         name="fullName"
+                        type="text"
                         th:field="*{fullName}"
-                        placeholder="fullName "/>
+                        placeholder="fullName"/>
             </div>
         </div>
         <div class="row">
@@ -49,7 +51,7 @@
                     Phone is required.
                 </p>
             </div>
-            </div>
+
             <div class="row">
                 <div class="col col-md-4">
                     <div class="button-holder d-flex">
@@ -57,6 +59,7 @@
                     </div>
                 </div>
             </div>
+
     </form>
     <!-- Registration form end -->
 </div>
