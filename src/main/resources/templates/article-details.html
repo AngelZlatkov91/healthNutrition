@@ -9,19 +9,14 @@
     </nav>
 </div>
 <div class="p-5 align-content-center bg-blur my-register-div">
-    <h4 class="text-center text-dark mt-5">Details</h4>
     <div th:object="${article}" class="offers row mx-auto d-flex flex-row justify-content-center">
         <div  class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0" >
-            <div class="offer card col-sm-2 col-md-3  col-lg-4 m-1 p-0">
-                <img th:src="*{imageUrl}" class="card-img-top"  alt="Article image">
-            </div>
             <div class="card-text">
                 <h4 th:text="*{title}">12345></h4>
             </div>
-            <div class="card-body pb-1">
-                <h5 class="card-title" th:text="*{description}">
-                    Article description</h5>
-            </div>
+            <article class="forecast">
+                <p class="card-title" th:text="*{description}">Article description</p>
+            </article>
         </div>
 
     </div>

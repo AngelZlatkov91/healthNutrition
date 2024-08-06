@@ -40,7 +40,7 @@ public class ProductDetailsController {
     @GetMapping("/product/add-shoppingCart/{uuid}")
     public ModelAndView addProductToCart(@PathVariable("uuid") UUID uuid) {
         this.shoppingCartService.addProductToShoppingCart(uuid);
-        return new ModelAndView("redirect:/products/all");
+        return new ModelAndView("redirect:/shopping_cart");
     }
 
 }

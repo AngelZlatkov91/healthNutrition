@@ -19,7 +19,8 @@
                 <h5 class="card-title" th:text="*{fullName}">
                     Full Name</h5>
             </div>
-            <ul class="offer-details list-group list-group-flush">
+            <div>
+             <ul class="offer-details list-group list-group-flush">
                 <li class="list-group-item">
                     <div class="card-text">
                         <span>• Email</span>
@@ -37,19 +38,34 @@
                         <a class="card-link" th:href="@{/edit}" th:text="#{edit_user}">Edit</a>
                     </div>
                 </li>
-            </ul>
-
-            <div  class="col-12 bg-dark rounded m-auto" style="height: 30vh; overflow: auto">
-                <h3 class="mySticky bg-white text-dark text-center" th:text="|ShopCart:   ${archive.size()}|"></h3>
-                <th:block th:each="archive : ${archive.getArchiveShoppingCartDTOS()}">
-                    <span class="bg-danger text-center" th:text=" 'Date Made: ' + ${archive.getDate()} + ': Total price: ' + ${archive.getTotalPrice()}"></span>
-                    <th:block th:each="product : ${archive.getArchive()}">
-                           <div class="row rounded badge-secondary text-center">
-                              <span th:text="'Name: ' + ${product.getName()} + '; Quantity: ' + ${product.getQuantity()} + '; Price: ' + ${product.getPrice()}" ></span>
-                          </div>
-                    </th:block>
-                </th:block>
+             </ul>
             </div>
+            <div class="container">
+                    <h3 class="mySticky bg-white text-dark text-center" th:text="|ShopCart:   ${archive.size()}|"></h3>
+                <th:block th:each="archive : ${archive.getArchiveShoppingCartDTOS()}">
+                <div class="table-responsive">
+                        <table class="table table-striped table-dark">
+                             <thead>
+                                  <span class="bg-danger text-center" th:text=" 'Date Made: ' + ${archive.getDate()} + ': Total price: ' + ${archive.getTotalPrice()}"></span>
+                                       <tr>
+                                           <th></th>
+                                          <th>Name</th>
+                                          <th>Quantity</th>
+                                          <th>Price</th>
+                                       </tr>
+                             </thead>
+                                  <tbody>
+                                         <tr th:each="product : ${archive.getArchive()}">
+                                             <th scope="row"></th>
+                                             <td th:text=" ${product.getName()}"></td>
+                                             <td th:text=" ${product.getQuantity()}"></td>
+                                             <td th:text=" ${product.getPrice()}"></td>
+                                         </tr>
+                                  </tbody>
+
+                        </table>
+                        </div>
+                </th:block>
         </div>
     </div>
 </div>

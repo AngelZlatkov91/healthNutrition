@@ -35,6 +35,9 @@
             <div class="row mt-3 mb-3" th:if="${!products.isEmpty()}">
                 <a class="card-link" th:href="@{/delivery}" th:text="#{final_step_cart}">Buy</a>
             </div>
+            <div class="row mt-3 mb-3" th:if="${products.isEmpty()}">
+                <a class="card-link" th:href="@{/home}" th:text="#{final_step_cart_empty}">Continue Shopping</a>
+            </div>
         </div>
     </div>
 </main>

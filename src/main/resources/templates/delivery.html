@@ -50,11 +50,13 @@
                     th:name="address"
                     th:field="*{address}"
                      th:errorclass="is-invalid"
+                    class="form-control"
                     />
            <p class="invalid-feedback errors alert alert-danger" th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}">
         Address is required.
             </p>
         </div>
+
         <div class="row">
             <div class="form-group col-md-6 mb-3">
                 <label class="text-center text-dark font-weight-bold" for="firm" th:text="#{delivery_firmName_user}">Delivery Firm</label>

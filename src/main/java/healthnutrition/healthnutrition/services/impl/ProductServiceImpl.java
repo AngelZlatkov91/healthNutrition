@@ -49,7 +49,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     // get all product by search key
     public List<ProductDetailsDTO> getAllProducts(String searchKey) {
-        Pageable pageable = PageRequest.of(0,10);
+        Pageable pageable = PageRequest.of(0,1000);
         if (searchKey.equals("")) {
             return productRepository.findAll(pageable).map(this::mapAsDetails).toList();
         } else {

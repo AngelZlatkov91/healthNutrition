@@ -7,4 +7,5 @@ public interface ArchiveShoppingCartService {
     ArchiveDTO allShoppingCarts(String user);
 
     AllOrdersDTO allOrdersToSend();
+
 }

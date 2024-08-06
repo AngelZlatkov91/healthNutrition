@@ -1,16 +1,11 @@
 package healthnutrition.healthnutrition.services.impl;
-
 import healthnutrition.healthnutrition.models.dto.cartDTOS.*;
-import healthnutrition.healthnutrition.models.entitys.Address;
-import healthnutrition.healthnutrition.models.entitys.ProductInCart;
-import healthnutrition.healthnutrition.models.entitys.ShoppingCart;
-import healthnutrition.healthnutrition.models.entitys.User;
+import healthnutrition.healthnutrition.models.entitys.*;
 import healthnutrition.healthnutrition.repositories.ShoppingCartRepositories;
 import healthnutrition.healthnutrition.repositories.UserRepositories;
 import healthnutrition.healthnutrition.services.ArchiveShoppingCartService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,4 +83,5 @@ public class ArchiveShoppingCartServiceImpl implements ArchiveShoppingCartServic
 
         return allOrdersDTO;
     }
+
 }
