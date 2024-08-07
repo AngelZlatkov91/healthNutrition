@@ -70,6 +70,17 @@
                 <p class="errors alert alert-danger invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}">
                     Password is required.
                 </p>
+                <input type="checkbox" onclick="myFunction()">Show Password</input>
+                <script>
+                    function myFunction() {
+                        var x = document.getElementById("password");
+                        if (x.type === "password") {
+                            x.type = "text";
+                        } else {
+                            x.type = "password";
+                        }
+                    }
+                </script>
             </div>
         <div class="form-group col-md-6 mb-3">
             <label for="confirmPassword"
@@ -83,6 +94,17 @@
             <p class="errors alert alert-danger invalid-feedback" th:if="${#fields.hasErrors('confirmPassword')}" th:errorclass="error" th:errors="*{confirmPassword}">
                 Password conformation is required.
             </p>
+            <input type="checkbox" onclick="myFunctionCon()">Show Password</input>
+            <script>
+                function myFunctionCon() {
+                    var x = document.getElementById("confirmPassword");
+                    if (x.type === "password") {
+                        x.type = "text";
+                    } else {
+                        x.type = "password";
+                    }
+                }
+            </script>
         </div>
 </div>
 <div class="row">
