@@ -9,7 +9,7 @@
     </nav>
 </div>
 <div class="p-5 align-content-center bg-blur my-register-div">
-    <h4 class="text-center text-dark">Register User</h4>
+    <h4 class="text-center text-dark" th:text="#{nav_bar_register}">Register User</h4>
     <!-- Registration form start -->
     <form
             th:action="@{/users/register}"
@@ -88,7 +88,7 @@
 <div class="row">
     <div class="col col-md-4">
         <div class="button-holder d-flex">
-            <input type="submit" class="btn btn-info btn-lg" value="Register"/>
+            <input type="submit" class="btn btn-info btn-lg" th:value="#{nav_bar_register}"/>
         </div>
     </div>
 </div>

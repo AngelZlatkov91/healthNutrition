@@ -61,7 +61,7 @@ public class UserDataUpdateController {
         }
         String userEmail = user.getUsername();
         this.userService.edit(editUserDTO,userEmail);
-        return new ModelAndView("redirect:/home");
+        return new ModelAndView("redirect:/profile");
     }
 
 

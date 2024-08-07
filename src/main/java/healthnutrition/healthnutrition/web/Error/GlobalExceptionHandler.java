@@ -11,13 +11,13 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Exception.class)
-    public ModelAndView handleObjectNotFound(Exception exception) {
-        ModelAndView modelAndView = new ModelAndView("500");
-        modelAndView.addObject("objectId", exception.getMessage());
-        return modelAndView;
-    }
+//    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler(Exception.class)
+//    public ModelAndView handleObjectNotFound(Exception exception) {
+//        ModelAndView modelAndView = new ModelAndView("500");
+//        modelAndView.addObject("objectId", exception.getMessage());
+//        return modelAndView;
+//    }
 
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     @ExceptionHandler(ObjectNotFoundException.class)
@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(DatabaseException.class)
     public ModelAndView handlerDatabase(DatabaseException exception) {
-        ModelAndView modelAndView = new ModelAndView("500");
+        ModelAndView modelAndView = new ModelAndView("500.html");
         modelAndView.addObject("objectId", exception.getMessage());
         return modelAndView;
     }

@@ -81,7 +81,7 @@ public class DeliveryDataDTO {
     public static DeliveryDataDTO empty(){
         return new DeliveryDataDTO(null,null,null, null, null, null);
     }
-
+    /// this, calculate the price for delivery
     public void add() {
         double price = 0.0;
         switch (this.deliveryAddress) {
