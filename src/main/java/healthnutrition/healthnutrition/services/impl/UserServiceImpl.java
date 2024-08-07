@@ -1,5 +1,6 @@
 package healthnutrition.healthnutrition.services.impl;
 
+import healthnutrition.healthnutrition.Exception.DatabaseException;
 import healthnutrition.healthnutrition.event.UserRegisterEvent;
 import healthnutrition.healthnutrition.models.dto.userDTOS.EditUserDTO;
 import healthnutrition.healthnutrition.models.dto.userDTOS.UserRegisterDTo;
@@ -36,9 +37,15 @@ public class UserServiceImpl implements UserService {
     @Override
     // register user with private method map
     public void registerUser(UserRegisterDTo userRegisterDTo) {
-        this.userRepositories.save(map(userRegisterDTo));
-        applicationEventPublisher.publishEvent(new UserRegisterEvent("UserService",
-                userRegisterDTo.getEmail(), userRegisterDTo.getFullName()));
+        try {
+            this.userRepositories.save(map(userRegisterDTo));
+            applicationEventPublisher.publishEvent(new UserRegisterEvent("UserService",
+                    userRegisterDTo.getEmail(), userRegisterDTo.getFullName()));
+
+        } catch (Exception ex) {
+            throw  new DatabaseException("Error something is wrong");
+        }
+
     }
 
     @Override
