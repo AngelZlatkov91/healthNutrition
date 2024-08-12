@@ -30,3 +30,7 @@ logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.orm.jdbc.bind: TRACE
+
+  products:
+    api:
+      baseUrl: "http://localhost:8081"

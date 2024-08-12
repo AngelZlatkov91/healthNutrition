@@ -1,5 +1,6 @@
 package healthnutrition.healthnutrition.web.UserController;
 import healthnutrition.healthnutrition.models.dto.cartDTOS.ArchiveDTO;
+import healthnutrition.healthnutrition.models.dto.productDTOS.ProductDetailsDTO;
 import healthnutrition.healthnutrition.models.dto.userDTOS.EditUserDTO;
 import healthnutrition.healthnutrition.models.dto.userDTOS.UserUpdateDTO;
 import healthnutrition.healthnutrition.services.ArchiveShoppingCartService;
@@ -13,9 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 public class UserDataUpdateController {
@@ -62,6 +66,17 @@ public class UserDataUpdateController {
         String userEmail = user.getUsername();
         this.userService.edit(editUserDTO,userEmail);
         return new ModelAndView("redirect:/profile");
+    }
+    @GetMapping("/edit/admin")
+    public ModelAndView editNewAdmin(){
+        return new ModelAndView("newAdmin");
+    }
+    @GetMapping("/edit/admin/{user}")
+    public  ModelAndView searchByBrand(@PathVariable("user")  String user, Model model) {
+        model.addAttribute("user",user);
+        UserUpdateDTO userData  = this.userService.getUserData(user);
+        model.addAttribute("user",user);
+        return new ModelAndView("newAdmin");
     }
 
 

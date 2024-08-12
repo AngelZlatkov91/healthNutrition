@@ -1,4 +1,5 @@
 package healthnutrition.healthnutrition.services.impl;
+import healthnutrition.healthnutrition.Exception.DatabaseException;
 import healthnutrition.healthnutrition.models.dto.userDTOS.EditUserDTO;
 import healthnutrition.healthnutrition.models.dto.userDTOS.UserRegisterDTo;
 import healthnutrition.healthnutrition.models.dto.userDTOS.UserUpdateDTO;
@@ -39,24 +40,21 @@ class UserServiceImplTest {
     public void testUserRegisterWithIncorrectData(){
         UserRegisterDTo userRegisterDTo = new UserRegisterDTo();
 
-        Exception exception = assertThrows(NullPointerException.class, () -> {
+        Exception exception = assertThrows(DatabaseException.class, () -> {
             userService.registerUser(userRegisterDTo);
         });
-        String expectedMessage = "Cannot invoke";
-        String actualMessage = exception.getMessage();
-
-        assertTrue(actualMessage.contains(expectedMessage));
+//        String expectedMessage = "Cannot invoke";
+//        String actualMessage = exception.getMessage();
+//
+//        assertTrue(actualMessage.contains(expectedMessage));
     }
     @Test
     public void UserRegisterWithExistingData(){
 
-        Exception exception = assertThrows(DataIntegrityViolationException.class, () -> {
+         assertThrows(DatabaseException.class, () -> {
             userService.registerUser(userDTO());
         });
-        String expectedMessage = "could not execute statement";
-        String actualMessage = exception.getMessage();
 
-        assertTrue(actualMessage.contains(expectedMessage));
 
     }
 

@@ -1,78 +1,72 @@
 package healthnutrition.healthnutrition.services.impl;
 import healthnutrition.healthnutrition.models.dto.productDTOS.ProductCreateDTO;
 import healthnutrition.healthnutrition.models.dto.productDTOS.ProductDetailsDTO;
-import healthnutrition.healthnutrition.models.entitys.BrandProduct;
-import healthnutrition.healthnutrition.models.entitys.Product;
-import healthnutrition.healthnutrition.models.entitys.TypeProduct;
-import healthnutrition.healthnutrition.repositories.BrandRepository;
-import healthnutrition.healthnutrition.repositories.ProductRepository;
-import healthnutrition.healthnutrition.repositories.TypeRepository;
 import healthnutrition.healthnutrition.services.RestProductService;
-import jakarta.transaction.Transactional;
-import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Pageable;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClient;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+
 @Service
 public class RestProductServiceImpl implements RestProductService {
 
-    private final ProductRepository productRepository;
-    private final ModelMapper mapper;
-    private final TypeRepository typeRepository;
-    private final BrandRepository brandRepository;
+    private final RestClient restClient;
 
-    public RestProductServiceImpl(ProductRepository productRepository, ModelMapper mapper, TypeRepository typeRepository, BrandRepository brandRepository) {
-        this.productRepository = productRepository;
-        this.mapper = mapper;
-        this.typeRepository = typeRepository;
-        this.brandRepository = brandRepository;
+    public RestProductServiceImpl(RestClient restClient) {
+        this.restClient = restClient;
     }
+
 
     @Override
     public List<ProductDetailsDTO> getAllProducts() {
-        return productRepository.findAll(Pageable.unpaged()).map(RestProductServiceImpl::mapAsDetails).toList();
+        return restClient
+                .get()
+                .uri("http://localhost:8081/api/products")
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<ProductDetailsDTO>>() {
+                });
     }
 
     @Override
-    public Optional<ProductDetailsDTO> getProductById(UUID uuid) {
-        Product byUuid = productRepository.findByUuid(uuid);
-        ProductDetailsDTO productDetailsDTO = mapAsDetails(byUuid);
-        return Optional.of(productDetailsDTO);
+    public ProductDetailsDTO getProductById(Long id) {
+        return restClient
+                .get()
+                .uri("http://localhost:8081/api/products/get/{id}",id)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .body(ProductDetailsDTO.class);
     }
 
     @Override
-    @Transactional
-    public void deleteProduct(UUID uuid) {
-         this.productRepository.deleteByUuid(uuid);
+    public void deleteProduct(Long id) {
+        restClient
+                .delete()
+                .uri("http://localhost:8081/api/products/remove/{id}",id)
+                .retrieve();
     }
 
     @Override
     public Long addProduct(ProductCreateDTO productCreateDTO) {
-        Product product = productRepository.save(map(productCreateDTO));
-        return product.getId();
-    }
 
-    private Product map(ProductCreateDTO productCreateDTO) {
-        Product product = this.mapper.map(productCreateDTO, Product.class);
-        Optional<TypeProduct> byType = typeRepository.findByType(productCreateDTO.getType());
-        Optional<BrandProduct> byBrand = brandRepository.findByBrand(productCreateDTO.getBrand());
-        product.setUuid(UUID.randomUUID());
-        product.setType(byType.get());
-        product.setBrant(byBrand.get());
-        return product;
-    }
+        try {
+            RestClient.ResponseSpec retrieve = restClient
+                    .post()
+                    .uri("http://localhost:8081/api/products/create")
+                    .body(productCreateDTO)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .retrieve();
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
+                String errorMessage = e.getResponseBodyAsString();
+                throw new IllegalArgumentException(errorMessage);
+            }
+            throw new IllegalArgumentException("Failed to add product " + e.getMessage(), e);
+        }
 
-    private static ProductDetailsDTO mapAsDetails(Product product) {
-        ProductDetailsDTO productDetailsDTO = new ProductDetailsDTO();
-        productDetailsDTO.setName(product.getName());
-        productDetailsDTO.setDescription(product.getDescription());
-        productDetailsDTO.setPrice(product.getPrice());
-        productDetailsDTO.setImageUrl(product.getImageUrl());
-        productDetailsDTO.setId(product.getUuid().toString());
-        productDetailsDTO.setBrant(product.getBrant().getBrand());
-        productDetailsDTO.setType(product.getType().getType());
-        return  productDetailsDTO;
+        return null;
     }
 }

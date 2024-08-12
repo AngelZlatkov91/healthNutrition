@@ -33,11 +33,16 @@
                         <th:block th:text="*{phone}">12345</th:block>
                     </div>
                 </li>
-                <li class="list-group-item">
+                <li class="list-group-item" >
                     <div class="card-text">
                         <a class="card-link" th:href="@{/edit}" th:text="#{edit_user}">Edit</a>
                     </div>
                 </li>
+                 <li class="list-group-item" sec:authorize="hasRole('ADMIN')">
+                     <div class="card-text">
+                         <a class="card-link" th:href="@{/edit/admin}" th:text="#{edit_user_to_ADMIN}">Set new Admin</a>
+                     </div>
+                 </li>
              </ul>
             </div>
             <div class="container">

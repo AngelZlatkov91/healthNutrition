@@ -2,6 +2,7 @@ package healthnutrition.healthnutrition.web.AdminController;
 import healthnutrition.healthnutrition.models.dto.productDTOS.ProductCreateDTO;
 import healthnutrition.healthnutrition.services.BrandProductService;
 import healthnutrition.healthnutrition.services.ProductService;
+import healthnutrition.healthnutrition.services.RestProductService;
 import healthnutrition.healthnutrition.services.TypeProductService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -15,11 +16,13 @@ import java.util.UUID;
 @Controller
 public class ProductAddController {
    private final ProductService productService;
+   private final RestProductService restProductService;
    private final BrandProductService brand;
    private final TypeProductService type;
 
-    public ProductAddController(ProductService productService, BrandProductService brand, TypeProductService typeProductService) {
+    public ProductAddController(ProductService productService, RestProductService restProductService, BrandProductService brand, TypeProductService typeProductService) {
         this.productService = productService;
+        this.restProductService = restProductService;
         this.brand = brand;
         this.type = typeProductService;
     }
@@ -43,6 +46,7 @@ public class ProductAddController {
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.productCreateDTO",bindingResult);
             return new ModelAndView("redirect:/product-add");
         }
+        Long l = restProductService.addProduct(productCreateDTO);
         this.productService.addProduct(productCreateDTO);
         return new ModelAndView("redirect:/product-add");
     }
