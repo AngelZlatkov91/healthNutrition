@@ -3,6 +3,7 @@ package healthnutrition.healthnutrition.web.AdminController;
 import healthnutrition.healthnutrition.models.dto.cartDTOS.AllOrdersDTO;
 import healthnutrition.healthnutrition.services.ArchiveShoppingCartService;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ public class OrdersController {
     }
 
     // view for  all orders for admin
+    @Secured("ROLE_ADMIN")
     @GetMapping("/orders")
     public ModelAndView orders(Model model) {
         AllOrdersDTO allOrdersDTO = this.archiveShoppingCartService.allOrdersToSend();

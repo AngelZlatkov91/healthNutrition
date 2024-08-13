@@ -53,7 +53,7 @@ class ShopCartControllerTest {
     @Test
     public  void testGetViewToShoppingCart() throws Exception {
         Product product = createProduct();
-        shoppingCartService.addProductToShoppingCart(product.getUuid());
+        shoppingCartService.addProductToShoppingCart(product.getName());
         MvcResult mvcResult =
                 mockMvc.perform(get("/shopping_cart"))
                 .andDo(print())
@@ -73,7 +73,7 @@ class ShopCartControllerTest {
     @Test
     public void testRemoveProductFromShoppingCart() throws Exception {
         Product product = createProduct();
-        shoppingCartService.addProductToShoppingCart(product.getUuid());
+        shoppingCartService.addProductToShoppingCart(product.getName());
                 mockMvc.perform(get("/remove/product/{getName}","ISOLATE" ))
                         .andDo(print())
                         .andExpect(status().is3xxRedirection());
@@ -85,8 +85,8 @@ class ShopCartControllerTest {
     @Test
     public void testDecreaseProductQuantityFromShoppingCart() throws Exception {
         Product product = createProduct();
-        shoppingCartService.addProductToShoppingCart(product.getUuid());
-        shoppingCartService.addProductToShoppingCart(product.getUuid());
+        shoppingCartService.addProductToShoppingCart(product.getName());
+        shoppingCartService.addProductToShoppingCart(product.getName());
 
                 mockMvc.perform(get("/decrease/product/{getName}","ISOLATE" ))
                         .andDo(print())
@@ -99,7 +99,7 @@ class ShopCartControllerTest {
     @Test
     public void testIncreaseProductQuantityFromShoppingCart() throws Exception {
         Product product = createProduct2();
-        shoppingCartService.addProductToShoppingCart(product.getUuid());
+        shoppingCartService.addProductToShoppingCart(product.getName());
                 mockMvc.perform(get("/increase/product/{getName}","FAT" ))
                         .andDo(print())
                         .andExpect(status().is3xxRedirection());

@@ -24,7 +24,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             String key1, String key2,String key3, Pageable pageable
     );
      // delete product with uuid from admin
-    void deleteByUuid(UUID uuid);
+    void deleteProductByName(String name);
+
 
 
 

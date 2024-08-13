@@ -67,17 +67,4 @@ public class UserDataUpdateController {
         this.userService.edit(editUserDTO,userEmail);
         return new ModelAndView("redirect:/profile");
     }
-    @GetMapping("/edit/admin")
-    public ModelAndView editNewAdmin(){
-        return new ModelAndView("newAdmin");
-    }
-    @GetMapping("/edit/admin/{user}")
-    public  ModelAndView searchByBrand(@PathVariable("user")  String user, Model model) {
-        model.addAttribute("user",user);
-        UserUpdateDTO userData  = this.userService.getUserData(user);
-        model.addAttribute("user",user);
-        return new ModelAndView("newAdmin");
-    }
-
-
 }

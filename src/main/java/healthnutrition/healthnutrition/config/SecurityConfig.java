@@ -39,7 +39,7 @@ public class SecurityConfig {
                         // all request matchers permit all
                         .requestMatchers("/","/users/login","/users/register", "/users/login-error").permitAll()
                         .requestMatchers("/products/all").permitAll()
-                        .requestMatchers("/product/{uuid}").permitAll()
+                        .requestMatchers("/product/{name}").permitAll()
                         .requestMatchers("/search/{searchKey}").permitAll()
                         .requestMatchers("/brand/{searchKey}").permitAll()
                         .requestMatchers("/type/{searchKey}").permitAll()
@@ -47,21 +47,18 @@ public class SecurityConfig {
                         .requestMatchers("/article/{uuid}").permitAll()
                         .requestMatchers("/delivery").permitAll()
                         .requestMatchers("/home").permitAll()
-
                         .requestMatchers("error").permitAll()
-
-                        // requestMatchers for rest controller
-                        .requestMatchers("/rest/get/products").permitAll()
-                        .requestMatchers("/rest/get/products/{id}").permitAll()
-                        .requestMatchers("/rest/remove/products/{id}").permitAll()
-                        .requestMatchers("/rest/create/product").permitAll()
 
                         // all request matchers permit only Admin
                         .requestMatchers("/add/brand").hasRole(UserRoleEnum.ADMIN.name())
                         .requestMatchers("/orders").hasRole(UserRoleEnum.ADMIN.name())
                         .requestMatchers("/product-add").hasRole(UserRoleEnum.ADMIN.name())
+                        .requestMatchers("/product/remove/{name}").hasRole(UserRoleEnum.ADMIN.name())
                         .requestMatchers("/add/type").hasRole(UserRoleEnum.ADMIN.name())
                         .requestMatchers("/add/article").hasRole(UserRoleEnum.ADMIN.name())
+                        .requestMatchers("/edit/admin").hasRole(UserRoleEnum.ADMIN.name())
+                        .requestMatchers("/make-admin").hasRole(UserRoleEnum.ADMIN.name())
+                        .requestMatchers("/remove-admin").hasRole(UserRoleEnum.ADMIN.name())
 
                         // all other requests are authenticated
                         .anyRequest().authenticated())

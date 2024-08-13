@@ -19,8 +19,8 @@
                 <img class="card-img-top" th:src="*{imageUrl}" alt="Car image">
             </div>
             <div class="card-body pb-1">
-                <h5 class="card-title" th:text="*{name}" >
-                    Offer year Brand name Model name</h5>
+                <h5 class="card-title" th:text="*{name}">
+                    Product name</h5>
             </div>
             <ul class="offer-details list-group list-group-flush">
                 <li class="list-group-item">
@@ -42,11 +42,11 @@
                 </li>
             </ul>
             <div class="card-body">
-                <a class="btn btn-info btn-lg" th:href="@{/product/{uuid}(uuid=*{id})}" th:text="#{details_of_all}">Details</a>
+                <a class="btn btn-info btn-lg" th:href="@{/product/{name}(name=*{name})}" th:text="#{details_of_all}">Details</a>
             </div>
             <div class="card-body" sec:authorize="hasRole('ADMIN')">
                 <form th:method="delete"
-                      th:action="@{/product/remove/{uuid}(uuid=*{id})}">
+                      th:action="@{/product/remove/{name}(name=*{name})}">
                     <input type="submit" value="Delete" class="link card-link" />
                 </form>
             </div>

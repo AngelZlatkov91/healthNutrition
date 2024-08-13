@@ -3,15 +3,16 @@ import healthnutrition.healthnutrition.models.dto.productDTOS.ProductCreateDTO;
 import healthnutrition.healthnutrition.models.dto.productDTOS.ProductDetailsDTO;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 public interface RestProductService {
     List<ProductDetailsDTO> getAllProducts();
 
-    ProductDetailsDTO getProductById(Long id);
+    ProductDetailsDTO getProductById(String name);
 
-    void deleteProduct(Long id);
+    void deleteProduct(String name);
 
-    Long addProduct(ProductCreateDTO productCreateDTO);
+    void addProduct(ProductCreateDTO productCreateDTO);
 
 }

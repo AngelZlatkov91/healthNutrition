@@ -1,6 +1,8 @@
 package healthnutrition.healthnutrition.services.impl;
 import healthnutrition.healthnutrition.models.dto.productDTOS.ProductCreateDTO;
 import healthnutrition.healthnutrition.models.dto.productDTOS.ProductDetailsDTO;
+import healthnutrition.healthnutrition.models.entitys.Product;
+import healthnutrition.healthnutrition.repositories.ProductRepository;
 import healthnutrition.healthnutrition.services.RestProductService;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
@@ -9,20 +11,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class RestProductServiceImpl implements RestProductService {
 
     private final RestClient restClient;
+    private final ProductRepository productRepository;
 
-    public RestProductServiceImpl(RestClient restClient) {
+    public RestProductServiceImpl(RestClient restClient, ProductRepository productRepository) {
         this.restClient = restClient;
+        this.productRepository = productRepository;
     }
 
 
     @Override
     public List<ProductDetailsDTO> getAllProducts() {
-        return restClient
+       return restClient
                 .get()
                 .uri("http://localhost:8081/api/products")
                 .accept(MediaType.APPLICATION_JSON)
@@ -32,25 +37,25 @@ public class RestProductServiceImpl implements RestProductService {
     }
 
     @Override
-    public ProductDetailsDTO getProductById(Long id) {
+    public ProductDetailsDTO getProductById(String name) {
         return restClient
                 .get()
-                .uri("http://localhost:8081/api/products/get/{id}",id)
+                .uri("http://localhost:8081/api/products/get/{name}",name)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .body(ProductDetailsDTO.class);
     }
 
     @Override
-    public void deleteProduct(Long id) {
+    public void deleteProduct(String name) {
         restClient
                 .delete()
-                .uri("http://localhost:8081/api/products/remove/{id}",id)
+                .uri("http://localhost:8081/api/products/remove/{name}",name)
                 .retrieve();
     }
 
     @Override
-    public Long addProduct(ProductCreateDTO productCreateDTO) {
+    public void addProduct(ProductCreateDTO productCreateDTO) {
 
         try {
             RestClient.ResponseSpec retrieve = restClient
@@ -59,6 +64,7 @@ public class RestProductServiceImpl implements RestProductService {
                     .body(productCreateDTO)
                     .accept(MediaType.APPLICATION_JSON)
                     .retrieve();
+            System.out.println();
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
                 String errorMessage = e.getResponseBodyAsString();
@@ -66,7 +72,5 @@ public class RestProductServiceImpl implements RestProductService {
             }
             throw new IllegalArgumentException("Failed to add product " + e.getMessage(), e);
         }
-
-        return null;
     }
 }

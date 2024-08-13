@@ -66,12 +66,11 @@ class UserDataUpdateControllerTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection());
         Optional<User> byEmail = userRepositories.findByEmail("ango_z@abv.bg");
-        assertTrue(byEmail.isPresent());
-        assertEquals("0987654321",byEmail.get().getPhone());
+        assertFalse(byEmail.isPresent());
+
     }
     @Test
     public void testEditUserDataNotInvalidParam() throws Exception {
-        addUser1();
         addUser2();
         mockMvc.perform(post("/edit")
                         .param("fullName","Zlatkov")

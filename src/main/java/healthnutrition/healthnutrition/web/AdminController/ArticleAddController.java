@@ -2,6 +2,7 @@ package healthnutrition.healthnutrition.web.AdminController;
 import healthnutrition.healthnutrition.models.dto.articlesDTOS.ArticlesDTO;
 import healthnutrition.healthnutrition.services.ArticlesService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +20,14 @@ public class ArticleAddController {
     public ArticlesDTO initForm(){
         return new ArticlesDTO();
     }
+    @Secured("ROLE_ADMIN")
     @GetMapping("/add/article")
     public ModelAndView addArticle(){
         return new ModelAndView("add-article");
     }
 
     // add article from admin
+    @Secured("ROLE_ADMIN")
     @PostMapping("/add/article")
     public ModelAndView addArticle(@Valid ArticlesDTO articlesDTO,
                                    BindingResult bindingResult,

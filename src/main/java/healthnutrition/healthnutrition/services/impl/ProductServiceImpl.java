@@ -10,6 +10,7 @@ import healthnutrition.healthnutrition.repositories.ProductRepository;
 import healthnutrition.healthnutrition.repositories.TypeRepository;
 import healthnutrition.healthnutrition.services.ProductService;
 import jakarta.transaction.Transactional;
+import org.apache.kafka.common.protocol.types.Field;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -70,8 +71,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     // delete product for admin with uuid
-    public void deleteProduct(UUID uuid) {
-        this.productRepository.deleteByUuid(uuid);
+    public void deleteProduct(String name) {
+        this.productRepository.deleteProductByName(name);
     }
 
     @Override

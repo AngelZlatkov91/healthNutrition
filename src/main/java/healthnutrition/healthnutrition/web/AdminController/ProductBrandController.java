@@ -2,6 +2,7 @@ package healthnutrition.healthnutrition.web.AdminController;
 import healthnutrition.healthnutrition.models.dto.productDTOS.BrandProductDTO;
 import healthnutrition.healthnutrition.services.BrandProductService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +23,13 @@ public class ProductBrandController {
     public BrandProductDTO initForm(){
         return new BrandProductDTO();
     }
+    @Secured("ROLE_ADMIN")
     @GetMapping("/add/brand")
     public ModelAndView addBrand() {
         return new ModelAndView("brand-add");
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("/add/brand")
     public ModelAndView addBrand(@Valid BrandProductDTO brandProductDTO,
                            BindingResult bindingResult,

@@ -4,6 +4,7 @@ import healthnutrition.healthnutrition.Exception.DatabaseException;
 import healthnutrition.healthnutrition.event.UserRegisterEvent;
 import healthnutrition.healthnutrition.models.dto.userDTOS.EditUserDTO;
 import healthnutrition.healthnutrition.models.dto.userDTOS.UserRegisterDTo;
+import healthnutrition.healthnutrition.models.dto.userDTOS.UserRoleDTO;
 import healthnutrition.healthnutrition.models.dto.userDTOS.UserUpdateDTO;
 import healthnutrition.healthnutrition.models.entitys.User;
 import healthnutrition.healthnutrition.models.enums.UserRoleEnum;
@@ -14,7 +15,10 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 import java.util.Optional;
+
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -56,6 +60,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<UserRoleDTO> usersRole(String user) {
+      return userRepositories.findAllByEmailNotLike(user).stream().map(this::mapRole).toList();
+    }
+    private UserRoleDTO mapRole(User user) {
+        UserRoleDTO userRoleDTO = new UserRoleDTO();
+        userRoleDTO.setEmail(user.getEmail());
+        userRoleDTO.setRole(user.getRole().toString());
+        return userRoleDTO;
+    }
+
+    @Override
     @Transactional
     // edit currency user data transactional
     public void edit(EditUserDTO editUserDTO, String userEmail) {
@@ -79,6 +94,23 @@ public class UserServiceImpl implements UserService {
       }
 
     }
+
+    // set role to admin
+    @Override
+    public void setRoleAdmin(String email) {
+        Optional<User> byEmail = userRepositories.findByEmail(email);
+        byEmail.get().setRole(UserRoleEnum.ADMIN);
+        userRepositories.saveAndFlush(byEmail.get());
+
+    }
+     // set role to user
+    @Override
+    public void setRoleUser(String email) {
+        Optional<User> byEmail = userRepositories.findByEmail(email);
+        byEmail.get().setRole(UserRoleEnum.USER);
+        userRepositories.saveAndFlush(byEmail.get());
+    }
+
 
 
 

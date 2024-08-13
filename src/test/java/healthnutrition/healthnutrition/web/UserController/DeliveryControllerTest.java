@@ -71,10 +71,10 @@ class DeliveryControllerTest {
     public void testFinalDelivery() throws Exception {
         addUser();
         Product product = createProduct2();
-        shoppingCartService.addProductToShoppingCart(product.getUuid());
+        shoppingCartService.addProductToShoppingCart(product.getName());
                 mockMvc.perform(post("/delivery")
                                 .param("city","SOFIA")
-                                .param("postCode","SOFIA")
+                                .param("postCode","1000")
                                 .param("address","SOFIA")
                                 .param("firm","SPEEDY")
                                 .param("deliveryAddress","OFFICE"))

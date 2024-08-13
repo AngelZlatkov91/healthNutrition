@@ -1,5 +1,6 @@
 package healthnutrition.healthnutrition.models.dto.userDTOS;
 import healthnutrition.healthnutrition.validation.userValidation.FieldMatch;
+import healthnutrition.healthnutrition.validation.userValidation.PhoneNumber;
 import healthnutrition.healthnutrition.validation.userValidation.UniqueUserEmail;
 import healthnutrition.healthnutrition.validation.userValidation.UniqueUserPhone;
 import jakarta.validation.constraints.*;
@@ -8,7 +9,7 @@ import jakarta.validation.constraints.*;
 second = "confirmPassword",
 message = "{register.user.password.match}")
 public class UserRegisterDTo {
-    @Email
+    @Email(message = "{register.user.email.correct}")
     @NotBlank(message = "{register.user.email}")
     @UniqueUserEmail
     private String email;
@@ -18,6 +19,7 @@ public class UserRegisterDTo {
     @NotBlank(message = "{register.user.phone.empty}")
     @Size(min = 9, max = 20, message = "{register.user.phone.length}")
     @UniqueUserPhone
+    @PhoneNumber
     private String phone;
     @NotBlank(message = "{register.user.password.empty}")
     @Size(min = 4,max = 20, message = "{register.user.password.length}")

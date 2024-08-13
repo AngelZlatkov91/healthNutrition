@@ -3,6 +3,7 @@ package healthnutrition.healthnutrition.web.AdminController;
 import healthnutrition.healthnutrition.models.dto.productDTOS.TypeProductDTO;
 import healthnutrition.healthnutrition.services.TypeProductService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +25,14 @@ public class ProductTypeController {
         return new TypeProductDTO();
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/add/type")
     public ModelAndView addType(){
         return new ModelAndView("type-add");
     }
+
     // adding product type from admin
+    @Secured("ROLE_ADMIN")
     @PostMapping("/add/type")
     public ModelAndView addType(@Valid TypeProductDTO typeProductDTO,
                           BindingResult bindingResult,

@@ -1,4 +1,5 @@
 package healthnutrition.healthnutrition.models.dto.userDTOS;
+import healthnutrition.healthnutrition.validation.userValidation.PhoneNumber;
 import healthnutrition.healthnutrition.validation.userValidation.UniqueUserEmail;
 import healthnutrition.healthnutrition.validation.userValidation.UniqueUserPhone;
 import jakarta.validation.constraints.Email;
@@ -8,6 +9,7 @@ public class EditUserDTO {
     @UniqueUserEmail
     private String email;
     @UniqueUserPhone
+    @PhoneNumber
     private String phone;
 
     public EditUserDTO(){}

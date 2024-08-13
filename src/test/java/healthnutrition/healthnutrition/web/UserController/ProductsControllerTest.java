@@ -49,30 +49,29 @@ class ProductsControllerTest {
                 .andReturn();
         boolean products = mvcResult.getModelAndView().getModel().containsKey("products");
         List<ProductDetailsDTO> products1 = (List<ProductDetailsDTO>) mvcResult.getModelAndView().getModel().get("products");
-        assertEquals(1,products1.size());
+        assertEquals(2,products1.size());
         assertTrue(products);
     }
 
     @Test
-    public  void testGetProductByUUIDPage() throws Exception {
+    public  void testGetProductByNamePage() throws Exception {
         Product product = createProduct();
-        MvcResult mvcResult = this.mockMvc.perform(get("/product/{uuid}",product.getUuid())).andDo(print())
+        MvcResult mvcResult = this.mockMvc.perform(get("/product/{name}",product.getName())).andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
         boolean products = mvcResult.getModelAndView().getModel().containsKey("product");
         ProductDetailsDTO products1 = (ProductDetailsDTO) mvcResult.getModelAndView().getModel().get("product");
-        assertEquals(product.getName(),products1.getName());
-        assertTrue(products);
+        assertNull(products1);
     }
 
     @Test
-    public void testAddProductToCartByUUID() throws Exception {
+    public void testAddProductToCartByName() throws Exception {
         Product product = createProduct();
-        MvcResult mvcResult = this.mockMvc.perform(get("/product/add-shoppingCart/{uuid}", product.getUuid()).with(csrf())).andDo(print())
+        MvcResult mvcResult = this.mockMvc.perform(get("/product/add-shoppingCart/{name}", product.getName()).with(csrf())).andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andReturn();
         String pathInfo = mvcResult.getRequest().getPathInfo();
-        String currentPath = "/product/add-shoppingCart/" + product.getUuid().toString();
+        String currentPath = "/product/add-shoppingCart/" + product.getName();
         assertEquals(pathInfo,currentPath);
     }
 

@@ -67,7 +67,7 @@ class ShoppingCartServiceImplTest {
 
     @Test
     public void testAddProductToCart(){
-        shoppingCartService.addProductToShoppingCart(getProductUUID());
+        shoppingCartService.addProductToShoppingCart(getProductName());
 
         assertEquals(1,shoppingCartService.productInCart().getProducts().size());
 
@@ -76,8 +76,8 @@ class ShoppingCartServiceImplTest {
     public void testAddSameProductAndIncreaseQuantity(){
         Optional<Product> save = productRepository.findByName(createProduct2().getName());
 
-        shoppingCartService.addProductToShoppingCart(save.get().getUuid());
-        shoppingCartService.addProductToShoppingCart(save.get().getUuid());
+        shoppingCartService.addProductToShoppingCart(save.get().getName());
+        shoppingCartService.addProductToShoppingCart(save.get().getName());
         Map<String, ProductInCartDTO> products = shoppingCartService.productInCart().getProducts();
         ProductInCartDTO protein = products.get("Protein");
         assertEquals(2,protein.getQuantity());
@@ -85,7 +85,7 @@ class ShoppingCartServiceImplTest {
     }
     @Test
     public void testIncreaseQuantity(){
-        shoppingCartService.addProductToShoppingCart(getProductUUID());
+        shoppingCartService.addProductToShoppingCart(getProductName());
         shoppingCartService.increase("fat burner");
         Map<String, ProductInCartDTO> products = shoppingCartService.productInCart().getProducts();
         ProductInCartDTO fatBurner = products.get("fat burner");
@@ -97,7 +97,7 @@ class ShoppingCartServiceImplTest {
     public void testDecreaseQuantity(){
 
         Optional<Product> byName = productRepository.findByName("Vitamin");
-        shoppingCartService.addProductToShoppingCart(byName.get().getUuid());
+        shoppingCartService.addProductToShoppingCart(byName.get().getName());
         shoppingCartService.increase("Vitamin");
         shoppingCartService.decrease("Vitamin");
         Map<String, ProductInCartDTO> products = shoppingCartService.productInCart().getProducts();
@@ -108,7 +108,7 @@ class ShoppingCartServiceImplTest {
 
     @Test
     public void testRemoveProductFromCart(){
-        shoppingCartService.addProductToShoppingCart(getProductUUID());
+        shoppingCartService.addProductToShoppingCart(getProductName());
         shoppingCartService.remove("fat burner");
         int size = shoppingCartService.productInCart().getProducts().size();
         assertEquals(0,size);
@@ -128,9 +128,9 @@ class ShoppingCartServiceImplTest {
    }
 
 
-    private UUID getProductUUID(){
+    private String getProductName(){
         Optional<Product> byName = productRepository.findByName("fat burner");
-        return byName.get().getUuid();
+        return byName.get().getName();
     }
     private Product createProduct(){
         Optional<BrandProduct> byBrand = brandRepository.findByBrand("AMIX");

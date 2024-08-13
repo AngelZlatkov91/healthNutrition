@@ -93,7 +93,7 @@ class ProductControllerTest {
     @Test
     public void testDeleteProductByUUID() throws Exception {
         Product product = createProduct();
-        MvcResult mvcResult = mockMvc.perform(delete("/product/remove/{uuid}", product.getUuid()))
+        MvcResult mvcResult = mockMvc.perform(delete("/product/remove/{name}", product.getName()))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection()).andReturn();
        assertEquals(0,productRepository.count());

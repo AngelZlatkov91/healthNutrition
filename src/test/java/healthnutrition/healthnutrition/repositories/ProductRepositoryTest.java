@@ -89,7 +89,7 @@ class ProductRepositoryTest {
 
     @Test
     public void testDeleteByUUID(){
-        productRepository.deleteByUuid(uuid);
+        productRepository.deleteProductByName(product.getName());
         assertEquals(0,productRepository.count());
     }
 

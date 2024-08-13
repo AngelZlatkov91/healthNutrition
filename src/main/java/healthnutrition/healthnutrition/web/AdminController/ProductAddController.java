@@ -5,6 +5,7 @@ import healthnutrition.healthnutrition.services.ProductService;
 import healthnutrition.healthnutrition.services.RestProductService;
 import healthnutrition.healthnutrition.services.TypeProductService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +27,7 @@ public class ProductAddController {
         this.brand = brand;
         this.type = typeProductService;
     }
+    @Secured("ROLE_ADMIN")
     @GetMapping("/product-add")
     public ModelAndView add(Model model) {
         if (!model.containsAttribute("productCreateDTO")) {
@@ -37,6 +39,7 @@ public class ProductAddController {
     }
 
     // add product from admin
+    @Secured("ROLE_ADMIN")
     @PostMapping( "/product-add")
     public ModelAndView add(@Valid ProductCreateDTO productCreateDTO,
                       BindingResult bindingResult,
@@ -46,14 +49,16 @@ public class ProductAddController {
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.productCreateDTO",bindingResult);
             return new ModelAndView("redirect:/product-add");
         }
-        Long l = restProductService.addProduct(productCreateDTO);
+        this.restProductService.addProduct(productCreateDTO);
         this.productService.addProduct(productCreateDTO);
         return new ModelAndView("redirect:/product-add");
     }
    // delete product form admin
-    @DeleteMapping("/product/remove/{uuid}")
-    public ModelAndView delete(@PathVariable("uuid") UUID uuid) {
-        productService.deleteProduct(uuid);
+   @Secured("ROLE_ADMIN")
+    @DeleteMapping("/product/remove/{name}")
+    public ModelAndView delete(@PathVariable("name") String name) {
+        restProductService.deleteProduct(name);
+        productService.deleteProduct(name);
         return new ModelAndView("redirect:/products/all");
     }
 

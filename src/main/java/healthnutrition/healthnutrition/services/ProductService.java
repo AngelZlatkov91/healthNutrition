@@ -15,7 +15,7 @@ public interface ProductService {
 
     ProductDetailsDTO getProductDetails(UUID uuid);
 
-    void deleteProduct(UUID uuid);
+    void deleteProduct(String name);
 
     String sellerProductQuantity();
 

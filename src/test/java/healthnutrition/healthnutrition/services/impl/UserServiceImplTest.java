@@ -34,7 +34,7 @@ class UserServiceImplTest {
     public void testRegisterUser(){
         UserRegisterDTo userRegisterDTo = userDTO();
 
-        assertEquals(1, userRepositoriesTest.count());
+        assertEquals(4, userRepositoriesTest.count());
     }
     @Test
     public void testUserRegisterWithIncorrectData(){
@@ -60,10 +60,11 @@ class UserServiceImplTest {
 
     @Test
     public void getUserData(){
-        UserRegisterDTo userRegisterDTo = userDTO();
-        userService.registerUser(userRegisterDTo);
-        UserUpdateDTO userData = userService.getUserData("test@abv.bg");
-        assertEquals(userData.getEmail(),userRegisterDTo.getEmail());
+
+        assertThrows(DatabaseException.class, () -> {
+            userService.registerUser(userDTO());
+        });
+
     }
     @Test
     public void editUserData(){

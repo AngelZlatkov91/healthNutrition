@@ -1,5 +1,6 @@
 package healthnutrition.healthnutrition.models.dto.cartDTOS;
 
+import healthnutrition.healthnutrition.validation.DeliverValidation.PostCode;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -8,6 +9,7 @@ public class DeliveryDataDTO {
     @NotBlank(message = "{deliver.city.user.empty}")
     private String city;
     @NotBlank(message = "{deliver.postCode.user.empty}")
+    @PostCode
     private String postCode;
     @NotBlank(message = "{deliver.street.user.empty}")
     private String address;

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{navbar/header}">
+
+</head>
+
+<body>
+
+<div>
+    <nav th:replace="~{navbar/navbar}"></nav>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+            <th th:text="#{login_user_email}">Email</th>
+            <th>Role</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="users: ${userRoleDTOS}">
+            <td th:text="${users.email}">example@example.com</td>
+            <td th:text="${users.role}">Role</td>
+            <td>
+                <form th:action="@{/make-admin}" method="post" style="display:inline;">
+                    <input type="hidden" name="email" th:value="${users.email}"/>
+                    <button type="submit" class="btn btn-sm btn-warning" th:text="#{edit_user_to_ADMIN}">Make Admin</button>
+                </form>
+                <form th:action="@{/remove-admin}" method="post" style="display:inline;">
+                    <input type="hidden" name="email" th:value="${users.email}"/>
+                    <button type="submit" class="btn btn-sm btn-danger" th:text="#{edit_user_to_User}">Remove Admin</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

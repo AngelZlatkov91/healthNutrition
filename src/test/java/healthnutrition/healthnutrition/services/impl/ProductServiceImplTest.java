@@ -87,17 +87,16 @@ class ProductServiceImplTest {
            productService.addProduct(createProduct());
            Optional<Product> byName =
                    productRepository.findByName("fat burner");
-           productService.deleteProduct(byName.get().getUuid());
+           productService.deleteProduct(byName.get().getName());
            assertEquals(0,productRepository.count());
        }
        @Test
        public void testDeleteNotExistingProduct(){
-           UUID uuid = UUID.randomUUID();
            brandRepository.save(brand());
            typeRepository.save(type());
            productService.addProduct(createProduct());
 
-              productService.deleteProduct(uuid);
+              productService.deleteProduct("test");
            assertEquals(1,productRepository.count());
 
        }

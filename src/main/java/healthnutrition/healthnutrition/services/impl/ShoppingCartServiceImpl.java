@@ -41,8 +41,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     //add product to cart
-    public void addProductToShoppingCart(UUID uuid) {
-        ProductInCartDTO product = findProduct(uuid);
+    public void addProductToShoppingCart(String name) {
+        ProductInCartDTO product = findProduct(name);
         if (this.shoppingCartDTO.getProducts().containsKey(product.getName())) {
             this.shoppingCartDTO.getProducts().get(product.getName()).increaseQuantity();
         } else {
@@ -102,9 +102,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return this.shoppingCartDTO;
     }
 
-    private ProductInCartDTO findProduct(UUID uuid) {
-        Product byUuid = this.productRepository.findByUuid(uuid);
-        ProductInCartDTO product = this.mapper.map(byUuid,ProductInCartDTO.class);
+    private ProductInCartDTO findProduct(String name) {
+        Optional<Product> byUuid = this.productRepository.findByName(name);
+        ProductInCartDTO product = this.mapper.map(byUuid.get(),ProductInCartDTO.class);
 //        product.setName(byUuid.getName());
 //        product.setPrice(byUuid.getPrice());
         product.increaseQuantity();
