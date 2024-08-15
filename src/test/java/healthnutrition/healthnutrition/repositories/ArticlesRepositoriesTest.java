@@ -27,7 +27,6 @@ class ArticlesRepositoriesTest {
         articles.setUuid(UUID.randomUUID());
         articles.setTitle("Test Articles");
         articles.setDescription("Test for first project in java web with spring boot");
-        articles.setImageUrl("123456789");
         articlesRepositories.save(articles);
     }
 

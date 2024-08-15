@@ -17,7 +17,7 @@ public class UserRegisterDTo {
     @NotBlank(message = "{register.user.userName.empty}")
     private String fullName;
     @NotBlank(message = "{register.user.phone.empty}")
-    @Size(min = 9, max = 20, message = "{register.user.phone.length}")
+    @Size(min = 9, max = 10, message = "{register.user.phone.length}")
     @UniqueUserPhone
     @PhoneNumber
     private String phone;

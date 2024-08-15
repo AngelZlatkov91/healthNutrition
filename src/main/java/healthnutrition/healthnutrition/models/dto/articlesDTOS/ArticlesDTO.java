@@ -5,12 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 
 public class ArticlesDTO {
     private String id;
-    @NotBlank
+    @NotBlank(message = "{article.title.empty}")
     @UniqueTitleArticle
     private String title;
-    @NotBlank
+    @NotBlank(message = "{article.description}")
     private String description;
-    private String imageUrl;
+
 
     public String getId() {
         return id;
@@ -36,11 +36,5 @@ public class ArticlesDTO {
         this.description = description;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 }

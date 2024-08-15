@@ -21,9 +21,6 @@ public class Articles extends BaseEntity {
     private String description;
 
 
-    @Column(columnDefinition = "LONGTEXT",length = 5000000)
-    private String imageUrl;
-
     public UUID getUuid() {
         return uuid;
     }
@@ -48,11 +45,5 @@ public class Articles extends BaseEntity {
         this.description = description;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 }

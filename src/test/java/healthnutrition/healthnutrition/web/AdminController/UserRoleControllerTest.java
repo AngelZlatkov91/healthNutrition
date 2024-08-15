@@ -38,5 +38,48 @@ class UserRoleControllerTest {
         boolean userRoleDTOS = mvcResult.getModelAndView().getModel().containsKey("userRoleDTOS");
         assertTrue(userRoleDTOS);
     }
+    @Test
+    public void testSetUserToRoleAdmin() throws Exception {
+        userRepositories.save(newUSer_Role_USER());
+        MvcResult mvcResult = mockMvc.perform(post("/make-admin")
+                        .param("email", newUSer_Role_USER().getEmail()))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andReturn();
+        Optional<User> byEmail = userRepositories.findByEmail(newUSer_Role_USER().getEmail());
+        assertEquals("ADMIN",byEmail.get().getRole().name());
+    }
+    @Test
+    public void testSetUserToRoleUSER() throws Exception {
+        userRepositories.save(newUSer_Role_ADMIN());
+        MvcResult mvcResult = mockMvc.perform(post("/remove-admin")
+                        .param("email", newUSer_Role_ADMIN().getEmail()))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andReturn();
+        Optional<User> byEmail = userRepositories.findByEmail(newUSer_Role_ADMIN().getEmail());
+        assertEquals("USER",byEmail.get().getRole().name());
+    }
+
+
+    private User newUSer_Role_USER(){
+        User user = new User();
+        user.setFullName("test User");
+        user.setEmail("test@User.gmail");
+        user.setPhone("123456798");
+        user.setPassword("12345");
+        user.setRole(UserRoleEnum.USER);
+        return user;
+    }
+
+    private User newUSer_Role_ADMIN(){
+        User user = new User();
+        user.setFullName("test ADMIN");
+        user.setEmail("test@ADMIN.gmail");
+        user.setPhone("1324657922");
+        user.setPassword("12345");
+        user.setRole(UserRoleEnum.ADMIN);
+        return user;
+    }
 
 }

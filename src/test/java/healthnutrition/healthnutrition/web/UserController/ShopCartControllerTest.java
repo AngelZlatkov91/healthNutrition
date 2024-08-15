@@ -1,14 +1,15 @@
 package healthnutrition.healthnutrition.web.UserController;
 import healthnutrition.healthnutrition.models.dto.cartDTOS.ProductInCartDTO;
 import healthnutrition.healthnutrition.models.dto.cartDTOS.ShoppingCartDTO;
+import healthnutrition.healthnutrition.models.dto.productDTOS.ProductCreateDTO;
 import healthnutrition.healthnutrition.models.entitys.BrandProduct;
-import healthnutrition.healthnutrition.models.entitys.Product;
 import healthnutrition.healthnutrition.models.entitys.TypeProduct;
 import healthnutrition.healthnutrition.repositories.BrandRepository;
-import healthnutrition.healthnutrition.repositories.ProductRepository;
 import healthnutrition.healthnutrition.repositories.TypeRepository;
+import healthnutrition.healthnutrition.services.impl.RestProductServiceImpl;
 import healthnutrition.healthnutrition.services.impl.ShoppingCartServiceImpl;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -32,28 +33,16 @@ class ShopCartControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-    @Autowired
-    private BrandRepository brandRepository;
-    @Autowired
-    private TypeRepository typeRepository;
-    @Autowired
-    private ProductRepository productRepository;
-
 
     @Autowired
     private ShoppingCartServiceImpl shoppingCartService;
 
-    @AfterEach
-    public void tearDown() {
-        productRepository.deleteAll();
-        typeRepository.deleteAll();
-        brandRepository.deleteAll();
-    }
+
 
     @Test
     public  void testGetViewToShoppingCart() throws Exception {
-        Product product = createProduct();
-        shoppingCartService.addProductToShoppingCart(product.getName());
+        ProductInCartDTO product = createProduct();
+        shoppingCartService.productInCart().getProducts().put("TEST",product);
         MvcResult mvcResult =
                 mockMvc.perform(get("/shopping_cart"))
                 .andDo(print())
@@ -66,15 +55,15 @@ class ShopCartControllerTest {
          assertEquals(1,shoppingCartDTO.getProducts().size());
         assertEquals(1,products.size());
         assertEquals(50.00,price);
-        assertEquals("ISOLATE",productInCartDTO.getName());
+        assertEquals("TEST",productInCartDTO.getName());
 
     }
 
     @Test
     public void testRemoveProductFromShoppingCart() throws Exception {
-        Product product = createProduct();
-        shoppingCartService.addProductToShoppingCart(product.getName());
-                mockMvc.perform(get("/remove/product/{getName}","ISOLATE" ))
+        ProductInCartDTO product = createProduct();
+        shoppingCartService.productInCart().getProducts().put("TEST",product);
+                mockMvc.perform(get("/remove/product/{getName}","TEST" ))
                         .andDo(print())
                         .andExpect(status().is3xxRedirection());
         ShoppingCartDTO shoppingCartDTO = shoppingCartService.productInCart();
@@ -84,64 +73,37 @@ class ShopCartControllerTest {
 
     @Test
     public void testDecreaseProductQuantityFromShoppingCart() throws Exception {
-        Product product = createProduct();
-        shoppingCartService.addProductToShoppingCart(product.getName());
-        shoppingCartService.addProductToShoppingCart(product.getName());
+        ProductInCartDTO product = createProduct();
+        shoppingCartService.productInCart().getProducts().put("TEST",product);
+        ProductInCartDTO productInCartDTO1 = shoppingCartService.productInCart().getProducts().get("TEST");
+        productInCartDTO1.increaseQuantity();
 
-                mockMvc.perform(get("/decrease/product/{getName}","ISOLATE" ))
+        mockMvc.perform(get("/decrease/product/{getName}","TEST" ))
                         .andDo(print())
                         .andExpect(status().is3xxRedirection());
         ShoppingCartDTO shoppingCartDTO = shoppingCartService.productInCart();
-        ProductInCartDTO productInCartDTO = shoppingCartDTO.getProducts().get("ISOLATE");
+        ProductInCartDTO productInCartDTO = shoppingCartDTO.getProducts().get("TEST");
         assertEquals(1,productInCartDTO.getQuantity());
 
     }
     @Test
     public void testIncreaseProductQuantityFromShoppingCart() throws Exception {
-        Product product = createProduct2();
-        shoppingCartService.addProductToShoppingCart(product.getName());
-                mockMvc.perform(get("/increase/product/{getName}","FAT" ))
+        ProductInCartDTO product = createProduct();
+        shoppingCartService.productInCart().getProducts().put("TEST",product);
+                mockMvc.perform(get("/increase/product/{getName}","TEST" ))
                         .andDo(print())
                         .andExpect(status().is3xxRedirection());
         ShoppingCartDTO shoppingCartDTO = shoppingCartService.productInCart();
-        ProductInCartDTO productInCartDTO = shoppingCartDTO.getProducts().get("FAT");
+        ProductInCartDTO productInCartDTO = shoppingCartDTO.getProducts().get("TEST");
         assertEquals(2,productInCartDTO.getQuantity());
 
     }
-
-    private Product createProduct(){
-        Product product = new Product();
-        product.setName("ISOLATE");
-        product.setDescription("Test description");
+    private ProductInCartDTO createProduct(){
+        ProductInCartDTO product = new ProductInCartDTO();
+        product.setName("TEST");
         product.setPrice(50.00);
-        product.setUuid(UUID.randomUUID());
-        product.setBrant(addBrand());
-        product.setType(addType());
-        product.setImageUrl("https://www.moremuscle.com/img/m/209.jpg");
-        return productRepository.save(product);
-    }
-    private Product createProduct2(){
-        Product product = new Product();
-        product.setName("FAT");
-        product.setDescription("Test description");
-        product.setPrice(50.00);
-        product.setUuid(UUID.randomUUID());
-        product.setBrant(addBrand());
-        product.setType(addType());
-        product.setImageUrl("https://www.moremuscle.com/img/m/209.jpg");
-        return productRepository.save(product);
+        product.increaseQuantity();
+        return product;
     }
 
-
-    private BrandProduct addBrand() {
-        BrandProduct brand = new BrandProduct();
-        brand.setBrand("AMIX");
-        brand.setImageUrl("https://www.moremuscle.com/img/m/209.jpg");
-        return brandRepository.save(brand);
-    }
-    private TypeProduct addType(){
-        TypeProduct type = new TypeProduct();
-        type.setType("PROTEIN");
-        return  typeRepository.save(type);
-    }
 }

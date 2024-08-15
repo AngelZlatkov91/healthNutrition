@@ -30,18 +30,18 @@
                     All articles</a>
             </li>
             <li class="nav-item" sec:authorize="hasRole('ADMIN')" >
-                <a class="nav-link" href="/orders">Orders</a>
+                <a class="nav-link" href="/orders" th:text="#{nav_bar_orders}">Orders</a>
             </li>
             <li class="nav-item dropdown" >
                 <a class="nav-link dropdown-toggle" sec:authorize="hasRole('ADMIN')" href="/" id="navbarDropdown" role="button"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="#{nav_bar_admin}">
                     Admin
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="/add/article">Add New article</a>
-                    <a class="dropdown-item" href="/add/brand">Add New brand</a>
-                    <a class="dropdown-item" href="/add/type">Add New type</a>
-                    <a class="dropdown-item" href="/product-add">Add New Product</a>
+                    <a class="dropdown-item" href="/add/article" th:text="#{nav_bar_admin_add_article}">Add New article</a>
+                    <a class="dropdown-item" href="/add/brand" th:text="#{nav_bar_admin_add_brand}">Add New brand</a>
+                    <a class="dropdown-item" href="/add/type" th:text="#{nav_bar_admin_add_type}">Add New type</a>
+                    <a class="dropdown-item" href="/product-add" th:text="#{nav_bar_admin_add_product}">Add New Product</a>
                 </div>
             </li>
             <li>

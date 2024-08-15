@@ -20,7 +20,7 @@
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
         <div class="row">
             <div class="form-group col-md-6 mb-3">
-                <label class="text-center text-dark font-weight-bold" for="type">Type</label>
+                <label class="text-center text-dark font-weight-bold" for="type" th:text="#{product_type}">Type</label>
                 <input id="type"
                        type="text"
                        th:name="type"
@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col col-md-4">
                 <div class="button-holder d-flex">
-                    <input type="submit" class="btn btn-info btn-lg" value="Submit type"/>
+                    <input type="submit" class="btn btn-info btn-lg" th:value="#{submit_form}"/>
                 </div>
             </div>
         </div>

@@ -45,7 +45,6 @@ class ArticleControllerTest {
         MvcResult mvcResult = mockMvc.perform(post("/add/article")
                 .param("title", "test Title")
                 .param("description", "Long text")
-                .param("imageUrl", "picture for the current article")
                 .with(csrf())
         ).andExpect(status().is3xxRedirection()).andDo(print()).andReturn();
         assertEquals(1,articlesRepositories.count());
@@ -56,7 +55,6 @@ class ArticleControllerTest {
         MvcResult mvcResult = mockMvc.perform(post("/add/article")
                 .param("title", "test Title")
                 .param("description", "")
-                .param("imageUrl", "")
         ).andExpect(status().is3xxRedirection()).andDo(print()).andReturn();
         assertEquals(0,articlesRepositories.count());
     }
@@ -66,7 +64,6 @@ class ArticleControllerTest {
         MvcResult mvcResult = mockMvc.perform(post("/add/article")
                 .param("title", "TEST TITLE ARTICLE")
                 .param("description", "test1")
-                .param("imageUrl", "test1")
         ).andExpect(status().is3xxRedirection()).andDo(print()).andReturn();
         assertEquals(1,articlesRepositories.count());
     }
@@ -76,7 +73,6 @@ class ArticleControllerTest {
         Articles articles = new Articles();
         articles.setUuid(UUID.randomUUID());
         articles.setDescription("Test article description");
-        articles.setImageUrl("test article imageUrl");
         articles.setTitle("TEST TITLE ARTICLE");
         return articlesRepositories.save(articles);
     }

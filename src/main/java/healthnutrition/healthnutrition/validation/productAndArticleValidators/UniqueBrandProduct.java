@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = UniqueBrandProductValidator.class)
 public @interface UniqueBrandProduct {
     // brand products search if exist in database
-    String message() default "The brand should be unique";
+    String message() default "{brand.product.unique}";
     Class<?>[] groups()default {};
 
     Class<? extends Payload>[] payload() default {};

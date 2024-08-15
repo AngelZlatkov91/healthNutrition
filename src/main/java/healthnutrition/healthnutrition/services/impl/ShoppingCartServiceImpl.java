@@ -2,6 +2,8 @@ package healthnutrition.healthnutrition.services.impl;
 import healthnutrition.healthnutrition.models.dto.cartDTOS.*;
 import healthnutrition.healthnutrition.models.entitys.*;
 import healthnutrition.healthnutrition.repositories.*;
+
+import healthnutrition.healthnutrition.services.RestProductService;
 import healthnutrition.healthnutrition.services.ShoppingCartService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -12,12 +14,10 @@ import java.util.*;
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
-
-    private final ProductRepository productRepository;
     private final ShoppingCartRepositories shoppingCartRepositories;
      private final UserRepositories userRepositories;
      private final DeliveryDataRepositories deliveryDataRepositories;
-
+     private final RestProductService restProductService;
      private final ShoppingCartDTO shoppingCartDTO;
      private final ProductInCartRepositories productInCartRepositories;
 
@@ -28,11 +28,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 
      @Autowired
-    public ShoppingCartServiceImpl(ProductRepository productRepository, ShoppingCartRepositories shoppingCartRepositories, UserRepositories userRepositories, DeliveryDataRepositories deliveryDataRepositories, ProductInCartRepositories productInCartRepositories, ModelMapper mapper) {
-        this.productRepository = productRepository;
+    public ShoppingCartServiceImpl( ShoppingCartRepositories shoppingCartRepositories, UserRepositories userRepositories, DeliveryDataRepositories deliveryDataRepositories, RestProductService restProductService, ProductInCartRepositories productInCartRepositories, ModelMapper mapper) {
         this.shoppingCartRepositories = shoppingCartRepositories;
         this.userRepositories = userRepositories;
          this.deliveryDataRepositories = deliveryDataRepositories;
+         this.restProductService = restProductService;
          this.productInCartRepositories = productInCartRepositories;
          this.mapper = mapper;
          this.shoppingCartDTO = new ShoppingCartDTO();
@@ -42,7 +42,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     //add product to cart
     public void addProductToShoppingCart(String name) {
-        ProductInCartDTO product = findProduct(name);
+        ProductInCartDTO product = restProductService.findProduct(name);
         if (this.shoppingCartDTO.getProducts().containsKey(product.getName())) {
             this.shoppingCartDTO.getProducts().get(product.getName()).increaseQuantity();
         } else {
@@ -69,6 +69,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         this.shoppingCartDTO.getProducts().get(getName).increaseQuantity();
     }
 
+    // select product quantity for scheduling
+    @Override
+    public String sellerProductQuantity() {
+        return this.productInCartRepositories.QuantitySellerProduct();
+    }
 
 
     @Override
@@ -102,14 +107,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return this.shoppingCartDTO;
     }
 
-    private ProductInCartDTO findProduct(String name) {
-        Optional<Product> byUuid = this.productRepository.findByName(name);
-        ProductInCartDTO product = this.mapper.map(byUuid.get(),ProductInCartDTO.class);
-//        product.setName(byUuid.getName());
-//        product.setPrice(byUuid.getPrice());
-        product.increaseQuantity();
-        return product;
-    }
 
     protected ShoppingCart addProduct (DeliveryDataDTO data) {
         List<ProductInCart> products = addProductToListForShoppingCart();

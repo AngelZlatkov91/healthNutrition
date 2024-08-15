@@ -11,7 +11,7 @@
 </div>
 
 <div class="p-5 align-content-center bg-blur my-register-div">
-    <h4 class="text-center text-dark mt-5">Details</h4>
+    <h4 class="text-center text-dark mt-5" th:text="#{cart_quantity}">Orders</h4>
     <div
          th:each="order : ${allOrders.getOrders()}"
          class="offers row mx-auto d-flex flex-row justify-content-center">
@@ -23,25 +23,25 @@
             <ul class="offer-details list-group list-group-flush">
                 <li class="list-group-item">
                     <div class="card-text">
-                        <span>• Email</span>
+                        <span th:text="#{login_user_email}">• Email</span>
                         <th:block th:text="*{order.email}">12345</th:block>
                     </div>
                 </li>
                 <li class="list-group-item">
                     <div class="card-text">
-                        <span>• Phone</span>
+                        <span th:text="#{register_user_phone}">• Phone</span>
                         <th:block th:text="*{order.phone}">12345</th:block>
                     </div>
                 </li>
                 <li class="list-group-item">
                     <div class="card-text">
-                        <span>• Address</span>
+                        <span th:text="#{delivery_street_user}">• Address</span>
                         <th:block th:text="*{order.address}">12345</th:block>
                     </div>
                 </li>
                 <li class="list-group-item">
                     <div class="card-text">
-                        <span>• Address</span>
+                        <span th:text="#{delivery_firmAddress_user}">• Address</span>
                         <th:block th:text="*{order.deliver}">12345</th:block>
                     </div>
                 </li>
@@ -51,12 +51,12 @@
                     <div class="table-responsive">
                         <table class="table table-striped table-dark">
                             <thead>
-                            <span class="bg-danger text-center" th:text=" 'Date Made: ' + ${order.getArchiveDTO().getDate()} + ': Total price: ' + ${order.getArchiveDTO().getTotalPrice()}"></span>
+                            <span class="bg-danger text-center" th:text="#{data_made_cart} +  '  '  + ${order.getArchiveDTO().getDate()} +  '  '  + #{total_price} +  '  '  + ${order.getArchiveDTO().getTotalPrice()}"></span>
                             <tr>
                                 <th></th>
-                                <th>Name</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
+                                <th th:text="#{product_name}">Name</th>
+                                <th th:text="#{product_quantity}">Quantity</th>
+                                <th th:text="#{product_price}">Price</th>
                             </tr>
                             </thead>
                             <tbody>

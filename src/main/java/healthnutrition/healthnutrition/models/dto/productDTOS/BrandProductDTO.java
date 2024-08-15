@@ -5,10 +5,11 @@ import jakarta.validation.constraints.NotBlank;
 
 public class BrandProductDTO {
 
-    @NotBlank
+    @NotBlank(message = "{brand.product.empty}")
     @UniqueBrandProduct
     private String brand;
 
+    @NotBlank(message = "{brand.image.empty}")
     private String imageUrl;
 
     public String getBrand() {

@@ -78,7 +78,6 @@ class ArticlesServiceImplTest {
         ArticlesDTO articlesDTO = new ArticlesDTO();
         articlesDTO.setTitle("Test Article Service");
         articlesDTO.setDescription("text description for title");
-        articlesDTO.setImageUrl("random picture");
         return articlesDTO;
     }
 }

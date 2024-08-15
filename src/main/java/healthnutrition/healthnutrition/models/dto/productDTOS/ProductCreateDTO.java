@@ -1,23 +1,21 @@
 package healthnutrition.healthnutrition.models.dto.productDTOS;
-import healthnutrition.healthnutrition.validation.productAndArticleValidators.UniqueProductNameValidator;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
 public class ProductCreateDTO  {
-    @Size(min = 3)
-    @NotBlank
-    @UniqueProductNameValidator
+    @Size(min = 3,message = "{product.name.length}")
+    @NotBlank(message = "{product.name.empty}")
     private String name;
-    @NotBlank
+    @NotBlank(message = "{product.description.empty}")
     private String description;
-    @Positive
+    @Positive(message = "{product.price.positive}")
     private Double price;
-    @NotBlank
+    @NotBlank(message = "{product.image.url.empty}")
     private String imageUrl;
-    @NotBlank
+    @NotBlank(message = "{product.type.empty}")
     private String type;
-    @NotBlank
+    @NotBlank(message = "{product.brand.empty}")
     private String brand;
 
 

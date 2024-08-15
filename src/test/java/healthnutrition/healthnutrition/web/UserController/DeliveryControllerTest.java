@@ -1,7 +1,7 @@
 package healthnutrition.healthnutrition.web.UserController;
 
+import healthnutrition.healthnutrition.models.dto.productDTOS.ProductCreateDTO;
 import healthnutrition.healthnutrition.models.entitys.BrandProduct;
-import healthnutrition.healthnutrition.models.entitys.Product;
 import healthnutrition.healthnutrition.models.entitys.TypeProduct;
 import healthnutrition.healthnutrition.models.entitys.User;
 import healthnutrition.healthnutrition.models.enums.UserRoleEnum;
@@ -15,8 +15,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -34,8 +32,7 @@ class DeliveryControllerTest {
     private BrandRepository brandRepository;
     @Autowired
     private TypeRepository typeRepository;
-    @Autowired
-    private ProductRepository productRepository;
+
     @Autowired
     private ShoppingCartRepositories shoppingCartRepositories;
     @Autowired
@@ -44,7 +41,7 @@ class DeliveryControllerTest {
     private ShoppingCartServiceImpl shoppingCartService;
     @AfterEach
     public void tearDown() {
-        productRepository.deleteAll();
+
         typeRepository.deleteAll();
         brandRepository.deleteAll();
     }
@@ -70,7 +67,7 @@ class DeliveryControllerTest {
     @Test
     public void testFinalDelivery() throws Exception {
         addUser();
-        Product product = createProduct2();
+        ProductCreateDTO product = productCreateDTO();
         shoppingCartService.addProductToShoppingCart(product.getName());
                 mockMvc.perform(post("/delivery")
                                 .param("city","SOFIA")
@@ -108,16 +105,16 @@ class DeliveryControllerTest {
 
 
 
-    private Product createProduct2(){
-        Product product = new Product();
+    private ProductCreateDTO productCreateDTO(){
+        ProductCreateDTO product = new ProductCreateDTO();
         product.setName("FAT");
         product.setDescription("Test description");
         product.setPrice(50.00);
-        product.setUuid(UUID.randomUUID());
-        product.setBrant(addBrand());
-        product.setType(addType());
+        product.setBrand(addBrand().getBrand());
+        product.setType(addType().getType());
         product.setImageUrl("https://www.moremuscle.com/img/m/209.jpg");
-        return productRepository.save(product);
+
+        return product;
     }
 
 

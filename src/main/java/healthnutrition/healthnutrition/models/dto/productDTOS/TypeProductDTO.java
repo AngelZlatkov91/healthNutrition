@@ -5,7 +5,7 @@ import healthnutrition.healthnutrition.validation.productAndArticleValidators.Un
 import jakarta.validation.constraints.NotBlank;
 
 public class TypeProductDTO {
-   @NotBlank
+   @NotBlank(message = "{type.product.empty}")
    @UniqueTypeProduct
     private String type;
 

@@ -15,16 +15,15 @@ import java.util.List;
 @Controller
 public class HomeController {
 
-    private final ProductService productService;
     private final BrandProductService brandProductService;
     private final TypeProductService typeProductService;
+    private final RestProductService restProductService;
 
 
-    public HomeController(ProductService productService,  BrandProductService brandProductService, TypeProductService typeProductService) {
-        this.productService = productService;
-
+    public HomeController(BrandProductService brandProductService, TypeProductService typeProductService, RestProductService restProductService) {
         this.brandProductService = brandProductService;
         this.typeProductService = typeProductService;
+        this.restProductService = restProductService;
     }
 
     // home view
@@ -32,8 +31,6 @@ public class HomeController {
     public ModelAndView home(Model model){
         List<GetBrandsDTO> brands = brandProductService.allBrands();
         List<GetTypesDTO> types = typeProductService.allTypes();
-
-
         model.addAttribute("brands", brands);
         model.addAttribute("types",types);
         return new ModelAndView("home");
@@ -42,7 +39,7 @@ public class HomeController {
     @GetMapping("/search/{searchKey}")
     public  ModelAndView searchBy( @PathVariable("searchKey") @RequestParam("") String searchKey, Model model) {
         model.addAttribute("searchKey",searchKey);
-        List<ProductDetailsDTO> allProducts = productService.getAllProducts(searchKey);
+        List<ProductDetailsDTO> allProducts = restProductService.getAllProducts(searchKey);
         model.addAttribute("products",allProducts);
         return new ModelAndView("search");
     }
@@ -50,7 +47,7 @@ public class HomeController {
     @GetMapping("/brand/{searchKey}")
     public  ModelAndView searchByBrand( @PathVariable("searchKey")  String searchKey, Model model) {
         model.addAttribute("searchKey",searchKey);
-        List<ProductDetailsDTO> allProducts = productService.getAllProducts(searchKey);
+        List<ProductDetailsDTO> allProducts = restProductService.getAllProducts(searchKey);
         model.addAttribute("products",allProducts);
         return new ModelAndView("search");
     }
@@ -58,7 +55,7 @@ public class HomeController {
     @GetMapping("/type/{searchKey}")
     public  ModelAndView searchByType( @PathVariable("searchKey")  String searchKey, Model model) {
         model.addAttribute("searchKey",searchKey);
-        List<ProductDetailsDTO> allProducts = productService.getAllProducts(searchKey);
+        List<ProductDetailsDTO> allProducts = restProductService.getAllProducts(searchKey);
         model.addAttribute("products",allProducts);
         return new ModelAndView("search");
     }

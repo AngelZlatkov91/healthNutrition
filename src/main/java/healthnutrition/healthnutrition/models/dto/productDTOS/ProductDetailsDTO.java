@@ -7,7 +7,7 @@ public class ProductDetailsDTO {
     private Double price;
     private String imageUrl;
     private String type;
-    private String brant;
+    private String brand;
 
 
     public ProductDetailsDTO(){
@@ -62,12 +62,12 @@ public class ProductDetailsDTO {
         this.type = type;
     }
 
-    public String getBrant() {
-        return brant;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setBrant(String brant) {
-        this.brant = brant;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
 }

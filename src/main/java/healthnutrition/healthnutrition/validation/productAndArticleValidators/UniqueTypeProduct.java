@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 public @interface UniqueTypeProduct {
 
     // type products search if exist in database
-    String message() default "The type should be unique";
+    String message() default "{type.product.unique}";
     Class<?>[] groups()default {};
 
     Class<? extends Payload>[] payload() default {};

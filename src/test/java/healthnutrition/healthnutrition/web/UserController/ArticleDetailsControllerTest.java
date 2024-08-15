@@ -60,7 +60,6 @@ class ArticleDetailsControllerTest {
         Articles articles = new Articles();
         articles.setUuid(UUID.randomUUID());
         articles.setDescription("Test article description");
-        articles.setImageUrl("test article imageUrl");
         articles.setTitle("TEST TITLE ARTICLE");
         return articlesRepositories.save(articles);
     }

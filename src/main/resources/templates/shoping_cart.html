@@ -16,15 +16,12 @@
             <div  class="col-lg-6 col-12 mb-4 mb-lg-0">
                 <th:block th:each="product : ${products}">
                     <div class="text-center mb-4 pb-lg-2">
+                        <a class="ml-3 text-danger" th:href="@{/remove/product/{getName} (getName=${product.getName()})}" th:text="#{remove_product_from_cart}">  Remove  </a>
                         <span th:text="${product.getName()} + '      '"></span>
-                        <a class="ml-3 text-danger" th:href="@{/remove/product/{getName} (getName=${product.getName()})}" th:text="#{remove_product_from_cart}"> Remove </a>
-
-
-                        <a class="ui-button text-danger "   th:min="1" th:href="@{/decrease/product/{getName} (getName=${product.getName()})}">  -  </a>
-                        <span th:text="'  ' + ${product.getQuantity()} + '  '"></span>
-                        <a class="ui-button text-danger" th:href="@{/increase/product/{getName} (getName=${product.getName()})}">  +  </a>
-
-                        <span th:text="'     ' + ${product.getPrice()} + '  '" ></span>
+                        <a class="ui-button text-danger "   th:min="1" th:href="@{/decrease/product/{getName} (getName=${product.getName()})}">   -   </a>
+                        <span th:text="'   ' + ${product.getQuantity()} + '   '"></span>
+                        <a class="ui-button text-danger" th:href="@{/increase/product/{getName} (getName=${product.getName()})}">   +   </a>
+                        <span th:text="'      ' + ${product.getPrice()} + '    '" ></span>
                     </div>
                  </th:block>
                 <div class="col-5 bg-danger rounded m-auto">

@@ -34,6 +34,7 @@
                        th:field="*{email}"
                        th:errorclass="is-invalid"
                        type="text"
+                       class="form-control"
                        placeholder="Email"/>
                 <p class="errors alert alert-danger invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}">
                     Email is required.
@@ -46,6 +47,7 @@
                        type="text"
                        th:field="*{phone}"
                        th:errorclass="is-invalid"
+                       class="form-control"
                        placeholder="Phone"/>
                 <p class="errors alert alert-danger invalid-feedback" th:if="${#fields.hasErrors('phone')}" th:errorclass="error" th:errors="*{phone}">
                     Phone is required.

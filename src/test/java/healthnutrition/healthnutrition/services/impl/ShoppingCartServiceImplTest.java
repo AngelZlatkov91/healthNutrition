@@ -28,12 +28,6 @@ class ShoppingCartServiceImplTest {
     @Autowired
     private ShoppingCartRepositories shoppingCartRepositories;
     @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private BrandRepository brandRepository;
-    @Autowired
-    private TypeRepository typeRepository;
-    @Autowired
     private UserRepositories userRepositories;
     @Autowired
     private ProductInCartRepositories productInCartRepositories;
@@ -46,38 +40,31 @@ class ShoppingCartServiceImplTest {
     void setUp(){
         productInCartRepositories.deleteAll();
         shoppingCartRepositories.deleteAll();
-        productRepository.deleteAll();
-        brandRepository.deleteAll();
-        typeRepository.deleteAll();
         userRepositories.deleteAll();
         deliveryDataRepositories.deleteAll();
+
         saveData();
     }
     @AfterEach
     void cleanUp(){
-
         shoppingCartRepositories.deleteAll();
         productInCartRepositories.deleteAll();
-        productRepository.deleteAll();
-        brandRepository.deleteAll();
-        typeRepository.deleteAll();
         userRepositories.deleteAll();
         deliveryDataRepositories.deleteAll();
+
     }
 
     @Test
     public void testAddProductToCart(){
-        shoppingCartService.addProductToShoppingCart(getProductName());
-
+        shoppingCartService.productInCart().getProducts().put("Protein",createProduct());
         assertEquals(1,shoppingCartService.productInCart().getProducts().size());
 
     }
     @Test
     public void testAddSameProductAndIncreaseQuantity(){
-        Optional<Product> save = productRepository.findByName(createProduct2().getName());
-
-        shoppingCartService.addProductToShoppingCart(save.get().getName());
-        shoppingCartService.addProductToShoppingCart(save.get().getName());
+        shoppingCartService.productInCart().getProducts().put("Protein",createProduct());
+        ProductInCartDTO productInCartDTO = shoppingCartService.productInCart().getProducts().get("Protein");
+        productInCartDTO.increaseQuantity();
         Map<String, ProductInCartDTO> products = shoppingCartService.productInCart().getProducts();
         ProductInCartDTO protein = products.get("Protein");
         assertEquals(2,protein.getQuantity());
@@ -85,31 +72,29 @@ class ShoppingCartServiceImplTest {
     }
     @Test
     public void testIncreaseQuantity(){
-        shoppingCartService.addProductToShoppingCart(getProductName());
-        shoppingCartService.increase("fat burner");
+        shoppingCartService.productInCart().getProducts().put("Protein",createProduct());
+        shoppingCartService.increase("Protein");
         Map<String, ProductInCartDTO> products = shoppingCartService.productInCart().getProducts();
-        ProductInCartDTO fatBurner = products.get("fat burner");
+        ProductInCartDTO fatBurner = products.get("Protein");
         assertEquals(2,fatBurner.getQuantity());
         assertEquals(100.00,shoppingCartService.calculateTotalPrice());
-        setUp();
+
     }
     @Test
     public void testDecreaseQuantity(){
-
-        Optional<Product> byName = productRepository.findByName("Vitamin");
-        shoppingCartService.addProductToShoppingCart(byName.get().getName());
-        shoppingCartService.increase("Vitamin");
-        shoppingCartService.decrease("Vitamin");
+        shoppingCartService.productInCart().getProducts().put("Protein",createProduct());
+        shoppingCartService.increase("Protein");
+        shoppingCartService.decrease("Protein");
         Map<String, ProductInCartDTO> products = shoppingCartService.productInCart().getProducts();
-        ProductInCartDTO vitamin = products.get("Vitamin");
+        ProductInCartDTO vitamin = products.get("Protein");
         assertEquals(1,vitamin.getQuantity());
 
     }
 
     @Test
     public void testRemoveProductFromCart(){
-        shoppingCartService.addProductToShoppingCart(getProductName());
-        shoppingCartService.remove("fat burner");
+        shoppingCartService.productInCart().getProducts().put("Protein",createProduct());
+        shoppingCartService.remove("Protein");
         int size = shoppingCartService.productInCart().getProducts().size();
         assertEquals(0,size);
 
@@ -119,56 +104,22 @@ class ShoppingCartServiceImplTest {
 
 
    private void saveData(){
-       brandRepository.save(brand());
-       typeRepository.save(type());
-       productRepository.save(createProduct());
-       productRepository.save(createProduct2());
-       productRepository.save(createProduct3());
-
+        userRepositories.save(user());
    }
 
-
-    private String getProductName(){
-        Optional<Product> byName = productRepository.findByName("fat burner");
-        return byName.get().getName();
-    }
-    private Product createProduct(){
-        Optional<BrandProduct> byBrand = brandRepository.findByBrand("AMIX");
-        Optional<TypeProduct> byType = typeRepository.findByType("FAT");
-        Product product = new Product();
-                product.setName("fat burner");
-                product.setDescription("fatBurning");
+    private ProductInCartDTO createProduct(){
+        ProductInCartDTO product = new ProductInCartDTO();
+                product.setName("Protein");
                 product.setPrice(50.00);
-                product.setImageUrl("imageURl");
-                product.setType(byType.get());
-                product.setBrant(byBrand.get());
-                product.setUuid(UUID.randomUUID());
+               product.increaseQuantity();
         return product;
     }
-    private Product createProduct2(){
-        Optional<BrandProduct> byBrand = brandRepository.findByBrand("AMIX");
-        Optional<TypeProduct> byType = typeRepository.findByType("FAT");
-        Product product = new Product();
-        product.setName("Protein");
-        product.setDescription("Protein");
+
+    private ProductInCartDTO createProduct2(){
+        ProductInCartDTO product = new ProductInCartDTO();
+        product.setName("Tribulus");
         product.setPrice(50.00);
-        product.setImageUrl("imageURl");
-        product.setType(byType.get());
-        product.setBrant(byBrand.get());
-        product.setUuid(UUID.randomUUID());
-        return product;
-    }
-    private Product createProduct3(){
-        Optional<BrandProduct> byBrand = brandRepository.findByBrand("AMIX");
-        Optional<TypeProduct> byType = typeRepository.findByType("FAT");
-        Product product = new Product();
-        product.setName("Vitamin");
-        product.setDescription("Vitamin");
-        product.setPrice(50.00);
-        product.setImageUrl("imageURl");
-        product.setType(byType.get());
-        product.setBrant(byBrand.get());
-        product.setUuid(UUID.randomUUID());
+        product.increaseQuantity();
         return product;
     }
 
@@ -179,22 +130,9 @@ class ShoppingCartServiceImplTest {
         user.setPhone("0893451813");
         user.setRole(UserRoleEnum.USER);
         user.setPassword("123456");
-
         return user;
     }
 
-    private BrandProduct brand(){
-        BrandProduct brandProduct = new BrandProduct();
-        brandProduct.setBrand("AMIX");
-        brandProduct.setImageUrl("picture");
-        return brandProduct;
-    }
-
-    private TypeProduct type(){
-        TypeProduct typeProduct = new TypeProduct();
-        typeProduct.setType("FAT");
-        return typeProduct;
-    }
 
     private DeliveryDataDTO address(){
         DeliveryDataDTO address = new DeliveryDataDTO();

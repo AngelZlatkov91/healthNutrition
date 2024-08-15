@@ -1,4 +1,4 @@
-package healthnutrition.healthnutrition.validation.productAndArticleValidators;
+package healthnutrition.healthnutrition.validation.userValidation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -10,10 +10,9 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-@Constraint(validatedBy = UniqueProductNameValidatorImpl.class)
-public @interface UniqueProductNameValidator {
-    // product name  search if exist in database
-    String message() default "The product name should be unique";
+@Constraint(validatedBy = PhoneNumberEditValidator.class)
+public @interface PhoneNumberEdit {
+    String message() default "{register.user.phone.number}";
     Class<?>[] groups()default {};
 
     Class<? extends Payload>[] payload() default {};

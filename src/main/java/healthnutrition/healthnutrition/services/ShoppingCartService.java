@@ -16,6 +16,7 @@ public interface ShoppingCartService {
     void decrease(String getName);
 
     void increase(String getName);
+    String sellerProductQuantity();
 
 
 

@@ -13,14 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class GlobalExceptionHandler {
 
 
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
-    public String handleObjectNotFound(Exception exception , Model model) {
-        String errorMessage = exception.getMessage();
-        model.addAttribute("errorMessage", errorMessage);
-        return "error";
-    }
-
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     @ExceptionHandler(ObjectNotFoundException.class)
     public ModelAndView handleObjectNotFound(ObjectNotFoundException exception) {
@@ -42,6 +34,14 @@ public class GlobalExceptionHandler {
         ModelAndView modelAndView = new ModelAndView("error");
         modelAndView.addObject("errorMessage", exception.getMessage());
         return modelAndView;
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public String handleProductExist(IllegalArgumentException exception , Model model) {
+        String errorMessage = exception.getMessage();
+        model.addAttribute("errorMessage", errorMessage);
+        return "error-add-product";
     }
 
 

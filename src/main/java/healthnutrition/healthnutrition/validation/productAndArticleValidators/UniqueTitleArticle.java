@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = UniqueTitleArticleValidator.class)
 public @interface UniqueTitleArticle {
     // title for the new article search if exist in database
-    String message() default "The title for this Article should be unique";
+    String message() default "{article.title.unique}";
     Class<?>[] groups()default {};
 
     Class<? extends Payload>[] payload() default {};

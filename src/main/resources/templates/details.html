@@ -19,11 +19,14 @@
                             <div class="button-holder d-flex">
                                 <a class="btn btn-info btn-lg" th:href="@{/product/add-shoppingCart/{name}(name=*{name})}" th:text="#{add_product_to_cart}">Add to Cart</a>
                             </div>
+                            <div class="button-holder d-flex" sec:authorize="hasRole('ADMIN')">
+                                <a class="btn btn-info btn-lg" th:href="@{/product/edit/price}" th:text="#{product.edit.price}">Edit price</a>
+                            </div>
                         </div>
                     </div>
                     <div class="card-text">
                         <span th:text="#{product_brand}">• Brant</span>
-                        <th:block th:text="*{brant}">12345</th:block>
+                        <th:block th:text="*{brand}">12345</th:block>
                     </div>
                     <div class="card-text">
                         <span th:text="#{product_price}">• Price</span>

@@ -28,7 +28,7 @@ public class ProductDetailsController {
      // get product by uuid
     @GetMapping("/product/{name}")
     public ModelAndView details(@PathVariable("name") String name, Model model) {
-        ProductDetailsDTO productByName= restProductService.getProductById(name);
+        ProductDetailsDTO productByName= restProductService.getProductByName(name);
         model.addAttribute("productByName",productByName);
         return new ModelAndView("details");
     }
