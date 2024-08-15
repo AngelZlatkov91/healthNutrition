@@ -6,6 +6,7 @@ import healthnutrition.healthnutrition.models.dto.productDTOS.ProductEditPrice;
 import healthnutrition.healthnutrition.services.RestProductService;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class RestProductServiceImpl implements RestProductService {
 
     @Override
     public ProductDetailsDTO getProductByName(String name) {
-        System.out.println();
+
         return restClient
                 .get()
                 .uri("http://localhost:8081/api/products/get/{name}",name)
@@ -60,13 +61,17 @@ public class RestProductServiceImpl implements RestProductService {
     public void addProduct(ProductCreateDTO productCreateDTO) {
 
         try {
+            // not catch the error when the product not exist
+
             RestClient.ResponseSpec retrieve = restClient
                     .post()
                     .uri("http://localhost:8081/api/products/create")
                     .body(productCreateDTO)
                     .accept(MediaType.APPLICATION_JSON)
                     .retrieve();
-
+            ResponseEntity<Void> bodilessEntity = retrieve.toBodilessEntity();
+            HttpStatusCode statusCode = bodilessEntity.getStatusCode();
+            System.out.println();
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {
                 String errorMessage = e.getResponseBodyAsString();
@@ -80,12 +85,14 @@ public class RestProductServiceImpl implements RestProductService {
     public void editPrice(ProductEditPrice productEditPrice) {
         try {
             // not catch the error when the product not exist
-            restClient
+            RestClient.ResponseSpec retrieve = restClient
                     .put()
                     .uri("http://localhost:8081/api/products/edit/price/{name}", productEditPrice.getName())
                     .body(productEditPrice)
                     .accept(MediaType.APPLICATION_JSON)
                     .retrieve();
+            ResponseEntity<Void> bodilessEntity = retrieve.toBodilessEntity();
+            HttpStatusCode statusCode = bodilessEntity.getStatusCode();
             System.out.println();
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode() == HttpStatus.BAD_REQUEST) {

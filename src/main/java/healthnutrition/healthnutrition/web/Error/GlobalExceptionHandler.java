@@ -11,7 +11,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public String handleProductExist(Exception exception , Model model) {
+        String errorMessage = exception.getMessage();
+        model.addAttribute("errorMessage", errorMessage);
+        return "error-add-product";
+    }
 
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     @ExceptionHandler(ObjectNotFoundException.class)
