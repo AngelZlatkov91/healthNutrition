@@ -79,6 +79,7 @@ public class RestProductServiceImpl implements RestProductService {
     @Override
     public void editPrice(ProductEditPrice productEditPrice) {
         try {
+            // not catch the error when the product not exist
             restClient
                     .put()
                     .uri("http://localhost:8081/api/products/edit/price/{name}", productEditPrice.getName())
