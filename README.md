@@ -16,6 +16,7 @@ for test JUnit 5 and spring security test
 
 Installing
 You cann pull the repositories.
+And for RestApi i make one onether Repo  must start together - https://github.com/AngelZlatkov91/bg.softUni.restProjectDefence
 For Running the application you must made envariable variables for MySql database
 
 Help
