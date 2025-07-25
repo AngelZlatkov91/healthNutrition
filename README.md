@@ -1,19 +1,9 @@
-HEALTHNUTRITION
-WEB APPLICATION FOR FOOD SUPLEMENT SELLER
-
-Description
- This is web application for seller helath suplement product. 
- I made this because i learning in Soft Uni and this is My Online Project Defence
-
-Getting Started
-Dependencies
-Windows 10
-This project made in InteliJIDE , with MySql - database
-I used  - Java - version 17, 
-Spring boot starte ,Spring starter Web, Spring Sequrity, Modelmapper, Spring starter validation, Spring hateoas,
-for fron end templeta - html and css boostrap.min, and thymleaf engine and Thymleaf extras springSequrity
-for test JUnit 5 and spring security test
-
+This is a web application for selling health supplement products. I developed it as part of
+my training at SoftUni , and it served as my Online Project Defense , which is available on
+my GitHub account .
+The application is built with Java and Spring Boot on the backend, and uses Thymeleaf,
+HTML, and CSS on the frontend. Additionally, it includes a microservice that communicates
+with the main application via REST API .
 Installing
 You cann pull the repositories.
 And for RestApi i make one onether Repo  must start together - https://github.com/AngelZlatkov91/bg.softUni.restProjectDefence
